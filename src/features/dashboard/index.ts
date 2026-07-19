@@ -2,4 +2,4 @@
  * Public API for the Dashboard feature.
  */
 
-export { default as DashboardScreen } from "./screens/DashboardScreen.tsx";
+export { default as DashboardScreen } from "./pages/dashboard-page.tsx";

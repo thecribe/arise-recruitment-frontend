@@ -1,15 +1,77 @@
-.glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/40;
+/**
+ * -----------------------------------------------------------------------------
+ * File: utilities.css
+ * Description:
+ * Global reusable utility classes for the AIRSE Recruitment application.
+ *
+ * Responsibilities:
+ * - Glassmorphism utilities
+ * - Layout helpers
+ * - Scroll helpers
+ * - Common visual patterns
+ * -----------------------------------------------------------------------------
+ */
+
+@utility glass-card {
+  @apply rounded-3xl border border-white/30 bg-white/70 shadow-xl backdrop-blur-xl;
 }
 
-.glass-card {
-    @apply glass rounded-2xl shadow-sm;
+@utility glass-panel {
+  @apply rounded-2xl border border-white/20 bg-white/60 backdrop-blur-lg;
 }
 
-.glass-sidebar {
-    @apply bg-white/80 backdrop-blur-xl border-r border-slate-200;
+@utility glass-sidebar {
+  @apply border-r border-white/20 bg-white/80 backdrop-blur-xl;
 }
 
-.glass-navbar {
-    @apply bg-white/70 backdrop-blur-xl border-b border-slate-200;
+@utility glass-header {
+  @apply border-b border-white/20 bg-white/70 backdrop-blur-xl;
+}
+
+@utility glass-dialog {
+  @apply border border-white/30 bg-white/80 backdrop-blur-2xl shadow-2xl;
+}
+
+@utility page-container {
+  @apply mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8;
+}
+
+@utility page-section {
+  @apply space-y-6;
+}
+
+@utility page-content {
+  @apply flex flex-col gap-6;
+}
+
+@utility dashboard-grid {
+  @apply grid gap-6 sm:grid-cols-2 xl:grid-cols-4;
+}
+
+@utility stats-grid {
+  @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+@utility form-section {
+  @apply space-y-5;
+}
+
+@utility form-grid {
+  @apply grid gap-5 md:grid-cols-2;
+}
+
+@utility centered-container {
+  @apply flex min-h-screen items-center justify-center p-6;
+}
+
+@utility responsive-stack {
+  @apply flex flex-col gap-4 md:flex-row md:items-center md:justify-between;
+}
+
+@utility transition-default {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+@utility hover-lift {
+  @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-2xl;
 }

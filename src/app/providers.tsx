@@ -1,29 +1,31 @@
 /**
- * -----------------------------------------------------------------------------
+ * ---------------------------------------------------------------------------
  * File: providers.tsx
+ *
  * Description:
- * Central registration point for all application providers.
- *
- * Responsibilities:
- * - React Query
- * - Router
- * - Toast Notifications
- *
- * Future Providers:
- * - Theme Provider
- * - Authentication Provider (if required)
- * -----------------------------------------------------------------------------
+ * Central registration point for application providers.
+ * ---------------------------------------------------------------------------
  */
 
-import QueryProvider from "@/providers/QueryProvider";
-import ToastProvider from "@/providers/ToastProvider";
+import type { ReactNode } from "react";
+
+import QueryProvider from "@/app/providers/QueryProvider";
+import ToastProvider from "@/app/providers/ToastProvider";
+import BootstrapProvider from "./providers/BootstrapProvider";
+// import AuthProvider from "@/app/providers/AuthProvider";
+
+interface Props {
+  children: ReactNode;
+}
 
 /**
- * Registers every global provider used by the application.
+ * Wraps the application with all global providers.
  */
-export default function Providers() {
+export default function Providers({ children }: Props) {
   return (
     <QueryProvider>
+      {/* <AuthProvider>{children}</AuthProvider> */}
+      <BootstrapProvider>{children}</BootstrapProvider>
       <ToastProvider />
     </QueryProvider>
   );

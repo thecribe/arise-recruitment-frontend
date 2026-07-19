@@ -1,34 +1,52 @@
 /**
  * -----------------------------------------------------------------------------
  * File: routes.ts
- *
  * Description:
- * Defines every URL path used throughout the application.
+ * Centralised application route constants.
  *
  * Responsibilities:
- * - Prevent hard-coded route strings
- * - Improve maintainability
- * - Provide IntelliSense
+ * - Prevent hardcoded URLs.
+ * - Provide typed route paths.
+ * - Used by router, sidebar, breadcrumbs and redirects.
  * -----------------------------------------------------------------------------
  */
 
-/**
- * Application route constants.
- */
 export const ROUTES = {
-  HOME: "/",
+  ROOT: "/",
 
-  LOGIN: "/login",
+  AUTH: {
+    LOGIN: "/login",
+    REGISTER: "/register",
+    FORGOT_PASSWORD: "/forgot-password",
+    RESET_PASSWORD: "/reset-password",
+    UNAUTHORIZED: "/unauthorized",
+  },
 
   DASHBOARD: "/dashboard",
 
-  APPLICATION: "/application",
+  APPLICATION: {
+    ROOT: "/application",
+    STAGE: "/application/:stage",
+  },
 
-  RECRUITMENT: "/recruitment",
+  RECRUITMENT: {
+    ROOT: "/recruitment",
+    APPLICANT: "/recruitment/:id",
+  },
 
-  COMPLIANCE: "/compliance",
+  COMPLIANCE: {
+    ROOT: "/compliance",
+    STAFF: "/compliance/:staffId",
+  },
 
-  STAFF: "/staff",
+  STAFF: {
+    ROOT: "/staff",
+    PROFILE: "/staff/:id",
+  },
 
   SETTINGS: "/settings",
+
+  PROFILE: "/profile",
+
+  NOT_FOUND: "*",
 } as const;

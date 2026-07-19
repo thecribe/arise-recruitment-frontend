@@ -1,2 +1,10 @@
-﻿// api index placeholder
-export * from "./auth.api";
+﻿/**
+ * Central API exports.
+ *
+ * Allows cleaner imports:
+ *
+ * import { authApi } from "@/api"
+ */
+
+
+export * as authApi from "./auth.api";
