@@ -1,4 +1,4 @@
-import { useCurrentUser } from "./use-current-user";
+import { useCurrentUser } from "./use-auth";
 
 export function useBootstrap() {
   const currentUser = useCurrentUser();

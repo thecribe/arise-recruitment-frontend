@@ -1,20 +1,79 @@
-import * as React from "react"
-import { Input as InputPrimitive } from "@base-ui/react/input"
+/**
+ * -----------------------------------------------------------------------------
+ * File: input.tsx
+ * Description:
+ * Reusable application input component.
+ *
+ * Responsibilities:
+ * - Provide a premium styled text input.
+ * - Maintain accessibility.
+ * - Support all native input props.
+ * -----------------------------------------------------------------------------
+ */
 
-import { cn } from "src/lib/utils"
+import * as React from "react";
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
-  return (
-    <InputPrimitive
-      type={type}
-      data-slot="input"
-      className={cn(
-        "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
-        className
-      )}
-      {...props}
-    />
-  )
-}
+import { cn } from "@/lib/utils";
 
-export { Input }
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type = "text", ...props }, ref) => {
+    return (
+      <input
+        ref={ref}
+        type={type}
+        className={cn(
+          // Layout
+          "flex h-12 w-full rounded-2xl",
+
+          // Border
+          "border border-slate-200/80",
+
+          // Glass
+          "bg-white/80 backdrop-blur-xl",
+
+          // Spacing
+          "px-4 py-2",
+
+          // Typography
+          "text-sm text-slate-900",
+          "placeholder:text-slate-400",
+
+          // Shadow
+          "shadow-sm",
+
+          // Animation
+          "transition-all duration-200",
+
+          // Hover
+          "hover:border-blue-300",
+          "hover:bg-white",
+
+          // Focus
+          "focus-visible:outline-none",
+          "focus-visible:border-blue-500",
+          "focus-visible:ring-4",
+          "focus-visible:ring-blue-500/15",
+
+          // Disabled
+          "disabled:cursor-not-allowed",
+          "disabled:opacity-60",
+
+          // File Input
+          "file:border-0",
+          "file:bg-transparent",
+          "file:text-sm",
+          "file:font-medium",
+
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+
+Input.displayName = "Input";
+
+export { Input };

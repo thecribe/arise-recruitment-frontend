@@ -1,69 +1,61 @@
 ﻿/**
- * ------------------------------------------------------------------
- * Authentication apiClient
- * ------------------------------------------------------------------
- *
- * This file only communicates with backend endpoints.
- *
- * No business logic should exist here.
- *
- * Example:
- *
- * auth.apiClient.ts
- *      |
- *      |
- *      --> POST /auth/login
- *
- * The service layer decides what to do with the response.
- * ------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ * File: auth.api.ts
+ * Description:
+ * Authentication API endpoints.
+ * -----------------------------------------------------------------------------
  */
 
-import type { User } from "@/types/auth";
+import type { User } from "@/features/auth/types/auth.types";
 import { apiClient } from "./client";
 
-interface LoginPayload {
+export interface LoginPayload {
   email: string;
-
   password: string;
 }
 
-interface LoginResponse {
+export interface RegisterPayload {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  postcode: string;
+  jobType: string;
+  password: string;
+}
+
+export interface AuthUserResponse {
   user: User;
 }
 
-/**
- * Login user
- *
- * Backend responsibilities:
- *
- * - Validate credentials
- * - Create cookies
- * - Return user profile
- */
-export const loginRequest = async (payload: LoginPayload) => {
-  const response = await apiClient.post<LoginResponse>("/auth/login", payload);
+export const authApi = {
+  login(payload: LoginPayload) {
+    return apiClient.post<AuthUserResponse>("/auth/login", payload);
+  },
 
-  return response.data;
-};
+  register(payload: RegisterPayload) {
+    return apiClient.post<AuthUserResponse>("/auth/register", payload);
+  },
 
-/**
- * Get currently authenticated user
- *
- * Browser automatically sends cookies.
- *
- * Backend validates session.
- */
-export const meRequest = async () => {
-  const response = await apiClient.get<LoginResponse>("/auth/me");
+  logout() {
+    return apiClient.post("/auth/logout");
+  },
 
-  return response.data;
-};
+  me() {
+    return apiClient.get<AuthUserResponse>("/auth/me");
+  },
 
-/**
- * Logout user
- *
- * Backend clears cookies.
- */
-export const logoutRequest = async () => {
-  await apiClient.post("/auth/logout");
+  forgotPassword(email: string) {
+    return apiClient.post("/auth/forgot-password", {
+      email,
+    });
+  },
+
+  resetPassword(token: string, password: string) {
+    return apiClient.post("/auth/reset-password", {
+      token,
+      password,
+    });
+  },
 };

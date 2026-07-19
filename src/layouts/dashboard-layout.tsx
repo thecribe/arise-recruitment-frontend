@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 
 export default function DashboardLayout() {
+  // const user = useCurrentUser();
+
   return (
     <div className="flex min-h-screen">
       <aside className="w-72">Sidebar</aside>

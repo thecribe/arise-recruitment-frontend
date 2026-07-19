@@ -10,7 +10,7 @@
 import type { ReactNode } from "react";
 
 import QueryProvider from "@/app/providers/QueryProvider";
-import ToastProvider from "@/app/providers/ToastProvider";
+
 import BootstrapProvider from "./providers/BootstrapProvider";
 // import AuthProvider from "@/app/providers/AuthProvider";
 
@@ -26,7 +26,6 @@ export default function Providers({ children }: Props) {
     <QueryProvider>
       {/* <AuthProvider>{children}</AuthProvider> */}
       <BootstrapProvider>{children}</BootstrapProvider>
-      <ToastProvider />
     </QueryProvider>
   );
 }
