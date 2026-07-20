@@ -11,7 +11,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { ArrowLeft, ArrowRight, Mail } from "lucide-react";
+import { ArrowLeft, Mail } from "lucide-react";
 
 import { Link } from "react-router-dom";
 
@@ -20,8 +20,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Card, CardContent } from "@/components/ui/card";
-
-import { Button } from "@/components/ui/button";
 
 import { FormInput } from "@/components/forms";
 

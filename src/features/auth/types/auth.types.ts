@@ -19,9 +19,11 @@ export interface AuthUser {
 
   avatar?: string;
 
-  createdAt: string;
+  createdAt?: string;
 
-  updatedAt: string;
+  permissions: string[];
+
+  updatedAt?: string;
 }
 
 export interface LoginPayload {

@@ -12,7 +12,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { ArrowRight, LockKeyhole, Mail } from "lucide-react";
+import { LockKeyhole, Mail } from "lucide-react";
 
 import { Link, useNavigate } from "react-router-dom";
 

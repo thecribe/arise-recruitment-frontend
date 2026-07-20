@@ -2,7 +2,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { authApi } from "../api/auth.api";
 
-import type { LoginPayload, RegisterPayload } from "../types/auth.types";
+import type {
+  AuthUser,
+  LoginPayload,
+  RegisterPayload,
+} from "../types/auth.types";
+
+import { authProvider } from "../api/auth.mock";
 
 export const authKeys = {
   all: ["auth"] as const,
@@ -10,10 +16,10 @@ export const authKeys = {
 };
 
 export function useCurrentUser() {
-  return useQuery({
+  return useQuery<AuthUser, Error>({
     queryKey: authKeys.user(),
 
-    queryFn: authApi.getCurrentUser,
+    queryFn: () => authProvider.getCurrentUser() as Promise<AuthUser>,
 
     retry: false,
 

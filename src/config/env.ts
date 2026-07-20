@@ -14,5 +14,7 @@ function getEnv(name: keyof ImportMetaEnv): string {
 export const env = {
   appName: import.meta.env.VITE_APP_NAME,
   apiUrl: getEnv("VITE_API_BASE_URL"),
+  enableAuth: getEnv("VITE_ENABLE_AUTH"),
+
   environment: import.meta.env.VITE_ENV,
 };

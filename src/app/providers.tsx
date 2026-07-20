@@ -11,7 +11,6 @@ import type { ReactNode } from "react";
 
 import QueryProvider from "@/app/providers/QueryProvider";
 
-import BootstrapProvider from "./providers/BootstrapProvider";
 // import AuthProvider from "@/app/providers/AuthProvider";
 
 interface Props {
@@ -25,7 +24,7 @@ export default function Providers({ children }: Props) {
   return (
     <QueryProvider>
       {/* <AuthProvider>{children}</AuthProvider> */}
-      <BootstrapProvider>{children}</BootstrapProvider>
+      {children}
     </QueryProvider>
   );
 }

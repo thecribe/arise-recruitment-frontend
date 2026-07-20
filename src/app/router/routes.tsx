@@ -15,11 +15,17 @@ import {
 
 import RouteSuspense from "./suspense";
 import { ROUTES } from "@/constants/routes";
+import ProtectedRoute from "@/permissions/protected-route";
 
 export const appRoutes = [
   {
     element: <RootLayout />,
     children: [
+      /**
+       * ---------------------------------------------------------
+       * Public Authentication Routes
+       * ---------------------------------------------------------
+       */
       {
         element: <AuthLayout />,
         children: [
@@ -41,56 +47,67 @@ export const appRoutes = [
           },
         ],
       },
+
+      /**
+       * ---------------------------------------------------------
+       * Protected Dashboard Routes
+       * ---------------------------------------------------------
+       */
       {
-        element: <DashboardLayout />,
+        element: <ProtectedRoute />,
         children: [
           {
-            path: ROUTES.DASHBOARD,
-            element: (
-              <RouteSuspense>
-                <DashboardPage />
-              </RouteSuspense>
-            ),
-          },
-          {
-            path: ROUTES.APPLICATION.ROOT,
-            element: (
-              <RouteSuspense>
-                <ApplicationPage />
-              </RouteSuspense>
-            ),
-          },
-          {
-            path: ROUTES.RECRUITMENT.ROOT,
-            element: (
-              <RouteSuspense>
-                <RecruitmentPage />
-              </RouteSuspense>
-            ),
-          },
-          {
-            path: ROUTES.COMPLIANCE.ROOT,
-            element: (
-              <RouteSuspense>
-                <CompliancePage />
-              </RouteSuspense>
-            ),
-          },
-          {
-            path: ROUTES.STAFF.ROOT,
-            element: (
-              <RouteSuspense>
-                <StaffPage />
-              </RouteSuspense>
-            ),
-          },
-          {
-            path: ROUTES.SETTINGS,
-            element: (
-              <RouteSuspense>
-                <SettingsPage />
-              </RouteSuspense>
-            ),
+            element: <DashboardLayout />,
+            children: [
+              {
+                path: ROUTES.DASHBOARD,
+                element: (
+                  <RouteSuspense>
+                    <DashboardPage />
+                  </RouteSuspense>
+                ),
+              },
+              {
+                path: ROUTES.APPLICATION.ROOT,
+                element: (
+                  <RouteSuspense>
+                    <ApplicationPage />
+                  </RouteSuspense>
+                ),
+              },
+              {
+                path: ROUTES.RECRUITMENT.ROOT,
+                element: (
+                  <RouteSuspense>
+                    <RecruitmentPage />
+                  </RouteSuspense>
+                ),
+              },
+              {
+                path: ROUTES.COMPLIANCE.ROOT,
+                element: (
+                  <RouteSuspense>
+                    <CompliancePage />
+                  </RouteSuspense>
+                ),
+              },
+              {
+                path: ROUTES.STAFF.ROOT,
+                element: (
+                  <RouteSuspense>
+                    <StaffPage />
+                  </RouteSuspense>
+                ),
+              },
+              {
+                path: ROUTES.SETTINGS,
+                element: (
+                  <RouteSuspense>
+                    <SettingsPage />
+                  </RouteSuspense>
+                ),
+              },
+            ],
           },
         ],
       },
