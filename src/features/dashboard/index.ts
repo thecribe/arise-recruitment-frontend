@@ -1,5 +1,4 @@
-/**
- * Public API for the Dashboard feature.
- */
-
-export { default as DashboardScreen } from "./pages/dashboard-page.tsx";
+export * from "./types/dashboard";
+export * from "./types/applicant-dashboard";
+export * from "./types/manager-dashboard";
+export * from "./types/admin-dashboard";

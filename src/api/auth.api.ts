@@ -1,13 +1,6 @@
-﻿/**
- * -----------------------------------------------------------------------------
- * File: auth.api.ts
- * Description:
- * Authentication API endpoints.
- * -----------------------------------------------------------------------------
- */
+﻿import type { User } from "@/types/auth";
 
-import type { User } from "@/features/auth/types/auth.types";
-import { apiClient } from "./client";
+import { http } from "./http";
 
 export interface LoginPayload {
   email: string;
@@ -31,29 +24,29 @@ export interface AuthUserResponse {
 
 export const authApi = {
   login(payload: LoginPayload) {
-    return apiClient.post<AuthUserResponse>("/auth/login", payload);
+    return http.post<AuthUserResponse>("/auth/login", payload);
   },
 
   register(payload: RegisterPayload) {
-    return apiClient.post<AuthUserResponse>("/auth/register", payload);
+    return http.post<AuthUserResponse>("/auth/register", payload);
   },
 
   logout() {
-    return apiClient.post("/auth/logout");
+    return http.post<void>("/auth/logout");
   },
 
   me() {
-    return apiClient.get<AuthUserResponse>("/auth/me");
+    return http.get<AuthUserResponse>("/auth/me");
   },
 
   forgotPassword(email: string) {
-    return apiClient.post("/auth/forgot-password", {
+    return http.post<void>("/auth/forgot-password", {
       email,
     });
   },
 
   resetPassword(token: string, password: string) {
-    return apiClient.post("/auth/reset-password", {
+    return http.post<void>("/auth/reset-password", {
       token,
       password,
     });

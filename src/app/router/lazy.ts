@@ -12,11 +12,11 @@ export const ForgotPasswordPage = lazy(
 );
 
 export const DashboardPage = lazy(
-  () => import("@/features/dashboard/pages/dashboard-page"),
+  () => import("@/features/dashboard/DashboardPage"),
 );
 
 export const ApplicationPage = lazy(
-  () => import("@/features/application/pages/application-page"),
+  () => import("@/features/application/pages/ApplicationPage"),
 );
 
 export const RecruitmentPage = lazy(

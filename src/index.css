@@ -123,6 +123,16 @@
   }
 }
 
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
 ::selection {
   background: color-mix(in srgb, var(--primary) 30%, white);
   color: var(--foreground);
