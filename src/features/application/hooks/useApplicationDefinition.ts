@@ -12,7 +12,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { getApplicationPhases, applicationDefinitionKeys } from "../api";
+import { applicationDefinitionApi, applicationDefinitionKeys } from "../api";
 
 /**
  * Retrieves the list of application phases.
@@ -21,7 +21,7 @@ export function useApplicationDefinition() {
   return useQuery({
     queryKey: applicationDefinitionKeys.phases(),
 
-    queryFn: getApplicationPhases,
+    queryFn: applicationDefinitionApi.getApplicationPhases,
 
     staleTime: Infinity,
   });

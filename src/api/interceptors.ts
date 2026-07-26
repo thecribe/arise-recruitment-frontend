@@ -1,5 +1,4 @@
 import type { InternalAxiosRequestConfig } from "axios";
-import type { AxiosError } from "axios";
 
 export function attachRequestInterceptor(
   client: typeof import("./client").apiClient,
@@ -14,7 +13,6 @@ export function attachRequestInterceptor(
     return config;
   });
 }
-
 
 export function attachResponseInterceptor(
   client: typeof import("./client").apiClient,

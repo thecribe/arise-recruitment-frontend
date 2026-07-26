@@ -17,7 +17,7 @@
 
 import { apiClient } from "@/api/client";
 import type {
-  ApplicationField,
+  // ApplicationField,
   ApplicationPhase,
   ApplicationSection,
 } from "../types";
@@ -25,32 +25,34 @@ import type {
 /**
  * Retrieves all application phases.
  */
-export async function getApplicationPhases() {
-  const { data } = await apiClient.get<ApplicationPhase[]>(
-    "/application/phases",
-  );
+export const applicationDefinitionApi = {
+  async getApplicationPhases() {
+    const { data } = await apiClient.get<ApplicationPhase[]>(
+      "/application/phases",
+    );
 
-  return data;
-}
+    return data;
+  },
 
-/**
- * Retrieves all sections belonging to a phase.
- */
-export async function getPhaseSections(phaseId: string) {
-  const { data } = await apiClient.get<ApplicationSection[]>(
-    `/application/phases/${phaseId}/sections`,
-  );
+  /**
+   * Retrieves all sections belonging to a phase.
+   */
+  async getPhaseSections(phaseId: string) {
+    const { data } = await apiClient.get<ApplicationSection[]>(
+      `/application/phases/${phaseId}/sections`,
+    );
 
-  return data;
-}
+    return data;
+  },
 
-/**
- * Retrieves all fields belonging to a section.
- */
-export async function getSectionFields(sectionId: string) {
-  const { data } = await apiClient.get<ApplicationField[]>(
-    `/application/sections/${sectionId}/fields`,
-  );
+  /**
+   * Retrieves all fields belonging to a section.
+   */
+  // async getSectionFields(sectionId: string) {
+  //   const { data } = await apiClient.get<ApplicationField[]>(
+  //     `/application/sections/${sectionId}/fields`,
+  //   );
 
-  return data;
-}
+  //   return data;
+  // },
+};

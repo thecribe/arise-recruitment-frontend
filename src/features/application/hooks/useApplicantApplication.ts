@@ -6,12 +6,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { applicantApplicationKeys, getApplicantApplication } from "../api";
+import { applicantApi, applicantApplicationKeys } from "../api";
 
 export function useApplicantApplication() {
   return useQuery({
     queryKey: applicantApplicationKeys.application(),
 
-    queryFn: getApplicantApplication,
+    queryFn: applicantApi.getApplicantApplication,
   });
 }

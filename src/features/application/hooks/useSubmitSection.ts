@@ -10,7 +10,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { applicantApplicationKeys } from "../api";
-import { applicationSectionApi } from "../api/application-section.api";
+import { applicationSectionApi } from "../api/applicant-section-request.api";
 
 export function useSubmitSection() {
   const queryClient = useQueryClient();

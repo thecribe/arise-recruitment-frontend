@@ -13,19 +13,22 @@ import type { ApplicantApplication } from "../types";
 /**
  * Retrieves the current applicant's application.
  */
-export async function getApplicantApplication() {
-  const { data } = await apiClient.get<ApplicantApplication>(
-    "/applicant/application",
-  );
 
-  return data;
-}
+export const applicantApi = {
+  async getApplicantApplication() {
+    const { data } = await apiClient.get<ApplicantApplication>(
+      "/applicant/application",
+    );
 
-/**
- * Retrieves values entered for a section.
- */
-export async function getApplicantSection(sectionId: string) {
-  const { data } = await apiClient.get(`/applicant/sections/${sectionId}`);
+    return data;
+  },
 
-  return data;
-}
+  /**
+   * Retrieves values entered for a section.
+   */
+  async getApplicantSection(sectionId: string) {
+    const { data } = await apiClient.get(`/applicant/sections/${sectionId}`);
+
+    return data;
+  },
+};

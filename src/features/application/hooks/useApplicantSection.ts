@@ -9,7 +9,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { applicationSectionApi } from "../api/application-section.api";
+import { applicationSectionApi } from "../api/applicant-section-request.api";
 
 export function useApplicantSection(sectionId?: string) {
   return useQuery({

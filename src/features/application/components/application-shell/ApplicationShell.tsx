@@ -27,7 +27,11 @@ import { usePhaseSections } from "../../hooks/usePhaseSections";
 
 import { SECTION_STATUS } from "../../constants/section-status";
 
-import type { ApplicantPhaseRecord, ApplicantSectionRecord } from "../../types";
+import type {
+  ApplicantPhaseRecord,
+  ApplicantSectionRecord,
+  ApplicationSection,
+} from "../../types";
 
 export default function ApplicationShell({ children }: PropsWithChildren) {
   /**
@@ -135,7 +139,8 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
     if (!applicantApplication) return undefined;
 
     return sections.find(
-      (section) => section.id === applicantApplication.currentSectionId,
+      (section: ApplicationSection) =>
+        section.id === applicantApplication.currentSectionId,
     );
   }, [sections, applicantApplication]);
 
@@ -159,7 +164,9 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
   const activeSection = useMemo(() => {
     if (!activeSectionId) return undefined;
 
-    return sections.find((section) => section.id === activeSectionId);
+    return sections.find(
+      (section: ApplicationSection) => section.id === activeSectionId,
+    );
   }, [sections, activeSectionId]);
 
   /**
@@ -222,7 +229,7 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
 
     const totalSections = sections.length;
 
-    const completedSections = sections.filter((section) => {
+    const completedSections = sections.filter((section: ApplicationSection) => {
       const record = sectionRecordMap.get(section.id);
 
       return record?.status === SECTION_STATUS.APPROVED;
@@ -243,7 +250,9 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
         availablePhases.findIndex((phase) => phase.id === currentPhase?.id) + 1,
 
       currentSectionIndex:
-        sections.findIndex((section) => section.id === currentSection?.id) + 1,
+        sections.findIndex(
+          (section: ApplicationSection) => section.id === currentSection?.id,
+        ) + 1,
     };
   }, [
     applicantApplication,
@@ -261,7 +270,7 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    */
   const navigationSummary = useMemo(() => {
     const index = sections.findIndex(
-      (section) => section.id === activeSection?.id,
+      (section: ApplicationSection) => section.id === activeSection?.id,
     );
 
     return {

@@ -18,10 +18,10 @@ import type { ApplicationField } from "./field";
 import type { VisibilityCondition } from "./visibility";
 
 import type { SectionType } from "../constants/section-types";
-import type { SectionStatus } from "../constants/section-status";
+// import type { SectionStatus } from "../constants/section-status";
 
-import type { ApplicationSectionPermissions } from "./application-permissions";
-import type { SectionReview } from "./review";
+// import type { ApplicationSectionPermissions } from "./application-permissions";
+// import type { SectionReview } from "./review";
 
 export interface ApplicationSection {
   /**
@@ -57,7 +57,7 @@ export interface ApplicationSection {
   /**
    * Section type.
    */
-  type: SectionType;
+  type?: SectionType;
 
   /**
    * Determines whether multiple entries
@@ -84,20 +84,20 @@ export interface ApplicationSection {
    *
    * Loaded independently from the section definition.
    */
-  values: Record<string, unknown>[];
+  // values: Record<string, unknown>[];
 
   /**
    * Current section status.
    */
-  status: SectionStatus;
+  // status: SectionStatus;
 
   /**
    * UI permissions.
    */
-  permissions: ApplicationSectionPermissions;
+  // permissions: ApplicationSectionPermissions;
 
   /**
    * Recruiter review.
    */
-  review?: SectionReview;
+  // review?: SectionReview;
 }
