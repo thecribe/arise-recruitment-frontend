@@ -98,7 +98,7 @@ export const authMockApi = {
     await new Promise((resolve) => setTimeout(resolve, 400));
 
     // return mockUsers.recruitmentManager;
-    return mockUsers.applicant;
+    return mockUsers.recruitmentManager;
     // return mockUsers.admin;
   },
 };

@@ -25,6 +25,9 @@ export interface ApplicantApplication {
   currentSectionId: string;
 
   phases: ApplicantPhaseRecord[];
+  submittedAt?: string;
+
+  updatedAt?: string;
 }
 
 /**
