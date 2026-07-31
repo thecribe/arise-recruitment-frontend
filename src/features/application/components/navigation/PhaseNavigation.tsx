@@ -48,24 +48,21 @@ const phaseStatusConfig: Record<
 };
 
 export default function PhaseNavigation() {
-  const { availablePhases, applicantApplication, activePhase, selectPhase } =
-    useApplicationContext();
+  const { availablePhases, activePhase, selectPhase } = useApplicationContext();
 
   const phases = [...availablePhases].sort((a, b) => a.order - b.order);
 
   /**
    * Build a lookup map for applicant phase records.
    */
-  const phaseRecordMap = new Map(
-    applicantApplication.phases.map((phase) => [phase.phaseId, phase]),
-  );
+  const phaseRecordMap = new Map(phases.map((phase) => [phase.id, phase]));
 
   return (
     <section
       className="
         rounded-3xl
         border border-white/20
-        bg-white/10
+        bg-white/70
         backdrop-blur-xl
         shadow-lg
         p-5
@@ -103,16 +100,32 @@ export default function PhaseNavigation() {
             return null;
           }
 
-          const config = phaseStatusConfig[record.status];
+          let config;
+
+          if (record.status) {
+            config = phaseStatusConfig[record.status as PhaseStatus];
+          } else {
+            config = phaseStatusConfig[PHASE_STATUS.LOCKED];
+          }
+
           const Icon = config.icon;
 
           const isActive = phase.id === activePhase.id;
 
+          const checkLocked = (phaseStatus?: string) => {
+            return !(phaseStatus === PHASE_STATUS.LOCKED || !phaseStatus);
+          };
           return (
             <button
               key={phase.id}
               type="button"
-              onClick={() => selectPhase(phase.id)}
+              onClick={(e) => {
+                e.preventDefault();
+
+                if (checkLocked(phase.status)) {
+                  selectPhase(phase.id);
+                }
+              }}
               className={`
                 min-w-[220px]
                 sm:min-w-[240px]

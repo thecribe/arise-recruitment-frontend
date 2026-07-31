@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 
-import { useApplicationContext } from "../../context/ApplicationContext";
 import { useApplicationForm } from "../../hooks/useApplicationForm";
 
 import FieldWrapper from "../FieldWrapper";
@@ -32,12 +31,12 @@ export default function TextField({ field, prefix }: FieldComponentProps) {
           disabled={isReadOnly}
         >
           <input
-            {...controller}
             id={field.id}
             type="text"
             placeholder={field.placeholder}
             disabled={isReadOnly}
             readOnly={isReadOnly}
+            {...controller}
             className="
               w-full
               rounded-xl

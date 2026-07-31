@@ -19,7 +19,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import type { VisibilityCondition } from "./visibility";
+import type { VisibilityCondition } from "../visibility";
 
 /**
  * Represents a single application phase.
@@ -49,6 +49,8 @@ export interface ApplicationPhase {
    * Determines the display order.
    */
   order: number;
+
+  status?: string;
 
   /**
    * Determines whether the phase is visible

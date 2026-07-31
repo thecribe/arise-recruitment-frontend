@@ -11,6 +11,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import { applicationSectionApi } from "../api/applicant-section-request.api";
 
+
+
 export function useApplicantSection(sectionId?: string) {
   return useQuery({
     queryKey: ["application", "section", sectionId],
@@ -20,3 +22,6 @@ export function useApplicantSection(sectionId?: string) {
     enabled: !!sectionId,
   });
 }
+
+
+;

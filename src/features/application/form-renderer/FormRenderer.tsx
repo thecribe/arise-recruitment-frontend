@@ -10,6 +10,7 @@
 import { useApplicationContext } from "../context/ApplicationContext";
 
 import FieldRenderer from "./FieldRenderer";
+import RepeatableSectionRenderer from "./RepeatableSectionRenderer";
 
 export default function FormRenderer() {
   const { activeSection } = useApplicationContext();
@@ -33,6 +34,9 @@ export default function FormRenderer() {
       </div>
     );
   }
+    if (activeSection.repeatable) {
+      return <RepeatableSectionRenderer />;
+    }
 
   return (
     <div className="grid grid-cols-12 gap-6">

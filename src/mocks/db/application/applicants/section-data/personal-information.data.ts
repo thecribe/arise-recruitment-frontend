@@ -10,7 +10,7 @@ export const personalInformationData: ApplicantSectionData = {
   values: {
     title: "",
 
-    firstName: "",
+    firstName: "James",
 
     middleName: "",
 

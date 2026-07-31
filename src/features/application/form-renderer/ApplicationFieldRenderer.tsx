@@ -1,5 +1,3 @@
-import type { ApplicationField } from "../types/field";
-
 import TextField from "./fields/TextField";
 import TextAreaField from "./fields/TextAreaField";
 import SelectField from "./fields/SelectField";
@@ -8,6 +6,7 @@ import RadioField from "./fields/RadioField";
 import DateField from "./fields/DateField";
 import SignatureField from "./fields/SignatureField";
 import UploadField from "./fields/UploadField";
+import type { ApplicationField } from "../types";
 
 interface Props {
   field: ApplicationField;

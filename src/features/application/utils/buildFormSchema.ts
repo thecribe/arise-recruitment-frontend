@@ -10,8 +10,6 @@
 
 import { z } from "zod";
 
-
-
 import { buildFieldSchema } from "./buildFieldSchema";
 import type { ApplicationSection } from "../types";
 
@@ -26,17 +24,21 @@ export function buildFormSchema(section: ApplicationSection) {
 
   const itemSchema = z.object(shape);
 
-  let schema = z.array(itemSchema);
+  if (!section.repeatable) {
+    return itemSchema;
+  }
+
+  let arraySchema = z.array(itemSchema);
 
   if (section.minItems !== undefined) {
-    schema = schema.min(section.minItems);
+    arraySchema = arraySchema.min(section.minItems);
   }
 
   if (section.maxItems !== undefined) {
-    schema = schema.max(section.maxItems);
+    arraySchema = arraySchema.max(section.maxItems);
   }
 
   return z.object({
-    [section.key]: schema,
+    [section.key]: arraySchema,
   });
 }

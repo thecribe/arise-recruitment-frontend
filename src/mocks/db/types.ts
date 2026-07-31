@@ -15,7 +15,6 @@ import type {
   ApplicationPhase,
   SectionStatus,
 } from "@/features/application/types";
-import type { AuthUser } from "@/features/auth/types/auth.types";
 
 export interface RecruitmentReview {
   id: string;
@@ -134,6 +133,8 @@ export interface ApplicantScenario {
  * -----------------------------------------------------------------------------
  */
 
+export type SectionValues = Record<string, unknown> | Record<string, unknown>[];
+
 export interface ApplicantSectionData {
   applicantId: string;
 
@@ -143,8 +144,6 @@ export interface ApplicantSectionData {
 
   values: SectionValues;
 }
-
-export type SectionValues = Record<string, unknown> | Record<string, unknown>[];
 
 export interface MockDatabase {
   applicationDefinition: any;

@@ -1,4 +1,4 @@
-import type { VisibilityRule } from "./application-field";
+import type { VisibilityRule } from "./application/application-field";
 
 /**
  * Represents a single visibility rule.

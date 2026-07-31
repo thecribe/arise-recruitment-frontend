@@ -65,7 +65,7 @@ export interface ApplicationContextValue {
   /**
    * Static application definition.
    */
-  applicationDefinition: ApplicationPhase[];
+  applicationPhase: ApplicationPhase[];
 
   /**
    * Current applicant progress.

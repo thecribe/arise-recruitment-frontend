@@ -33,16 +33,25 @@ export default function ApplicationPage() {
         <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
           <SectionNavigation />
 
-          <div className="space-y-6">
+          <div
+            className="space-y-6   
+        rounded-3xl
+        border
+        border-white/20
+        bg-white/70
+        backdrop-blur-xl
+        shadow-lg
+        p-5
+      "
+          >
             <ReviewPanel />
 
             <ApplicationFormProvider>
               <FormRenderer />
+              <ApplicationFooter />
             </ApplicationFormProvider>
           </div>
         </div>
-
-        <ApplicationFooter />
       </div>
     </ApplicationShell>
   );

@@ -16,19 +16,23 @@
  */
 
 import { apiClient } from "@/api/client";
+import { env } from "@/config/env";
+import { getApplicantFieldData } from "@/mocks/db/application/services";
 
 /**
  * Applicant section values returned by the backend.
  */
 export interface ApplicantSectionValuesResponse {
   sectionId: string;
+  applicantId?: string;
+  status?: string;
 
   /**
    * Form values for the section.
    *
    * Repeatable sections return multiple records.
    */
-  values: Record<string, unknown>[];
+  values: Record<string, unknown> | Record<string, unknown>[];
 }
 
 /**
@@ -37,7 +41,7 @@ export interface ApplicantSectionValuesResponse {
 export interface SaveSectionDraftRequest {
   sectionId: string;
 
-  values: Record<string, unknown>[];
+  values: Record<string, unknown> | Record<string, unknown>[];
 }
 
 /**
@@ -46,9 +50,10 @@ export interface SaveSectionDraftRequest {
 export interface SubmitSectionRequest {
   sectionId: string;
 
-  values: Record<string, unknown>[];
+  values: Record<string, unknown> | Record<string, unknown>[];
 }
 
+const mock = env.useMocks;
 export const applicationSectionApi = {
   /**
    * ---------------------------------------------------------------------------
@@ -59,10 +64,14 @@ export const applicationSectionApi = {
    * ---------------------------------------------------------------------------
    */
   async getApplicantSection(sectionId: string) {
-    const { data } = await apiClient.get<ApplicantSectionValuesResponse>(
-      `/applicant/sections/${sectionId}`, // TODO: Update endpoint
-    );
+    if (!mock) {
+      const { data } = await apiClient.get<ApplicantSectionValuesResponse>(
+        `/applicant/sections/${sectionId}`, // TODO: Update endpoint
+      );
 
+      return data;
+    }
+    const data = getApplicantFieldData(sectionId);
     return data;
   },
 

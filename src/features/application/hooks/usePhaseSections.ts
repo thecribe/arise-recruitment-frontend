@@ -6,13 +6,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { applicationDefinitionKeys, getPhaseSections } from "../api";
+import { applicationApi, applicationDefinitionKeys } from "../api";
 
 export function usePhaseSections(phaseId?: string) {
   return useQuery({
     queryKey: applicationDefinitionKeys.sections(phaseId ?? ""),
 
-    queryFn: () => getPhaseSections(phaseId!),
+    queryFn: () => applicationApi.getPhaseSections(phaseId!),
+    // queryFn: () => [],
 
     enabled: !!phaseId,
   });

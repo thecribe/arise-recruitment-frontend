@@ -21,16 +21,25 @@ import type {
   ApplicationPhase,
   ApplicationSection,
 } from "../types";
+import { env } from "@/config/env";
+import {
+  getMockApplicationPhases,
+  getMockApplicationSection,
+} from "@/mocks/db/application/services";
 
 /**
  * Retrieves all application phases.
  */
-export const applicationDefinitionApi = {
+const mock = env.useMocks;
+export const applicationApi = {
   async getApplicationPhases() {
-    const { data } = await apiClient.get<ApplicationPhase[]>(
-      "/application/phases",
-    );
-
+    if (!mock) {
+      const { data } = await apiClient.get<ApplicationPhase[]>(
+        "/application/phases",
+      );
+      return data;
+    }
+    const data = getMockApplicationPhases();
     return data;
   },
 
@@ -38,6 +47,14 @@ export const applicationDefinitionApi = {
    * Retrieves all sections belonging to a phase.
    */
   async getPhaseSections(phaseId: string) {
+  
+    if (mock) {
+    
+      const data = getMockApplicationSection(phaseId);
+
+      return data;
+    }
+ 
     const { data } = await apiClient.get<ApplicationSection[]>(
       `/application/phases/${phaseId}/sections`,
     );

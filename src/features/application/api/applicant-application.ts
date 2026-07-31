@@ -9,17 +9,22 @@
 
 import { apiClient } from "@/api/client";
 import type { ApplicantApplication } from "../types";
+import { env } from "@/config/env";
+import { getMockApplicatApplication } from "@/mocks/db/application/services";
 
 /**
  * Retrieves the current applicant's application.
  */
-
+const mock = env.useMocks;
 export const applicantApi = {
   async getApplicantApplication() {
-    const { data } = await apiClient.get<ApplicantApplication>(
-      "/applicant/application",
-    );
-
+    if (!mock) {
+      const { data } = await apiClient.get<ApplicantApplication>(
+        "/applicant/application",
+      );
+      return data;
+    }
+    const data = getMockApplicatApplication();
     return data;
   },
 

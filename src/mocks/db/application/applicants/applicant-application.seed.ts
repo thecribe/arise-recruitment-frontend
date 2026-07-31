@@ -44,28 +44,28 @@ export const applicantApplicationSeed: ApplicantApplication = {
       ],
     },
 
-    {
-      phaseId: "phase-professional",
+    // {
+    //   phaseId: "phase-professional",
 
-      status: "locked",
+    //   status: "locked",
 
-      sections: [],
-    },
+    //   sections: [],
+    // },
 
-    {
-      phaseId: "phase-compliance",
+    // {
+    //   phaseId: "phase-compliance",
 
-      status: "locked",
+    //   status: "locked",
 
-      sections: [],
-    },
+    //   sections: [],
+    // },
 
-    {
-      phaseId: "phase-declaration",
+    // {
+    //   phaseId: "phase-declaration",
 
-      status: "locked",
+    //   status: "locked",
 
-      sections: [],
-    },
+    //   sections: [],
+    // },
   ],
 };

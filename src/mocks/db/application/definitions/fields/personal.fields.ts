@@ -1,5 +1,7 @@
-import type { ApplicationField } from "@/features/application/types";
-import { FIELD_WIDTH } from "@/features/application/types/field-width";
+import {
+  FIELD_WIDTH,
+  type ApplicationField,
+} from "@/features/application/types";
 
 export const personalFields: ApplicationField[] = [
   {

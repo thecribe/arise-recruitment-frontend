@@ -66,22 +66,27 @@ export default function ApplicationFormProvider({
    * - backend values change
    */
   useEffect(() => {
-    if (sectionValues?.values?.length) {
+    if (!sectionValues) {
+      methods.reset(defaultValues);
+      return;
+    }
+
+    if (activeSection.repeatable) {
       methods.reset({
-        [activeSection.key]: sectionValues.values,
+        [activeSection.key]: sectionValues.values?.length
+          ? sectionValues.values
+          : defaultValues[activeSection.key],
       });
 
       return;
     }
 
-    methods.reset(defaultValues);
-  }, [
-    activeSection.id,
-    activeSection.key,
-    sectionValues,
-    defaultValues,
-    methods,
-  ]);
+    methods.reset(
+      sectionValues.values && Object.keys(sectionValues.values).length
+        ? (sectionValues.values as Record<string, unknown>)
+        : defaultValues,
+    );
+  }, [activeSection, sectionValues, defaultValues, methods]);
 
   return <FormProvider {...methods}>{children}</FormProvider>;
 }

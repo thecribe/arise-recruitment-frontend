@@ -1,11 +1,7 @@
 import type { PropsWithChildren } from "react";
 
 import { cn } from "@/lib/utils";
-import {
-  FIELD_WIDTH,
-  FIELD_WIDTH_CLASS,
-  type FieldWidth,
-} from "../types/field-width";
+import { FIELD_WIDTH, FIELD_WIDTH_CLASS, type FieldWidth } from "../types";
 
 interface FieldWrapperProps extends PropsWithChildren {
   id: string;

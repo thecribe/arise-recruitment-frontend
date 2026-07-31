@@ -54,12 +54,13 @@ export default function ApplicationFooter() {
    * ---------------------------------------------------------------------------
    */
   function handleSaveDraft(values: unknown) {
+    const payload = activeSection.repeatable
+      ? (values as Record<string, Record<string, unknown>[]>)[activeSection.key]
+      : values;
+
     saveDraft.mutate({
       sectionId: activeSection.id,
-
-      // TODO:
-      // Replace `unknown` with your final form value type.
-      values: values as Record<string, unknown>[],
+      values: payload as Record<string, unknown> | Record<string, unknown>[],
     });
   }
 
@@ -69,12 +70,14 @@ export default function ApplicationFooter() {
    * ---------------------------------------------------------------------------
    */
   function handleSectionSubmit(values: unknown) {
+    console.log(values);
+    const payload = activeSection.repeatable
+      ? (values as Record<string, Record<string, unknown>[]>)[activeSection.key]
+      : values;
+
     submitSection.mutate({
       sectionId: activeSection.id,
-
-      // TODO:
-      // Replace `unknown` with your final form value type.
-      values: values as Record<string, unknown>[],
+      values: payload as Record<string, unknown> | Record<string, unknown>[],
     });
   }
 

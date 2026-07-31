@@ -21,7 +21,7 @@ import type { PropsWithChildren } from "react";
 
 import { ApplicationContext } from "../../context/ApplicationContext";
 
-import { useApplicationDefinition } from "../../hooks/useApplicationDefinition";
+import { useApplicationPhases } from "../../hooks/useApplicationPhases";
 import { useApplicantApplication } from "../../hooks/useApplicantApplication";
 import { usePhaseSections } from "../../hooks/usePhaseSections";
 
@@ -32,18 +32,19 @@ import type {
   ApplicantSectionRecord,
   ApplicationSection,
 } from "../../types";
+import { PHASE_STATUS } from "../../constants/phase-status";
 
 export default function ApplicationShell({ children }: PropsWithChildren) {
   /**
    * ---------------------------------------------------------------------------
-   * Load application definition.
+   * Load application phases.
    * ---------------------------------------------------------------------------
    */
-  const { data: applicationDefinition = [] } = useApplicationDefinition();
+  const { data: applicationPhase = [] } = useApplicationPhases();
 
   /**
    * ---------------------------------------------------------------------------
-   * Load applicant progress.
+   * Load applicant progress. (if applicant as no profile yet, backend sends default object)
    * ---------------------------------------------------------------------------
    */
   const { data: applicantApplication } = useApplicantApplication();
@@ -56,10 +57,10 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
   const currentPhase = useMemo(() => {
     if (!applicantApplication) return undefined;
 
-    return applicationDefinition.find(
+    return applicationPhase.find(
       (phase) => phase.id === applicantApplication.currentPhaseId,
     );
-  }, [applicationDefinition, applicantApplication]);
+  }, [applicationPhase, applicantApplication]);
 
   /**
    * ---------------------------------------------------------------------------
@@ -68,11 +69,19 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    */
   const availablePhases = useMemo(() => {
     if (!applicantApplication) return [];
+    const applicantPahses = applicantApplication.phases;
 
-    return applicationDefinition.filter((phase) =>
-      applicantApplication.phases.some((record) => record.phaseId === phase.id),
+    const updateMap = new Map(
+      applicantPahses.map((phase) => [phase.phaseId, phase]),
     );
-  }, [applicationDefinition, applicantApplication]);
+
+    const mergePhases = applicationPhase.map((phase) => ({
+      ...phase,
+      ...(updateMap.get(phase.id) ?? {}),
+    }));
+
+    return mergePhases;
+  }, [applicationPhase, applicantApplication]);
 
   /**
    * ---------------------------------------------------------------------------
@@ -90,8 +99,8 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
   const activePhase = useMemo(() => {
     if (!activePhaseId) return undefined;
 
-    return applicationDefinition.find((phase) => phase.id === activePhaseId);
-  }, [applicationDefinition, activePhaseId]);
+    return applicationPhase.find((phase) => phase.id === activePhaseId);
+  }, [applicationPhase, activePhaseId]);
 
   /**
    * ---------------------------------------------------------------------------
@@ -123,6 +132,7 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
     );
   }, [applicantApplication]);
 
+  console.log(activeApplicantPhase);
   /**
    * ---------------------------------------------------------------------------
    * Load sections.
@@ -211,8 +221,9 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
   const canView = !!activeSection;
 
   const canEdit =
-    activeApplicantSection?.status === SECTION_STATUS.DRAFT ||
-    activeApplicantSection?.status === SECTION_STATUS.REJECTED;
+    activeApplicantPhase?.status === PHASE_STATUS.IN_PROGRESS ||
+    activeApplicantPhase?.status === PHASE_STATUS.REJECTED ||
+    activeApplicantPhase?.status === PHASE_STATUS.DRAFT;
 
   const canSubmit = canEdit;
 
@@ -294,7 +305,6 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    */
   const selectPhase = (phaseId: string) => {
     setActivePhaseId(phaseId);
-    setActiveSectionId(undefined);
   };
 
   const selectSection = (sectionId: string) => {
@@ -315,13 +325,13 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
     !activeSection ||
     !activeApplicantSection
   ) {
-    return null;
+    return "null";
   }
 
   return (
     <ApplicationContext.Provider
       value={{
-        applicationDefinition,
+        applicationPhase,
 
         applicantApplication,
 

@@ -15,7 +15,7 @@ export default function ApplicationHeader() {
       className="
         rounded-3xl
         border border-white/20
-        bg-white/10
+        bg-white/70
         backdrop-blur-xl
         shadow-lg
         px-5
