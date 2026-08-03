@@ -8,8 +8,6 @@ import type {
   RegisterPayload,
 } from "../types/auth.types";
 
-import { authProvider } from "../api/auth.mock";
-
 export const authKeys = {
   all: ["auth"] as const,
   user: () => [...authKeys.all, "user"] as const,
@@ -19,7 +17,7 @@ export function useCurrentUser() {
   return useQuery<AuthUser, Error>({
     queryKey: authKeys.user(),
 
-    queryFn: () => authProvider.getCurrentUser() as Promise<AuthUser>,
+    queryFn: () => authApi.getCurrentUser() as Promise<AuthUser>,
 
     retry: false,
 
@@ -33,9 +31,10 @@ export function useLogin() {
   return useMutation({
     mutationFn: (payload: LoginPayload) => authApi.login(payload),
 
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.fetchQuery({
         queryKey: authKeys.user(),
+        queryFn: authApi.getCurrentUser,
       });
     },
   });

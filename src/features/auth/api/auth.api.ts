@@ -1,4 +1,4 @@
-import { apiClient } from "@/api/client";
+import { instance } from "@/api/client";
 import type {
   LoginPayload,
   RegisterPayload,
@@ -8,28 +8,29 @@ import type {
 
 export const authApi = {
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
-    const response = await apiClient.post("/auth/login", payload);
+    const response = await instance.post("/auth/login", payload);
 
     return response.data;
   },
 
   register: async (payload: RegisterPayload) => {
-    const response = await apiClient.post("/auth/register", payload);
+    const response = await instance.post("/auth/register", payload);
     return response.data;
   },
 
   logout: async () => {
-    const response = await apiClient.post("/auth/logout");
+    const response = await instance.post("/auth/logout");
     return response.data;
   },
 
   getCurrentUser: async (): Promise<AuthUser> => {
-    const response = await apiClient.get("/auth/me");
+    const response = await instance.get("/auth/me");
+
     return response.data;
   },
 
   forgotPassword: async (email: string) => {
-    const response = await apiClient.post("/auth/forgot-password", {
+    const response = await instance.post("/auth/forgot-password", {
       email,
     });
 
@@ -37,12 +38,12 @@ export const authApi = {
   },
 
   resetPassword: async (payload: { token: string; password: string }) => {
-    const response = await apiClient.post("/auth/reset-password", payload);
+    const response = await instance.post("/auth/reset-password", payload);
 
     return response.data;
   },
   verifyEmail: async (token: string) => {
-    const response = await apiClient.post("/auth/verify-email", {
+    const response = await instance.post("/auth/verify-email", {
       token,
     });
 

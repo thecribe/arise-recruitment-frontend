@@ -1,12 +1,12 @@
 import axios from "axios";
 
 import { env } from "@/config/env";
-import {
-  attachRequestInterceptor,
-  attachResponseInterceptor,
-} from "./interceptors";
+// import {
+//   attachRequestInterceptor,
+//   attachResponseInterceptor,
+// } from "./interceptors";
 
-export const apiClient = axios.create({
+export const instance = axios.create({
   baseURL: env.apiUrl,
   timeout: 30000,
   withCredentials: true,
@@ -17,5 +17,5 @@ export const apiClient = axios.create({
   },
 });
 
-attachRequestInterceptor(apiClient);
-attachResponseInterceptor(apiClient);
+// attachRequestInterceptor(apiClient);
+// attachResponseInterceptor(apiClient);

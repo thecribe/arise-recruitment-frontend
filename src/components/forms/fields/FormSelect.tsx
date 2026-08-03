@@ -56,6 +56,7 @@ export function FormSelect<T extends FieldValues>({
     name,
   });
 
+  const selectedOption = options.find((option) => option.value === field.value);
   return (
     <FormFieldWrapper
       id={field.name}
@@ -73,6 +74,8 @@ export function FormSelect<T extends FieldValues>({
           id={field.name}
           className="
             h-12
+            w-full
+            
             rounded-2xl
             border-slate-200/80
             bg-white/80
@@ -81,10 +84,11 @@ export function FormSelect<T extends FieldValues>({
             transition-all
             hover:border-blue-300
             focus:ring-4
-            focus:ring-blue-500/15
+            focus:ring-blue-500/15        
           "
         >
-          <SelectValue placeholder={placeholder} />
+          {/* <SelectValue placeholder={placeholder} /> */}
+          <SelectValue>{selectedOption?.label ?? placeholder}</SelectValue>
         </SelectTrigger>
 
         <SelectContent>

@@ -12,33 +12,26 @@
  */
 
 import {
-  ArrowRight,
+  // ArrowRight,
   Home,
   Mail,
   Phone,
   User,
-  Briefcase,
-  LockKeyhole,
+  // Briefcase,
+  // LockKeyhole,
 } from "lucide-react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from "@/components/ui/button";
-
 import { Card, CardContent } from "@/components/ui/card";
 
-import {
-  FormCheckbox,
-  FormInput,
-  FormPassword,
-  FormSelect,
-} from "@/components/forms";
+import { FormCheckbox, FormInput, FormSelect } from "@/components/forms";
 
-import { JOB_TYPES } from "@/constants/job-types";
+// import { JOB_TYPES } from "@/constants/job-types";
 
 import { ROUTES } from "@/constants/routes";
 
@@ -52,12 +45,15 @@ import { useRegister } from "../hooks/use-auth";
 import { useState } from "react";
 import { notification } from "@/components/feedback/notification";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { useBootstrapData } from "@/hooks/useBootstrapData";
+import PageLoader from "@/components/feedback/page-loader";
 
 export default function RegisterPage() {
   const [registrationComplete, setRegistrationComplete] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const registerMutation = useRegister();
+  const { jobTypes, isLoading, isError } = useBootstrapData();
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -75,7 +71,7 @@ export default function RegisterPage() {
 
       postcode: "",
 
-      jobType: "",
+      jobTypeId: "",
 
       // password: "",
 
@@ -85,9 +81,22 @@ export default function RegisterPage() {
     },
   });
 
+  if (isLoading) {
+    return <PageLoader />;
+  }
+
+  if (isError) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-red-500">Error loading bootstrap data.</p>
+      </div>
+    );
+  }
+
   const onSubmit = (values: RegisterFormValues) => {
+    console.log("values", values);
     registerMutation.mutate(values, {
-      onSuccess: () => {
+      onSuccess: async () => {
         /**
          * TODO:
          * Replace with notification system
@@ -97,7 +106,7 @@ export default function RegisterPage() {
       },
 
       onError: (error) => {
-        console.error(error);
+        console.error("error", error);
         notification.error("Unable to create account. Please try again.");
       },
     });
@@ -136,6 +145,13 @@ export default function RegisterPage() {
       </Card>
     );
   }
+
+  const job_options = jobTypes?.data?.jobTypes.map(
+    ({ id, name }: { id: string; name: string }) => ({
+      label: name,
+      value: id,
+    }),
+  );
 
   return (
     <Card className="w-full max-w-3xl">
@@ -208,10 +224,10 @@ export default function RegisterPage() {
 
               <FormSelect
                 control={form.control}
-                name="jobType"
+                name="jobTypeId"
                 label="Job Type"
                 placeholder="Select job type"
-                options={JOB_TYPES}
+                options={job_options}
                 required
               />
             </div>

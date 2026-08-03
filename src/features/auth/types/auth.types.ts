@@ -45,7 +45,7 @@ export interface RegisterPayload {
 
   postcode: string;
 
-  jobType: string;
+  jobTypeId: string;
 
   // password: string;
 

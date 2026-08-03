@@ -1,5 +1,3 @@
-import { ROUTES } from "./routes";
-
 export const RouteBuilder = {
   applicant: (id: string) => `/recruitment/${id}`,
 

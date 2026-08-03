@@ -21,11 +21,8 @@ export const registerSchema = z.object({
 
   postcode: z.string().min(3, "Postcode is required"),
 
-  jobType: z.string().min(1, "Please select a job type"),
-
-  // password: z.string().min(8, "Password must contain at least 8 characters"),
-
-  // confirmPassword: z.string().min(8, "Please confirm your password"),
+  jobTypeId: z.string().min(1, "Please select a job type"),
+  // jobTypeId: z.string().min(1, "Please select a job type"),
 
   acceptTerms: z.boolean().refine((value) => value === true, {
     message: "You must accept the terms and conditions",
