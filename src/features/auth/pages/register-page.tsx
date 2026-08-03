@@ -47,6 +47,7 @@ import { notification } from "@/components/feedback/notification";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useBootstrapData } from "@/hooks/useBootstrapData";
 import PageLoader from "@/components/feedback/page-loader";
+import type { AxiosError } from "axios";
 
 export default function RegisterPage() {
   const [registrationComplete, setRegistrationComplete] = useState(false);
@@ -103,11 +104,20 @@ export default function RegisterPage() {
          */
 
         setRegistrationComplete(true);
+        notification.success(
+          "Account created successfully. Please check your email for verification.",
+        );
       },
 
       onError: (error) => {
-        console.error("error", error);
-        notification.error("Unable to create account. Please try again.");
+        const axiosError = error as AxiosError<{
+          message: string;
+          errors?: string[];
+        }>;
+        notification.error(
+          axiosError.response?.data.message ||
+            "Unable to create account. Please try again.",
+        );
       },
     });
   };
