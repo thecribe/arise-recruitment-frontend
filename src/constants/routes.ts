@@ -19,7 +19,7 @@ export const ROUTES = {
     REGISTER: "/register",
     FORGOT_PASSWORD: "/forgot-password",
     RESET_PASSWORD: "/reset-password",
-    VERIFY_EMAIL_NOTICE: "/verify-email-notice",
+    VERIFY_EMAIL: "/verify-email",
     UNAUTHORIZED: "/unauthorized",
   },
 

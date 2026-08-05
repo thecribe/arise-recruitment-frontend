@@ -56,6 +56,9 @@ export default function RegisterPage() {
   const registerMutation = useRegister();
   const { jobTypes, isLoading, isError } = useBootstrapData();
 
+
+
+
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
 
@@ -95,8 +98,7 @@ export default function RegisterPage() {
   }
 
   const onSubmit = (values: RegisterFormValues) => {
-    console.log("values", values);
-    registerMutation.mutate(values, {
+        registerMutation.mutate(values, {
       onSuccess: async () => {
         /**
          * TODO:
