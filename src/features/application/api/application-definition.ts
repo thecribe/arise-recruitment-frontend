@@ -15,7 +15,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { apiClient } from "@/api/client";
+import { instance } from "@/api/client";
 import type {
   // ApplicationField,
   ApplicationPhase,
@@ -34,7 +34,7 @@ const mock = env.useMocks;
 export const applicationApi = {
   async getApplicationPhases() {
     if (!mock) {
-      const { data } = await apiClient.get<ApplicationPhase[]>(
+      const { data } = await instance.get<ApplicationPhase[]>(
         "/application/phases",
       );
       return data;
@@ -55,7 +55,7 @@ export const applicationApi = {
       return data;
     }
  
-    const { data } = await apiClient.get<ApplicationSection[]>(
+    const { data } = await instance.get<ApplicationSection[]>(
       `/application/phases/${phaseId}/sections`,
     );
 
@@ -66,7 +66,7 @@ export const applicationApi = {
    * Retrieves all fields belonging to a section.
    */
   // async getSectionFields(sectionId: string) {
-  //   const { data } = await apiClient.get<ApplicationField[]>(
+  //   const { data } = await instance.get<ApplicationField[]>(
   //     `/application/sections/${sectionId}/fields`,
   //   );
 

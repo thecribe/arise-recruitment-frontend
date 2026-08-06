@@ -33,7 +33,7 @@ export const navigation: NavigationItem[] = [
     title: "Application",
     href: "/application",
     icon: FileText,
-    permissions: ["application:view"],
+    permissions: ["APPLICATION_VIEW"],
   },
 
   {

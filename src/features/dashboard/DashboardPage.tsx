@@ -11,7 +11,7 @@ import AdminDashboard from "./admin/AdminDashboard";
 const DashboardPage = () => {
   const { data: user, isPending } = useCurrentUser();
 
-  console.log("Current user:", user);
+ 
   
   if (isPending) {
     return <PageLoader />;

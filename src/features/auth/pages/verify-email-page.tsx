@@ -12,7 +12,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect,  useState } from "react";
 
 import { Link, useSearchParams } from "react-router-dom";
 
@@ -56,7 +56,7 @@ import { useResetPassword, useVerifyEmail } from "../hooks/use-auth";
     }
   const {data:passwordToken, isPending, isError} = useVerifyEmail(verificationToken);
 
-  const setPasswordMutation = useResetPassword("setPassword");
+  const setPasswordMutation = useResetPassword();
 
  const [passwordCreated, setPasswordCreated] =   useState(false);
 

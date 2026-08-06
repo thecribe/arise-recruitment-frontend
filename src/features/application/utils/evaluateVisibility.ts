@@ -1,4 +1,5 @@
-import type { FieldCondition, VisibilityCondition } from "../types/condition";
+import type { VisibilityCondition } from "../types/visibility";
+
 
 function evaluateCondition(
   condition: FieldCondition,

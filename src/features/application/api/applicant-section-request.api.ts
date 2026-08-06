@@ -15,7 +15,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { apiClient } from "@/api/client";
+import { instance } from "@/api/client";
 import { env } from "@/config/env";
 import { getApplicantFieldData } from "@/mocks/db/application/services";
 
@@ -65,7 +65,7 @@ export const applicationSectionApi = {
    */
   async getApplicantSection(sectionId: string) {
     if (!mock) {
-      const { data } = await apiClient.get<ApplicantSectionValuesResponse>(
+      const { data } = await instance.get<ApplicantSectionValuesResponse>(
         `/applicant/sections/${sectionId}`, // TODO: Update endpoint
       );
 
@@ -86,7 +86,7 @@ export const applicationSectionApi = {
   async saveDraft(payload: SaveSectionDraftRequest) {
     const { sectionId, values } = payload;
 
-    const { data } = await apiClient.patch(
+    const { data } = await instance.patch(
       `/applicant/sections/${sectionId}/draft`, // TODO: Update endpoint
       {
         values,
@@ -107,7 +107,7 @@ export const applicationSectionApi = {
   async submitSection(payload: SubmitSectionRequest) {
     const { sectionId, values } = payload;
 
-    const { data } = await apiClient.post(
+    const { data } = await instance.post(
       `/applicant/sections/${sectionId}/submit`, // TODO: Update endpoint
       {
         values,

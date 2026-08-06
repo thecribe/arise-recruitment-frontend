@@ -36,6 +36,10 @@ export const appRoutes = [
             element: <LoginPage />,
           },
           {
+            path: ROUTES.ROOT,
+            element: <LoginPage />,
+          },
+          {
             path: ROUTES.AUTH.REGISTER,
             element: <RegisterPage />,
           },

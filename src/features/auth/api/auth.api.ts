@@ -10,7 +10,7 @@ import type {
 export const authApi = {
   login: async (payload: LoginPayload): Promise<LoginResponse> => {
     const response = await instance.post("/auth/login", payload);
-    console.log(response.data);
+   
     return response.data;
   },
 
@@ -51,7 +51,7 @@ export const authApi = {
   },
   
 verifyEmail: async (token: string) => {
-  console.log("Calling verify API...", token);
+
 
   const response = await instance.get("/auth/verify-email", {
     params: { token },

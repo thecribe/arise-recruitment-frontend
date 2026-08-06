@@ -66,29 +66,15 @@ export function useForgotPassword() {
   });
 }
 
-export function useResetPassword(type?:string) {
-  if(type){
+export function useResetPassword() {
+
 return useMutation({
     mutationFn: authApi.setPassword,
   });
-  }
-  return useMutation({
-    mutationFn: authApi.resetPassword,
-  });
+  
 }
 
-// export function useVerifyEmail() {
-//   const mutation =useMutation({
-//     mutationFn: (payload:string)=>authApi.verifyEmail(payload),
-//   });
 
-//   console.log(mutation)
-//    return {
-//     ...mutation,
-//     verifyEmail: mutation.mutate,
-//     verifyEmailAsync: mutation.mutateAsync,
-//   };
-// }
 
 export const useVerifyEmail = (payload: string) => {
   return useQuery({

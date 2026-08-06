@@ -13,7 +13,7 @@
 
 import { ArrowRight, LockKeyhole } from "lucide-react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
@@ -35,9 +35,20 @@ import {
 } from "../schemas/reset-password.schema";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useResetPassword } from "../hooks/use-auth";
+import { notification } from "@/components/feedback/notification";
+import { useEffect, useState } from "react";
+import type { AxiosError } from "axios";
 
 export default function ResetPasswordPage() {
+  const navigate = useNavigate();
+const [searchParams] = useSearchParams();
+const resetPasswordToken = searchParams.get("token");
+
+ const [passwordCreated, setPasswordCreated] =   useState(false);
+
+
   const resetPasswordMutation = useResetPassword();
+  
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
 
@@ -47,8 +58,21 @@ export default function ResetPasswordPage() {
     },
   });
 
+    useEffect(() => {
+  if (!resetPasswordToken) {
+    notification.error("Reset password token is missing.");
+
+    navigate(ROUTES.AUTH.FORGOT_PASSWORD, {
+      replace: true,
+    });
+  }
+}, [resetPasswordToken, navigate]);
+if (!resetPasswordToken) {
+  return null;
+}
+
   const onSubmit = async (values: ResetPasswordFormValues) => {
-    console.log("Reset password payload:", values);
+   
 
     /**
      * TODO:
@@ -56,7 +80,73 @@ export default function ResetPasswordPage() {
      * - Call reset password API
      * - Redirect to login
      */
+     resetPasswordMutation.mutate(
+        {
+          token: resetPasswordToken,
+          password: values.password,
+                confirmPassword: values.confirmPassword
+    
+        },
+        {
+          onSuccess: () => {
+            notification.success(
+              "Password created successfully.",
+            );
+            setPasswordCreated(true)
+           
+          },
+    
+          onError: (error) => {
+            const axiosError = error as AxiosError<{
+              message: string;
+            }>;
+    
+            notification.error(
+              axiosError.response?.data.message ??
+                "Unable to reset password.",
+            );
+          },
+        },
+      );
   };
+
+  if (passwordCreated) {
+    return (
+      <Card className="w-full max-w-xl">
+        <CardContent className="p-8 md:p-10">
+          <div className="space-y-8">
+            <AuthHeader
+              title="Password Created"
+              description="
+                Your account has been activated successfully.
+              "
+            />
+  
+            <div className="space-y-6 text-center">
+              <p className="text-sm text-slate-600">
+                You can now sign in using your email address and newly created
+                password.
+              </p>
+  
+              <Link
+                to={ROUTES.AUTH.LOGIN}
+                className="
+                  inline-flex
+                  font-semibold
+                  text-blue-600
+                  hover:text-blue-700
+                "
+              >
+                Continue to Login
+              </Link>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+  
+
 
   return (
     <Card className="w-full max-w-lg">

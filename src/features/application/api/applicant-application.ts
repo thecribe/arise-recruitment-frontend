@@ -7,7 +7,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { apiClient } from "@/api/client";
+import { instance } from "@/api/client";
 import type { ApplicantApplication } from "../types";
 import { env } from "@/config/env";
 import { getMockApplicatApplication } from "@/mocks/db/application/services";
@@ -19,7 +19,7 @@ const mock = env.useMocks;
 export const applicantApi = {
   async getApplicantApplication() {
     if (!mock) {
-      const { data } = await apiClient.get<ApplicantApplication>(
+      const { data } = await instance.get<ApplicantApplication>(
         "/applicant/application",
       );
       return data;
@@ -32,7 +32,7 @@ export const applicantApi = {
    * Retrieves values entered for a section.
    */
   async getApplicantSection(sectionId: string) {
-    const { data } = await apiClient.get(`/applicant/sections/${sectionId}`);
+    const { data } = await instance.get(`/applicant/sections/${sectionId}`);
 
     return data;
   },

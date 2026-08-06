@@ -16,6 +16,8 @@ import { useCurrentUser } from "@/features/auth/hooks/use-auth";
 export function useNavigation() {
   const { data: user } = useCurrentUser();
 
+
+
   return useMemo(() => {
     return filterNavigation(navigation, user?.permissions ?? []);
   }, [user]);
