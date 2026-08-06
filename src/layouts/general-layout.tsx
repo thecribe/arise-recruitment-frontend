@@ -1,29 +1,10 @@
-import PageLoader from "@/components/feedback/page-loader";
-import { ROUTES } from "@/constants/routes";
-import { useCurrentUser } from "@/features/auth/hooks/use-auth";
 
-import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-export default function AuthLayout() {
-  const location = useLocation();
-  const { data: user, isPending } = useCurrentUser();
- 
+import {  Outlet } from "react-router-dom";
 
-  if (isPending) {
-    return <PageLoader />;
-  }
+export default function GeneralLayout() {
 
-  if (user) {
-    return (
-      <Navigate
-        to={ROUTES.DASHBOARD}
-        replace
-        state={{
-          from: location,
-        }}
-      />
-    );
-  }
+
 
   return (
     <main

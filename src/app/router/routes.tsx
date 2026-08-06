@@ -17,6 +17,7 @@ import RouteSuspense from "./suspense";
 import { ROUTES } from "@/constants/routes";
 import ProtectedRoute from "@/permissions/protected-route";
 import VerifyEmailPage from "@/features/auth/pages/verify-email-page";
+import GeneralLayout from "@/layouts/general-layout";
 
 export const appRoutes = [
   {
@@ -38,19 +39,27 @@ export const appRoutes = [
             path: ROUTES.AUTH.REGISTER,
             element: <RegisterPage />,
           },
-          {
+         
+          
+        ],
+      },
+
+      {
+        element: <GeneralLayout />,
+        children: [
+           {
             path: ROUTES.AUTH.FORGOT_PASSWORD,
             element: <ForgotPasswordPage />,
-          },
-          {
-            path: ROUTES.AUTH.RESET_PASSWORD,
-            element: <ResetPasswordPage />,
           },
           {
             path: ROUTES.AUTH.VERIFY_EMAIL,
             element: <VerifyEmailPage />,
           },
-        ],
+           {
+            path: ROUTES.AUTH.RESET_PASSWORD,
+            element: <ResetPasswordPage />,
+          },
+        ]
       },
 
       /**

@@ -47,17 +47,21 @@ import { useResetPassword, useVerifyEmail } from "../hooks/use-auth";
 
   export default function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
-  
-
-  const verificationToken = searchParams.get("token");
-
-  const verifyEmailMutation = useVerifyEmail();
+    const verificationToken = searchParams.get("token");
+    if (!verificationToken) {
+            notification.error(
+        "Verification token is missing.",
+      );
+      return;
+    }
+  const {data:passwordToken, isPending, isError} = useVerifyEmail(verificationToken);
 
   const setPasswordMutation = useResetPassword("setPassword");
 
  const [passwordCreated, setPasswordCreated] =   useState(false);
 
     
+
 
 const form = useForm<ResetPasswordFormValues>({
   resolver: zodResolver(resetPasswordSchema),
@@ -75,7 +79,6 @@ const form = useForm<ResetPasswordFormValues>({
   const [setPasswordToken, setSetPasswordToken] =
     useState("");
 
-const hasVerified = useRef(false);
 
     const onSubmit = (values: ResetPasswordFormValues) => {
   setPasswordMutation.mutate(
@@ -110,48 +113,16 @@ const hasVerified = useRef(false);
 
   useEffect(() => {
     
-  //     if (hasVerified.current) return;
 
-  // hasVerified.current = true;
 
-    if (!verificationToken) {
-            notification.error(
-        "Verification token is missing.",
-      );
-      return;
-    }
-
-    verifyEmailMutation.mutate(verificationToken, {
-      onSuccess: (data ) => {
-       
-        console.log(data,"data")
-        setSetPasswordToken(data.setPasswordToken);
-         notification.success(
-          "Email verified successfully. Please create your password to activate your account.",
-        );
-      },
-
-      onError: (error) => {
-   
-        const axiosError = error as AxiosError<{
-          message: string;
-          errors?: string[];
-        }>;
-
-        console.log(axiosError.response?.data.message,"error")
-        notification.error(
-          axiosError.response?.data.message ??
-            "Unable to verify email.",
-        );
-
-       
-      },
-    });
-  }, [verificationToken]);
+  if(passwordToken){
+    setSetPasswordToken(passwordToken.data.setPasswordToken);}
+  
+  }, [passwordToken]);
 
 
 
-if (verifyEmailMutation.isError) {
+if (isError) {
   return (
     <Card className="w-full max-w-xl">
       <CardContent className="p-8 md:p-10">
@@ -225,7 +196,7 @@ if (passwordCreated) {
 
 
 
-if (verifyEmailMutation.isPending){
+if (isPending){
 return (
   <Card className="w-full max-w-xl">
     <CardContent className="p-8 md:p-10">

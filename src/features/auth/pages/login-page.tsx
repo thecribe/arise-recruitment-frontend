@@ -33,6 +33,7 @@ import AuthHeader from "../components/AuthHeader";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { useLogin } from "../hooks/use-auth";
 import { notification } from "@/components/feedback/notification";
+import type { AxiosError } from "axios";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -45,12 +46,12 @@ export default function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false,
+      // rememberMe: false,
     },
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-    console.log("Login payload:", values);
+   
 
     loginMutation.mutate(values, {
       onSuccess: (data) => {
@@ -59,8 +60,14 @@ export default function LoginPage() {
       },
 
       onError: (error) => {
-        console.error("Login failed:", error);
-        notification.error("Invalid email or password");
+         const axiosError = error as AxiosError<{
+                  message: string;
+                  errors?: string[];
+                }>;
+                notification.error(
+                  axiosError.response?.data.message ||
+                    "Invalid email or password.",
+                );
       },
     });
     /**
@@ -104,11 +111,11 @@ export default function LoginPage() {
             />
 
             <div className="flex items-center justify-between">
-              <FormCheckbox
+              {/* <FormCheckbox
                 control={form.control}
                 name="rememberMe"
                 label="Remember me"
-              />
+              /> */}
 
               <Link
                 to={ROUTES.AUTH.FORGOT_PASSWORD}

@@ -77,14 +77,27 @@ return useMutation({
   });
 }
 
-export function useVerifyEmail() {
-  const mutation =useMutation({
-    mutationFn: (payload:string)=>authApi.verifyEmail(payload),
-  });
+// export function useVerifyEmail() {
+//   const mutation =useMutation({
+//     mutationFn: (payload:string)=>authApi.verifyEmail(payload),
+//   });
 
-   return {
-    ...mutation,
-    verifyEmail: mutation.mutate,
-    verifyEmailAsync: mutation.mutateAsync,
-  };
+//   console.log(mutation)
+//    return {
+//     ...mutation,
+//     verifyEmail: mutation.mutate,
+//     verifyEmailAsync: mutation.mutateAsync,
+//   };
+// }
+
+export const useVerifyEmail = (payload: string) => {
+  return useQuery({
+    queryKey: ["verifyEmail"],
+
+    queryFn: () => authApi.verifyEmail(payload),
+    retry: false,
+
+    enabled: !!payload,
+  });
 }
+
