@@ -116,7 +116,7 @@ export interface ApplicationContextValue {
   /**
    * Quick lookup of applicant phase records by phase id.
    */
-  phaseRecordMap: Map<string, ApplicantPhaseRecord>;
+  // phaseRecordMap: Map<string, ApplicantPhaseRecord>;
 
   /**
    * Quick lookup of applicant section records by section id.

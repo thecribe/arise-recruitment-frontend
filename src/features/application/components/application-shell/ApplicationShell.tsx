@@ -28,8 +28,7 @@ import { usePhaseSections } from "../../hooks/usePhaseSections";
 import { SECTION_STATUS } from "../../constants/section-status";
 
 import type {
-  ApplicantPhaseRecord,
-  ApplicantSectionRecord,
+   ApplicantSectionRecord,
   ApplicationSection,
 } from "../../types";
 import { PHASE_STATUS } from "../../constants/phase-status";
@@ -41,7 +40,7 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    * ---------------------------------------------------------------------------
    */
   const { data: applicationPhase = [] } = useApplicationPhases();
-
+console.log(applicationPhase);
   /**
    * ---------------------------------------------------------------------------
    * Load applicant progress. (if applicant as no profile yet, backend sends default object)
@@ -122,15 +121,15 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    * Phase lookup map.
    * ---------------------------------------------------------------------------
    */
-  const phaseRecordMap = useMemo(() => {
-    if (!applicantApplication) {
-      return new Map<string, ApplicantPhaseRecord>();
-    }
+  // const phaseRecordMap = useMemo(() => {
+  //   if (!applicantApplication) {
+  //     return new Map<string, ApplicantPhaseRecord>();
+  //   }
 
-    return new Map<string, ApplicantPhaseRecord>(
-      applicantApplication.phases.map((phase) => [phase.phaseId, phase]),
-    );
-  }, [applicantApplication]);
+  //   return new Map<string, ApplicantPhaseRecord>(
+  //     applicantApplication.phases.map((phase) => [phase.phaseId, phase]),
+  //   );
+  // }, [applicantApplication]);
 
   console.log(activeApplicantPhase);
   /**
@@ -349,7 +348,7 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
 
         activeApplicantSection,
 
-        phaseRecordMap,
+        // phaseRecordMap,
 
         sectionRecordMap,
 

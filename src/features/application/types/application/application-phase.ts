@@ -19,16 +19,11 @@
  * -----------------------------------------------------------------------------
  */
 
-import type { VisibilityCondition } from "../visibility";
 
 /**
  * Represents a single application phase.
  */
 export interface ApplicationPhase {
-  /**
-   * Optional unique key for frontend rendering.
-   */
-  key?: string;
 
   /**
    * Unique identifier.
@@ -52,9 +47,4 @@ export interface ApplicationPhase {
 
   status?: string;
 
-  /**
-   * Determines whether the phase is visible
-   * for the current applicant.
-   */
-  visibleWhen?: VisibilityCondition;
 }

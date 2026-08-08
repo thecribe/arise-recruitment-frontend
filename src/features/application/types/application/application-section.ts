@@ -32,7 +32,7 @@ export interface ApplicationSection {
   /**
    * Form key.
    */
-  key: string;
+  // key: string;
 
   /**
    * Parent phase.
@@ -55,11 +55,6 @@ export interface ApplicationSection {
   order: number;
 
   /**
-   * Section type.
-   */
-  type?: SectionType;
-
-  /**
    * Determines whether multiple entries
    * may be added.
    */
@@ -69,12 +64,7 @@ export interface ApplicationSection {
 
   maxItems?: number;
 
-  /**
-   * Dynamic visibility.
-   */
-  visibleWhen?: VisibilityCondition;
-
-  /**
+ /**
    * Fields belonging to this section.
    */
   fields: ApplicationField[];

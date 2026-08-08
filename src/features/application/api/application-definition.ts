@@ -23,7 +23,6 @@ import type {
 } from "../types";
 import { env } from "@/config/env";
 import {
-  getMockApplicationPhases,
   getMockApplicationSection,
 } from "@/mocks/db/application/services";
 
@@ -32,15 +31,12 @@ import {
  */
 const mock = env.useMocks;
 export const applicationApi = {
-  async getApplicationPhases() {
-    if (!mock) {
-      const { data } = await instance.get<ApplicationPhase[]>(
-        "/application/phases",
+  async getApplicationPhases(): Promise<ApplicationPhase[]> {
+      const response = await instance.get(
+        "/application-definitions/phases"
       );
-      return data;
-    }
-    const data = getMockApplicationPhases();
-    return data;
+    
+    return response.data.data;
   },
 
   /**

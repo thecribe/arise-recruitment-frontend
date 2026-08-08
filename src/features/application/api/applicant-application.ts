@@ -33,7 +33,6 @@ export const applicantApi = {
    */
   async getApplicantSection(sectionId: string) {
     const { data } = await instance.get(`/applicant/sections/${sectionId}`);
-
     return data;
   },
 };

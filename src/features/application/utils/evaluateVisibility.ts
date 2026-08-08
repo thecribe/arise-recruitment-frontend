@@ -1,8 +1,8 @@
+import type { VisibilityRule } from "../types";
 import type { VisibilityCondition } from "../types/visibility";
 
-
 function evaluateCondition(
-  condition: FieldCondition,
+  condition: VisibilityRule,
   values: Record<string, unknown>,
 ): boolean {
   const currentValue = values[condition.field];
@@ -65,11 +65,11 @@ export function evaluateVisibility(
 ): boolean {
   if (!visibility) return true;
 
-  const results = visibility.conditions.map((condition) =>
+  const results = visibility.rules.map((condition) =>
     evaluateCondition(condition, values),
   );
 
-  return visibility.logic === "OR"
+  return visibility.operator === "OR"
     ? results.some(Boolean)
     : results.every(Boolean);
 }

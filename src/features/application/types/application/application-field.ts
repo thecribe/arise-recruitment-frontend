@@ -17,7 +17,7 @@
  */
 
 import type { FieldType } from "../../constants/field-types";
-import type { ValidationRule } from "../validation-rule";
+// import type { ValidationRule } from "../validation-rule";
 import type { VisibilityCondition } from "../visibility";
 
 /**
@@ -30,10 +30,13 @@ export interface VisibilityRule {
     | "equals"
     | "notEquals"
     | "contains"
+    | "notContains"
     | "greaterThan"
     | "lessThan"
     | "isEmpty"
-    | "isNotEmpty";
+    | "isNotEmpty"
+    | "in"
+    | "notIn";
 
   value?: unknown;
 }
@@ -116,12 +119,11 @@ export interface ApplicationField {
 
   visibleWhen?: VisibilityCondition;
 
-  validation?: ValidationRule[];
+  // validation?: ValidationRule[];
 
   options?: FieldOption[];
 
   width?: FieldWidth;
-
   order: number;
   rows?: number;
   min?: number;
@@ -130,6 +132,6 @@ export interface ApplicationField {
   // multiple?: boolean;
   // accept?: string;
   file?: FileConfig;
-  dependsOn?: string[];
+  // dependsOn?: string[];
   metadata?: Record<string, unknown>;
 }
