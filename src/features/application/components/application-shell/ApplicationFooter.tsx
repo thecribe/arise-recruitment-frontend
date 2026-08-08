@@ -22,6 +22,8 @@ import { useFormContext } from "react-hook-form";
 import { useApplicationContext } from "../../context/ApplicationContext";
 import { useSaveDraft } from "../../hooks/useSaveDraft";
 import { useSubmitSection } from "../../hooks/useSubmitSection";
+import { notification } from "@/components/feedback/notification";
+import type { AxiosError } from "axios";
 
 export default function ApplicationFooter() {
   /**
@@ -54,13 +56,36 @@ export default function ApplicationFooter() {
    * ---------------------------------------------------------------------------
    */
   function handleSaveDraft(values: unknown) {
+  
     const payload = activeSection.repeatable
-      ? (values as Record<string, Record<string, unknown>[]>)[activeSection.key]
+      ? (values as Record<string, Record<string, unknown>[]>)[activeSection.id]
       : values;
 
     saveDraft.mutate({
       sectionId: activeSection.id,
       values: payload as Record<string, unknown> | Record<string, unknown>[],
+    }, {
+      onSuccess: async (data) => {
+              /**
+               * TODO:
+               * Replace with notification system
+               */
+       
+              notification.success(
+                data.message
+              );
+            },
+      
+            onError: (error) => {
+              const axiosError = error as AxiosError<{
+                message: string;
+                errors?: string[];
+              }>;
+              notification.error(
+                axiosError.response?.data.message ||
+                  "Unable to create account. Please try again.",
+              );
+            },
     });
   }
 
@@ -70,14 +95,36 @@ export default function ApplicationFooter() {
    * ---------------------------------------------------------------------------
    */
   function handleSectionSubmit(values: unknown) {
-    console.log(values);
+   
     const payload = activeSection.repeatable
-      ? (values as Record<string, Record<string, unknown>[]>)[activeSection.key]
+      ? (values as Record<string, Record<string, unknown>[]>)[activeSection.id]
       : values;
 
     submitSection.mutate({
       sectionId: activeSection.id,
       values: payload as Record<string, unknown> | Record<string, unknown>[],
+    }, {
+      onSuccess: async (data) => {
+              /**
+               * TODO:
+               * Replace with notification system
+               */
+       
+              notification.success(
+                data.message
+              );
+            },
+      
+            onError: (error) => {
+              const axiosError = error as AxiosError<{
+                message: string;
+                errors?: string[];
+              }>;
+              notification.error(
+                axiosError.response?.data.message ||
+                  "Unable to create account. Please try again.",
+              );
+            },
     });
   }
 

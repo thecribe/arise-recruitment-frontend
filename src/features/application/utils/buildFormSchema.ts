@@ -39,6 +39,6 @@ export function buildFormSchema(section: ApplicationSection) {
   }
 
   return z.object({
-    [section.key]: arraySchema,
+    [section.id]: arraySchema,
   });
 }

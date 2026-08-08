@@ -24,57 +24,57 @@ import {
 
 import { cn } from "@/lib/utils";
 
-// import { SECTION_STATUS } from "../../constants/section-status";
+import { SECTION_STATUS } from "../../constants/section-status";
 import { useApplicationContext } from "../../context/ApplicationContext";
 
-// const sectionStatusConfig = {
-//   [SECTION_STATUS.LOCKED]: {
-//     icon: Lock,
-//     iconClass: "text-slate-400",
-//     borderClass: "border-slate-200",
-//     backgroundClass: "bg-slate-50",
-//   },
-//   [SECTION_STATUS.IN_PROGRESS]: {
-//     icon: Loader,
-//     iconClass: "text-amber-600",
-//     borderClass: "border-amber-200",
-//     backgroundClass: "bg-amber-50",
-//   },
+const sectionStatusConfig = {
+  [SECTION_STATUS.LOCKED]: {
+    icon: Lock,
+    iconClass: "text-slate-400",
+    borderClass: "border-slate-200",
+    backgroundClass: "bg-slate-50",
+  },
+  [SECTION_STATUS.IN_PROGRESS]: {
+    icon: Loader,
+    iconClass: "text-amber-600",
+    borderClass: "border-amber-200",
+    backgroundClass: "bg-amber-50",
+  },
 
-//   [SECTION_STATUS.DRAFT]: {
-//     icon: Pencil,
-//     iconClass: "text-blue-600",
-//     borderClass: "border-blue-200",
-//     backgroundClass: "bg-blue-50",
-//   },
+  [SECTION_STATUS.DRAFT]: {
+    icon: Pencil,
+    iconClass: "text-blue-600",
+    borderClass: "border-blue-200",
+    backgroundClass: "bg-blue-50",
+  },
 
-//   [SECTION_STATUS.SUBMITTED]: {
-//     icon: Clock3,
-//     iconClass: "text-amber-600",
-//     borderClass: "border-amber-200",
-//     backgroundClass: "bg-amber-50",
-//   },
+  [SECTION_STATUS.SUBMITTED]: {
+    icon: Clock3,
+    iconClass: "text-amber-600",
+    borderClass: "border-amber-200",
+    backgroundClass: "bg-amber-50",
+  },
 
-//   [SECTION_STATUS.APPROVED]: {
-//     icon: CheckCircle2,
-//     iconClass: "text-green-600",
-//     borderClass: "border-green-200",
-//     backgroundClass: "bg-green-50",
-//   },
+  [SECTION_STATUS.APPROVED]: {
+    icon: CheckCircle2,
+    iconClass: "text-green-600",
+    borderClass: "border-green-200",
+    backgroundClass: "bg-green-50",
+  },
 
-//   [SECTION_STATUS.REJECTED]: {
-//     icon: AlertTriangle,
-//     iconClass: "text-red-600",
-//     borderClass: "border-red-200",
-//     backgroundClass: "bg-red-50",
-//   },
-// };
+  [SECTION_STATUS.REJECTED]: {
+    icon: AlertTriangle,
+    iconClass: "text-red-600",
+    borderClass: "border-red-200",
+    backgroundClass: "bg-red-50",
+  },
+};
 
 export default function SectionNavigation() {
   const {
     sections,
     activeSection,
-    // sectionRecordMap,
+    sectionRecordMap,
     progressSummary,
     selectSection,
   } = useApplicationContext();
@@ -122,29 +122,29 @@ export default function SectionNavigation() {
 
       <div className="space-y-3">
         {orderedSections.map((section) => {
-          // const record = sectionRecordMap.get(section.id);
+          const record = sectionRecordMap.get(section.id);
 
-          // const status = record?.status ?? SECTION_STATUS.LOCKED;
+          const status = record?.status ?? SECTION_STATUS.LOCKED;
 
-          // const config = sectionStatusConfig[status];
+          const config = sectionStatusConfig[status];
 
-          // const Icon = config.icon;
+          const Icon = config.icon;
 
           const isActive = section.id === activeSection.id;
 
-          // const canView = status !== SECTION_STATUS.LOCKED;
+          const canView = status !== SECTION_STATUS.LOCKED;
 
           return (
             <button
               key={section.id}
               type="button"
-              // disabled={!canView}
+              disabled={!canView}
               onClick={() => selectSection(section.id)}
               className={cn(
                 "w-full rounded-2xl border p-4 text-left transition-all",
 
-                // config.borderClass,
-                // config.backgroundClass,
+                config.borderClass,
+                config.backgroundClass,
 
                 isActive && "ring-2 ring-blue-500 shadow-lg",
 
@@ -154,7 +154,7 @@ export default function SectionNavigation() {
               )}
             >
               <div className="flex items-start gap-3">
-                {/* <div
+                <div
                   className="
                     flex
                     h-10
@@ -167,7 +167,7 @@ export default function SectionNavigation() {
                   "
                 >
                   <Icon className={cn("h-5 w-5", config.iconClass)} />
-                </div> */}
+                </div>
 
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-slate-900">

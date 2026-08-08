@@ -1,12 +1,3 @@
-/**
- * -----------------------------------------------------------------------------
- * File: RepeatableSectionRenderer.tsx
- *
- * Description:
- * Renders repeatable application sections.
- * -----------------------------------------------------------------------------
- */
-
 import { Plus, Trash2 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 
@@ -42,34 +33,43 @@ function createEmptyRow(fields: ApplicationField[]) {
 }
 
 export default function RepeatableSectionRenderer() {
-  const { activeSection } = useApplicationContext();
+  const { activeSection } =
+    useApplicationContext();
 
-  const { control } = useApplicationForm();
+  const { control } =
+    useApplicationForm();
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: activeSection.key,
-  });
+  const { fields, append, remove } =
+    useFieldArray({
+      control,
 
-  const minItems = activeSection.minItems ?? 1;
-  const maxItems = activeSection.maxItems ?? Number.MAX_SAFE_INTEGER;
+      // IMPORTANT:
+      // The form is structured using activeSection.id.
+      name: activeSection.id,
+    });
+
+  const minItems =
+    activeSection.minItems ?? 1;
+
+  const maxItems =
+    activeSection.maxItems ??
+    Number.MAX_SAFE_INTEGER;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {fields.map((item, index) => (
         <div
           key={item.id}
           className="
-            rounded-3xl
+            rounded-2xl
             border
             border-slate-200
-            bg-white/60
+            bg-white/50
             p-6
-            backdrop-blur-xl
           "
         >
           <div className="mb-6 flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-slate-700">
+            <h3 className="font-medium text-slate-800">
               {activeSection.title} #{index + 1}
             </h3>
 
@@ -91,13 +91,15 @@ export default function RepeatableSectionRenderer() {
           </div>
 
           <div className="grid grid-cols-12 gap-6">
-            {activeSection.fields.map((field) => (
-              <FieldRenderer
-                key={field.id}
-                field={field}
-                prefix={`${activeSection.key}.${index}`}
-              />
-            ))}
+            {activeSection.fields.map(
+              (field) => (
+                <FieldRenderer
+                  key={field.id}
+                  field={field}
+                  prefix={`${activeSection.id}.${index}`}
+                />
+              ),
+            )}
           </div>
         </div>
       ))}
@@ -105,7 +107,13 @@ export default function RepeatableSectionRenderer() {
       {fields.length < maxItems && (
         <button
           type="button"
-          onClick={() => append(createEmptyRow(activeSection.fields))}
+          onClick={() =>
+            append(
+              createEmptyRow(
+                activeSection.fields,
+              ),
+            )
+          }
           className="
             flex
             items-center
@@ -125,7 +133,8 @@ export default function RepeatableSectionRenderer() {
           "
         >
           <Plus size={18} />
-          Add another {activeSection.title}
+          Add another{" "}
+          {activeSection.title}
         </button>
       )}
     </div>

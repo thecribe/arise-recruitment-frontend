@@ -7,14 +7,20 @@ import FieldWrapper from "../FieldWrapper";
 import type { FieldComponentProps } from "./BaseField";
 import { useFieldState } from "../../hooks/useFieldState";
 
-export default function TextField({ field, prefix }: FieldComponentProps) {
+export default function TextField({
+  field,
+  prefix,
+}: FieldComponentProps) {
   const { control } = useApplicationForm();
 
-  const { isDisabled, isReadOnly } = useFieldState(field);
+  const { isDisabled, isReadOnly } =
+    useFieldState(field);
 
   if (!field.name) return null;
 
-  const fieldName = prefix ? `${prefix}.${field.name}` : field.name;
+  const fieldName = prefix
+    ? `${prefix}.${field.name}`
+    : field.name;
 
   return (
     <Controller
@@ -22,7 +28,7 @@ export default function TextField({ field, prefix }: FieldComponentProps) {
       control={control}
       render={({ field: controller, fieldState }) => (
         <FieldWrapper
-          id={field.id}
+         id={field.id}
           label={field.label}
           required={field.required}
           helpText={field.helpText}
@@ -34,9 +40,10 @@ export default function TextField({ field, prefix }: FieldComponentProps) {
             id={field.id}
             type="text"
             placeholder={field.placeholder}
-            disabled={isReadOnly}
+            disabled={isDisabled}
             readOnly={isReadOnly}
             {...controller}
+            value={controller.value ?? ""}
             className="
               w-full
               rounded-xl

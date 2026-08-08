@@ -32,6 +32,8 @@ export default function ApplicationFormProvider({
 }: PropsWithChildren) {
   const { activeSection } = useApplicationContext();
 
+
+
   /**
    * Build validation schema.
    */
@@ -73,9 +75,9 @@ export default function ApplicationFormProvider({
 
     if (activeSection.repeatable) {
       methods.reset({
-        [activeSection.key]: sectionValues.values?.length
+        [activeSection.id]: sectionValues.values?.length
           ? sectionValues.values
-          : defaultValues[activeSection.key],
+          : defaultValues[activeSection.id],
       });
 
       return;

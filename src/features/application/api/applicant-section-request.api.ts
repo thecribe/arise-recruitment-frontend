@@ -16,8 +16,6 @@
  */
 
 import { instance } from "@/api/client";
-import { env } from "@/config/env";
-import { getApplicantFieldData } from "@/mocks/db/application/services";
 
 /**
  * Applicant section values returned by the backend.
@@ -53,7 +51,6 @@ export interface SubmitSectionRequest {
   values: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const mock = env.useMocks;
 export const applicationSectionApi = {
   /**
    * ---------------------------------------------------------------------------
@@ -63,16 +60,13 @@ export const applicationSectionApi = {
    * Replace endpoint with backend route.
    * ---------------------------------------------------------------------------
    */
-  async getApplicantSection(sectionId: string) {
-    if (!mock) {
-      const { data } = await instance.get<ApplicantSectionValuesResponse>(
-        `/applicant/sections/${sectionId}`, // TODO: Update endpoint
+  async getApplicantSection(sectionId: string):Promise <ApplicantSectionValuesResponse> {
+  
+      const response = await instance.get(
+        `/applicant-application/sections/${sectionId}/values`, // TODO: Update endpoint
       );
-
-      return data;
-    }
-    const data = getApplicantFieldData(sectionId);
-    return data;
+      return response.data.data;
+  
   },
 
   /**
@@ -87,12 +81,12 @@ export const applicationSectionApi = {
     const { sectionId, values } = payload;
 
     const { data } = await instance.patch(
-      `/applicant/sections/${sectionId}/draft`, // TODO: Update endpoint
+      `/applicant-application/sections/${sectionId}/values`, // TODO: Update endpoint
       {
         values,
       },
     );
-
+    
     return data;
   },
 
@@ -108,7 +102,7 @@ export const applicationSectionApi = {
     const { sectionId, values } = payload;
 
     const { data } = await instance.post(
-      `/applicant/sections/${sectionId}/submit`, // TODO: Update endpoint
+      `/applicant-application/sections/${sectionId}/submit`, // TODO: Update endpoint
       {
         values,
       },
