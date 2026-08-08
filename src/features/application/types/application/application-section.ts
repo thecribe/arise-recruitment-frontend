@@ -14,9 +14,6 @@
  * -----------------------------------------------------------------------------
  */
 
-import type { VisibilityCondition } from "../visibility";
-
-import type { SectionType } from "../../constants/section-types";
 import type { ApplicationField } from "./application-field";
 // import type { SectionStatus } from "../constants/section-status";
 

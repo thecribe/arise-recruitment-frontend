@@ -40,13 +40,14 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    * ---------------------------------------------------------------------------
    */
   const { data: applicationPhase = [] } = useApplicationPhases();
-console.log(applicationPhase);
   /**
    * ---------------------------------------------------------------------------
    * Load applicant progress. (if applicant as no profile yet, backend sends default object)
    * ---------------------------------------------------------------------------
    */
   const { data: applicantApplication } = useApplicantApplication();
+
+ 
 
   /**
    * ---------------------------------------------------------------------------
@@ -61,6 +62,7 @@ console.log(applicationPhase);
     );
   }, [applicationPhase, applicantApplication]);
 
+  
   /**
    * ---------------------------------------------------------------------------
    * Available phases.
@@ -82,6 +84,7 @@ console.log(applicationPhase);
     return mergePhases;
   }, [applicationPhase, applicantApplication]);
 
+  
   /**
    * ---------------------------------------------------------------------------
    * Active phase.
@@ -101,6 +104,7 @@ console.log(applicationPhase);
     return applicationPhase.find((phase) => phase.id === activePhaseId);
   }, [applicationPhase, activePhaseId]);
 
+  
   /**
    * ---------------------------------------------------------------------------
    * Applicant phase.
@@ -116,6 +120,7 @@ console.log(applicationPhase);
     );
   }, [activePhaseId, applicantApplication]);
 
+ 
   /**
    * ---------------------------------------------------------------------------
    * Phase lookup map.
@@ -131,13 +136,15 @@ console.log(applicationPhase);
   //   );
   // }, [applicantApplication]);
 
-  console.log(activeApplicantPhase);
+ 
   /**
    * ---------------------------------------------------------------------------
    * Load sections.
    * ---------------------------------------------------------------------------
    */
   const { data: sections = [] } = usePhaseSections(activePhaseId);
+
+
 
   /**
    * ---------------------------------------------------------------------------

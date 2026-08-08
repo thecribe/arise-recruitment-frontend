@@ -23,6 +23,7 @@ import type {
 } from "../types";
 import { env } from "@/config/env";
 import {
+
   getMockApplicationSection,
 } from "@/mocks/db/application/services";
 
@@ -42,20 +43,11 @@ export const applicationApi = {
   /**
    * Retrieves all sections belonging to a phase.
    */
-  async getPhaseSections(phaseId: string) {
-  
-    if (mock) {
-    
-      const data = getMockApplicationSection(phaseId);
-
-      return data;
-    }
- 
-    const { data } = await instance.get<ApplicationSection[]>(
-      `/application/phases/${phaseId}/sections`,
+  async getPhaseSections(phaseId: string):Promise<ApplicationSection[]> {
+    const response = await instance.get(
+      `/application-definitions/phases/${phaseId}/sections`,
     );
-
-    return data;
+    return response.data.data;
   },
 
   /**

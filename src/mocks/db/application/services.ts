@@ -1,11 +1,10 @@
 import type { ApplicationSection } from "@/features/application/types";
 import { applicantApplicationSeed } from "./applicants/applicant-application.seed";
-import { applicationDefinitionSeed } from "./definitions/application-definition.seed";
 import { personalPhaseSections } from "./definitions/sections";
 import { applicantSectionData } from "./applicants/section-data";
 
 export const getMockApplicationPhases = () => {
-  return applicationDefinitionSeed.phases;
+  return  ;
 };
 
 export const getMockApplicationSection = (phaseId: string) => {
