@@ -15,6 +15,7 @@ import CheckboxField from "../fields/CheckboxField";
 import DateField from "../fields/DateField";
 import UploadField from "../fields/UploadField";
 import type { FieldComponentProps } from "../fields/BaseField";
+import TimeField from "../fields/TimeField";
 
 type FieldComponent = ComponentType<FieldComponentProps>;
 
@@ -25,6 +26,7 @@ export const FIELD_REGISTRY: Record<FieldType, FieldComponent> = {
   [FIELD_TYPES.PHONE]: PhoneField,
   [FIELD_TYPES.NUMBER]: NumberField,
   [FIELD_TYPES.DATE]: DateField,
+  [FIELD_TYPES.TIME]: TimeField,
   [FIELD_TYPES.TEXTAREA]: TextAreaField,
   [FIELD_TYPES.SELECT]: SelectField,
   [FIELD_TYPES.MULTISELECT]: SelectField,

@@ -23,23 +23,6 @@ import type { VisibilityCondition } from "../visibility";
 /**
  * Represents one visibility expression.
  */
-export interface VisibilityRule {
-  field: string;
-
-  operator:
-    | "equals"
-    | "notEquals"
-    | "contains"
-    | "notContains"
-    | "greaterThan"
-    | "lessThan"
-    | "isEmpty"
-    | "isNotEmpty"
-    | "in"
-    | "notIn";
-
-  value?: unknown;
-}
 
 export interface FieldOption {
   label: string;

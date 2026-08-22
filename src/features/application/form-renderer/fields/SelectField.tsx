@@ -51,13 +51,13 @@ export default function SelectField({ field, prefix }: FieldComponentProps) {
             }}
             disabled={isDisabled}
           >
-            <SelectTrigger id={field.id}>
+            <SelectTrigger id={field.id} className={`border-slate-300`}>
               <SelectValue placeholder={field.placeholder} />
             </SelectTrigger>
 
             <SelectContent>
-              {options.map((option) => (
-                <SelectItem key={option.value} value={String(option.value)}>
+              {options.map((option, index) => (
+                <SelectItem key={index} value={String(option.value)}>
                   {option.label}
                 </SelectItem>
               ))}

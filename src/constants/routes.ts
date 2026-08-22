@@ -32,7 +32,7 @@ export const ROUTES = {
 
   RECRUITMENT: {
     ROOT: "/recruitment",
-    APPLICANT: "/recruitment/:id",
+    APPLICANT: "/recruitment/:applicantId",
   },
 
   COMPLIANCE: {

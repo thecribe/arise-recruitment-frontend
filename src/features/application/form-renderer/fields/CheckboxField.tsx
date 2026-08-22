@@ -41,7 +41,9 @@ export default function CheckboxField({ field, prefix }: FieldComponentProps) {
       control={control}
       render={({ field: controller, fieldState }) => {
         if (field.options?.length) {
-          const selectedValues: string[] = controller.value ?? [];
+          const selectedValues = Array.isArray(controller.value)
+            ? controller.value
+            : [];
 
           return (
             <FieldWrapper
@@ -53,13 +55,17 @@ export default function CheckboxField({ field, prefix }: FieldComponentProps) {
               width={field.width}
               disabled={isDisabled}
             >
-              <div className="space-y-3">
-                {options.map((option) => (
-                  <div key={option.value} className="flex items-center gap-2">
+              <div className="space-y-3 md:flex items-baseline gap-4">
+                {options.map((option, index: number) => (
+                  <div
+                    key={index}
+                    className="flex justify-center items-center gap-2"
+                  >
                     <Checkbox
                       id={`${field.id}-${option.value}`}
                       disabled={isDisabled}
                       checked={selectedValues.includes(option.value)}
+                      className={`border-slate-300`}
                       onCheckedChange={(checked) => {
                         if (isDisabled) return;
 

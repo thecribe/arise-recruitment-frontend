@@ -28,7 +28,7 @@ const DashboardPage = () => {
     case ROLE_CODES.RECRUITMENT_MANAGER:
       return <ManagerDashboard />;
 
-    case ROLE_CODES.ADMIN:
+    case ROLE_CODES.TOP_ADMIN:
       return <AdminDashboard />;
 
     default:

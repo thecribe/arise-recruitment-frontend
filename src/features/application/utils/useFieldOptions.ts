@@ -11,10 +11,9 @@
 
 import { useWatch } from "react-hook-form";
 
-import type { FieldOption } from "../types/field-option";
-
 import { filterFieldOptions } from "../utils/filterFieldOptions";
 import { useApplicationForm } from "../hooks/useApplicationForm";
+import type { FieldOption } from "../types";
 
 /**
  * Returns filtered options based on current form values.

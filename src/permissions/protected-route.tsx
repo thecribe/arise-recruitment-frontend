@@ -26,6 +26,8 @@ export default function ProtectedRoute() {
 
   const { data: user, isPending, isError } = useCurrentUser();
 
+  
+
   /**
    * Authentication state is loading.
    */

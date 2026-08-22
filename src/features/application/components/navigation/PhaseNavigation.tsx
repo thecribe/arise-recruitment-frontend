@@ -67,6 +67,7 @@ export default function PhaseNavigation() {
         shadow-lg
         p-5
         sm:p-6
+        
       "
     >
       <div className="mb-4 flex items-center justify-between">
@@ -81,11 +82,12 @@ export default function PhaseNavigation() {
           gap-3
           overflow-x-auto
           overflow-y-hidden
-          pb-2
+          pb-5
           snap-x
           snap-mandatory
           scroll-smooth
-          no-scrollbar
+           touch-pan-x
+          
         "
       >
         {phases.map((phase) => {
@@ -127,8 +129,8 @@ export default function PhaseNavigation() {
                 }
               }}
               className={`
-                min-w-[220px]
-                sm:min-w-[240px]
+                w-72 min-w-55
+                sm:min-w-60
                 shrink-0
                 snap-start
                 rounded-2xl

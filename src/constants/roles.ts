@@ -23,9 +23,22 @@ export const ROLES = [
   },
   {
     id: 3,
-    name: "Admin",
-    code: "ADMIN",
-    description: "System Administrator",
+    name: "Compliance Manager",
+    code: "COMPLIANCE_MANAGER",
+    description: "Compliance Manager",
+  },
+
+  {
+    id: 4,
+    name: "Staff Manager",
+    code: "STAFF_MANAGER",
+    description: "Staff Manager",
+  },
+  {
+    id: 5,
+    name: "Administrator",
+    code: "TOP_ADMIN",
+    description: "Administrator",
   },
 ] as const;
 
@@ -34,7 +47,9 @@ export type Role = (typeof ROLES)[number];
 export const ROLE_CODES = {
   APPLICANT: "APPLICANT",
   RECRUITMENT_MANAGER: "RECRUITMENT_MANAGER",
-  ADMIN: "ADMIN",
+  COMPLIANCE_MANAGER:"COMPLIANCE_MANAGER",
+  STAFF_MANAGER:"STAFF_MANAGER",
+  TOP_ADMIN: "TOP_ADMIN",
 } as const;
 
 export const getRoleByCode = (code: string) =>

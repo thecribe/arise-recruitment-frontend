@@ -1,4 +1,4 @@
-import type { VisibilityRule } from "./application/application-field";
+import type { VisibilityRule } from "@/components/forms/types/visibility";
 
 /**
  * Represents a single visibility rule.

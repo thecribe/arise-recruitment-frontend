@@ -15,7 +15,7 @@
  * -----------------------------------------------------------------------------
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { PropsWithChildren } from "react";
 
@@ -26,12 +26,9 @@ import { useApplicantApplication } from "../../hooks/useApplicantApplication";
 import { usePhaseSections } from "../../hooks/usePhaseSections";
 
 import { SECTION_STATUS } from "../../constants/section-status";
-
-import type {
-   ApplicantSectionRecord,
-  ApplicationSection,
-} from "../../types";
 import { PHASE_STATUS } from "../../constants/phase-status";
+
+import type { ApplicantSectionRecord, ApplicationSection } from "../../types";
 
 export default function ApplicationShell({ children }: PropsWithChildren) {
   /**
@@ -40,14 +37,15 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    * ---------------------------------------------------------------------------
    */
   const { data: applicationPhase = [] } = useApplicationPhases();
+
   /**
    * ---------------------------------------------------------------------------
-   * Load applicant progress. (if applicant as no profile yet, backend sends default object)
+   * Load applicant progress.
+   *
+   * If applicant has no profile yet, backend sends default object.
    * ---------------------------------------------------------------------------
    */
   const { data: applicantApplication } = useApplicantApplication();
-
- 
 
   /**
    * ---------------------------------------------------------------------------
@@ -62,7 +60,6 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
     );
   }, [applicationPhase, applicantApplication]);
 
-  
   /**
    * ---------------------------------------------------------------------------
    * Available phases.
@@ -70,41 +67,44 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    */
   const availablePhases = useMemo(() => {
     if (!applicantApplication) return [];
-    const applicantPahses = applicantApplication.phases;
+
+    const applicantPhases = applicantApplication.phases;
 
     const updateMap = new Map(
-      applicantPahses.map((phase) => [phase.phaseId, phase]),
+      applicantPhases.map((phase) => [phase.phaseId, phase]),
     );
 
-    const mergePhases = applicationPhase.map((phase) => ({
+    return applicationPhase.map((phase) => ({
       ...phase,
       ...(updateMap.get(phase.id) ?? {}),
     }));
-
-    return mergePhases;
   }, [applicationPhase, applicantApplication]);
 
-  
+  /**
+   * ---------------------------------------------------------------------------
+   * Selected phase.
+   *
+   * `selectedPhaseId` only stores an explicit user selection.
+   *
+   * When there is no explicit selection, the current application phase is
+   * automatically used.
+   * ---------------------------------------------------------------------------
+   */
+  const [selectedPhaseId, setSelectedPhaseId] = useState<string | undefined>();
+
+  const activePhaseId = selectedPhaseId ?? currentPhase?.id;
+
   /**
    * ---------------------------------------------------------------------------
    * Active phase.
    * ---------------------------------------------------------------------------
    */
-  const [activePhaseId, setActivePhaseId] = useState<string>();
-
-  useEffect(() => {
-    if (!currentPhase) return;
-
-    setActivePhaseId((previous) => previous ?? currentPhase.id);
-  }, [currentPhase]);
-
   const activePhase = useMemo(() => {
     if (!activePhaseId) return undefined;
 
     return applicationPhase.find((phase) => phase.id === activePhaseId);
   }, [applicationPhase, activePhaseId]);
 
-  
   /**
    * ---------------------------------------------------------------------------
    * Applicant phase.
@@ -120,35 +120,20 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
     );
   }, [activePhaseId, applicantApplication]);
 
- 
   /**
    * ---------------------------------------------------------------------------
-   * Phase lookup map.
-   * ---------------------------------------------------------------------------
-   */
-  // const phaseRecordMap = useMemo(() => {
-  //   if (!applicantApplication) {
-  //     return new Map<string, ApplicantPhaseRecord>();
-  //   }
-
-  //   return new Map<string, ApplicantPhaseRecord>(
-  //     applicantApplication.phases.map((phase) => [phase.phaseId, phase]),
-  //   );
-  // }, [applicantApplication]);
-
- 
-  /**
-   * ---------------------------------------------------------------------------
-   * Load sections.
+   * Load sections for the active phase.
    * ---------------------------------------------------------------------------
    */
   const { data: sections = [] } = usePhaseSections(activePhaseId);
 
-
-
   /**
    * ---------------------------------------------------------------------------
    * Current editable section.
+   *
+   * This represents the applicant's actual backend progress.
+   *
+   * It may be undefined when the user is viewing a different phase.
    * ---------------------------------------------------------------------------
    */
   const currentSection = useMemo(() => {
@@ -162,21 +147,26 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
 
   /**
    * ---------------------------------------------------------------------------
+   * Selected section.
+   *
+   * When the user has not explicitly selected a section, the first section
+   * of the active phase becomes the active section automatically.
+   *
+   * This means changing activePhase automatically changes the active section
+   * to sections[0] without needing an effect.
+   * ---------------------------------------------------------------------------
+   */
+  const [selectedSectionId, setSelectedSectionId] = useState<
+    string | undefined
+  >();
+
+  const activeSectionId = selectedSectionId ?? sections[0]?.id;
+
+  /**
+   * ---------------------------------------------------------------------------
    * Active section.
    * ---------------------------------------------------------------------------
    */
-  const [activeSectionId, setActiveSectionId] = useState<string>();
-
-  useEffect(() => {
-    if (!sections.length) return;
-
-    setActiveSectionId((previous) => {
-      if (previous) return previous;
-
-      return currentSection?.id ?? sections[0].id;
-    });
-  }, [sections, currentSection]);
-
   const activeSection = useMemo(() => {
     if (!activeSectionId) return undefined;
 
@@ -310,16 +300,40 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
    * ---------------------------------------------------------------------------
    */
   const selectPhase = (phaseId: string) => {
-    setActivePhaseId(phaseId);
+    /**
+     * Selecting a new phase automatically causes:
+     *
+     * selectedPhaseId
+     *        ↓
+     * activePhaseId
+     *        ↓
+     * sections
+     *        ↓
+     * sections[0]
+     *        ↓
+     * activeSection
+     */
+    setSelectedPhaseId(phaseId);
+
+    /**
+     * Clear the manually selected section.
+     *
+     * The new phase will therefore default to its first section.
+     */
+    setSelectedSectionId(undefined);
   };
 
   const selectSection = (sectionId: string) => {
-    setActiveSectionId(sectionId);
+    setSelectedSectionId(sectionId);
   };
 
   /**
    * ---------------------------------------------------------------------------
    * Loading guard.
+   *
+   * `currentSection` is intentionally NOT required here because it represents
+   * the applicant's backend progress and may not belong to the phase currently
+   * being viewed.
    * ---------------------------------------------------------------------------
    */
   if (
@@ -327,11 +341,10 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
     !currentPhase ||
     !activePhase ||
     !activeApplicantPhase ||
-    !currentSection ||
     !activeSection ||
     !activeApplicantSection
   ) {
-    return "null";
+    return null;
   }
 
   return (
@@ -354,8 +367,6 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
         activeSection,
 
         activeApplicantSection,
-
-        // phaseRecordMap,
 
         sectionRecordMap,
 

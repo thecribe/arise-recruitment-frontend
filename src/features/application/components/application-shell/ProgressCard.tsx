@@ -1,11 +1,18 @@
-import { CheckCircle2, Layers3, ListChecks } from "lucide-react";
+import {
+  CheckCircle2,
+  Layers3,
+  // ListChecks
+} from "lucide-react";
 
 import { useApplicationContext } from "../../context/ApplicationContext";
 import { PHASE_STATUS } from "../../constants/phase-status";
 
 export default function ProgressCard() {
-  const { applicantApplication, currentPhase, currentSection } =
-    useApplicationContext();
+  const {
+    applicantApplication,
+    currentPhase,
+    // currentSection
+  } = useApplicationContext();
 
   const totalPhases = applicantApplication.phases.length;
 
@@ -25,7 +32,7 @@ export default function ProgressCard() {
         sm:p-6
       "
     >
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {/* Progress */}
         <div className="rounded-2xl bg-white/30 p-4">
           <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
@@ -62,7 +69,7 @@ export default function ProgressCard() {
         </div>
 
         {/* Current Section */}
-        <div className="flex gap-3 rounded-2xl bg-white/30 p-4">
+        {/* <div className="flex gap-3 rounded-2xl bg-white/30 p-4">
           <div className="rounded-xl bg-blue-500/10 p-2.5">
             <ListChecks className="h-5 w-5 text-blue-600" />
           </div>
@@ -73,10 +80,10 @@ export default function ProgressCard() {
             </p>
 
             <p className="font-semibold text-slate-900">
-              {currentSection.title}
+              {currentSection?.title}
             </p>
           </div>
-        </div>
+        </div> */}
 
         {/* Completed */}
         <div className="flex gap-3 rounded-2xl bg-white/30 p-4">

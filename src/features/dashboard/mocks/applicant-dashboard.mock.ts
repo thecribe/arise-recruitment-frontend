@@ -51,9 +51,5 @@ export const applicantDashboardMock: ApplicantDashboard = {
     },
   ],
 
-  nextAction: {
-    label: "Continue Application",
-    route: "/application?phase=personal-information",
-    disabled: false,
-  },
+ 
 };

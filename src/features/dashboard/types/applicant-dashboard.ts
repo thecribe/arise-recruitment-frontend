@@ -1,5 +1,11 @@
 import type { PhaseStatus } from "@/features/application/constants/phase-status";
-import type { DashboardAction, DashboardFeedback } from "./dashboard";
+
+
+export interface DashboardFeedback {
+  author: string;
+  message: string;
+  createdAt: string;
+}
 
 export interface ApplicantDashboardPhase {
   id: string;
@@ -18,5 +24,5 @@ export interface ApplicantDashboard {
 
   phases: ApplicantDashboardPhase[];
 
-  nextAction: DashboardAction;
+ 
 }

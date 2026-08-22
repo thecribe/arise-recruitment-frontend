@@ -1,19 +1,19 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 import DashboardCard from "../../components/DashboardCard";
 import ProgressBar from "../../components/ProgressBar";
 import StatusBadge from "../../components/StatusBadge";
 
 import type { ApplicantDashboard } from "../../types/applicant-dashboard";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 interface Props {
   dashboard: ApplicantDashboard;
 }
 
 const ApplicationSummaryCard = ({ dashboard }: Props) => {
-  const { currentPhase, overallProgress, nextAction } = dashboard;
-  const navigate = useNavigate();
+  const { currentPhase, overallProgress } = dashboard;
+  // const navigate = useNavigate();
 
   return (
     <DashboardCard>
@@ -37,13 +37,13 @@ const ApplicationSummaryCard = ({ dashboard }: Props) => {
         <ProgressBar value={overallProgress} />
 
         <div className="flex justify-end ">
-          <Button
+          {/* <Button
             onClick={() => navigate(nextAction.route)}
             disabled={nextAction.disabled}
             className="cursor-pointer"
           >
             {nextAction.label}
-          </Button>
+          </Button> */}
         </div>
       </div>
     </DashboardCard>

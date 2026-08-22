@@ -49,7 +49,7 @@ export default function TextAreaField({ field, prefix }: FieldComponentProps) {
             rows={field.rows ?? 5}
             disabled={isDisabled}
             readOnly={isReadOnly}
-            className="resize-y"
+            className="resize-y border-slate-300"
           />
         </FieldWrapper>
       )}

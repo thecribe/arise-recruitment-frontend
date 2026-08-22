@@ -6,6 +6,7 @@ import type { ApplicantDashboard } from "../../types/applicant-dashboard";
 interface Props {
   applicantName: string;
   dashboard: ApplicantDashboard;
+  job_type?:string
 }
 
 const getGreeting = () => {
@@ -18,7 +19,7 @@ const getGreeting = () => {
   return "Good Evening";
 };
 
-const WelcomeBanner = ({ applicantName, dashboard }: Props) => {
+const WelcomeBanner = ({ applicantName, dashboard, job_type }: Props) => {
   return (
     <DashboardCard className="overflow-hidden bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white">
       <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
@@ -27,7 +28,7 @@ const WelcomeBanner = ({ applicantName, dashboard }: Props) => {
 
           <h1 className="text-4xl font-bold">{applicantName}</h1>
 
-          <p className="text-sky-100">Registered Nurse Recruitment</p>
+          <p className="text-sky-100">{job_type}</p>
         </div>
 
         <div className="space-y-3 rounded-2xl bg-white/10 p-5 backdrop-blur">

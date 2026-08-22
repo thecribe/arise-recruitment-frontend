@@ -100,7 +100,7 @@ export interface ApplicationContextValue {
   /**
    * Backend controlled editable section.
    */
-  currentSection: ApplicationSection;
+  currentSection?: ApplicationSection;
 
   /**
    * Section currently selected in the UI.

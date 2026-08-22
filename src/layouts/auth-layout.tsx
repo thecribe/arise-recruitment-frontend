@@ -8,6 +8,7 @@ export default function AuthLayout() {
   const location = useLocation();
   const { data: user, isPending } = useCurrentUser();
  
+  
 
   if (isPending) {
     return <PageLoader />;

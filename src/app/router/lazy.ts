@@ -20,7 +20,14 @@ export const ApplicationPage = lazy(
 );
 
 export const RecruitmentPage = lazy(
-  () => import("@/features/recruitment/pages/recruitment-page"),
+  () => import("@/features/recruitment/pages/RecruitmentPage"),
+);
+
+export const RecruitmentApplicantPage = lazy(
+  () =>
+    import(
+      "@/features/recruitment/pages/RecruitmentApplicantPage"
+    ),
 );
 
 export const CompliancePage = lazy(

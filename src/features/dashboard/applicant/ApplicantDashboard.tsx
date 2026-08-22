@@ -9,12 +9,15 @@ import ApplicationJourney from "./component/ApplicationJourney";
 import PageLoader from "@/components/feedback/page-loader";
 import { ROUTES } from "@/constants/routes";
 import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "@/features/auth/hooks/use-auth";
+import { capitalize } from "@/utils/generalfunctions";
 
 const ApplicantDashboard = () => {
   const { data, isPending } = useDashboard();
+  const {data:user} = useCurrentUser()
   const navigate = useNavigate();
 
-  if (isPending || !data) {
+  if (isPending || !data ||!user) {
     return <PageLoader />;
   }
 
@@ -25,7 +28,7 @@ const ApplicantDashboard = () => {
         description="Track your recruitment progress."
       />
 
-      <WelcomeBanner applicantName="John Smith" dashboard={data} />
+      <WelcomeBanner applicantName={`${capitalize(user?.firstName) + " "+ capitalize(user?.lastName)}`} job_type={user?.jobType?.name} dashboard={data} />
 
       <ApplicationSummaryCard dashboard={data} />
 

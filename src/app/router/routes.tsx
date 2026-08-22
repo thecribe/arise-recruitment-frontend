@@ -18,6 +18,9 @@ import { ROUTES } from "@/constants/routes";
 import ProtectedRoute from "@/permissions/protected-route";
 import VerifyEmailPage from "@/features/auth/pages/verify-email-page";
 import GeneralLayout from "@/layouts/general-layout";
+import PermissionRoute from "@/permissions/permission-route";
+import { PERMISSIONS } from "@/constants/permission";
+import RecruitmentApplicantPage from "@/features/recruitment/pages/RecruitmentApplicantPage";
 
 export const appRoutes = [
   {
@@ -96,11 +99,26 @@ export const appRoutes = [
               {
                 path: ROUTES.RECRUITMENT.ROOT,
                 element: (
-                  <RouteSuspense>
+                 <PermissionRoute  permission={PERMISSIONS.RECRUITMENT_VIEW.name}> <RouteSuspense>
                     <RecruitmentPage />
-                  </RouteSuspense>
+                  </RouteSuspense></PermissionRoute>
                 ),
               },
+                  {
+          path: ROUTES.RECRUITMENT.APPLICANT,
+          element: (
+            <PermissionRoute
+              permission={
+                PERMISSIONS.RECRUITMENT_VIEW.name
+              }
+            >
+              <RouteSuspense>
+                
+                <RecruitmentApplicantPage />
+              </RouteSuspense>
+            </PermissionRoute>
+          ),
+        },
               {
                 path: ROUTES.COMPLIANCE.ROOT,
                 element: (

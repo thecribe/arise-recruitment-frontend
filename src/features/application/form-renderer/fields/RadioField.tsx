@@ -44,7 +44,7 @@ export default function RadioField({ field, prefix }: FieldComponentProps) {
               controller.onChange(value);
             }}
             disabled={isDisabled}
-            className="space-y-3"
+            className="space-y-3 md:flex items-baseline gap-4 "
           >
             {options.map((option) => (
               <div key={option.value} className="flex items-center space-x-2">
@@ -52,6 +52,7 @@ export default function RadioField({ field, prefix }: FieldComponentProps) {
                   id={`${field.id}-${option.value}`}
                   value={String(option.value)}
                   disabled={isDisabled}
+                  className={`border-slate-300`}
                 />
 
                 <label

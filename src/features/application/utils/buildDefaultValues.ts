@@ -9,8 +9,6 @@
 
 import type { ApplicationSection } from "../types";
 
-
-
 function createDefaultRow(section: ApplicationSection) {
   const values: Record<string, unknown> = {};
 
@@ -19,7 +17,7 @@ function createDefaultRow(section: ApplicationSection) {
 
     switch (field.type) {
       case "checkbox":
-        values[field.name] = false;
+        values[field.name] = field.options?.length ? [] : false;
         break;
 
       case "file":

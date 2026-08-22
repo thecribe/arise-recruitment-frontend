@@ -32,8 +32,6 @@ export default function ApplicationFormProvider({
 }: PropsWithChildren) {
   const { activeSection } = useApplicationContext();
 
-
-
   /**
    * Build validation schema.
    */

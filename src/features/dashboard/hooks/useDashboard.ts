@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { dashboardService } from "../services/dashboard.service";
+import { dashboardApi } from "../api/dashboard.api";
 
 export const useDashboard = () => {
   return useQuery({
     queryKey: ["applicant-dashboard"],
 
-    queryFn: () => dashboardService.getApplicantDashboard(),
+    queryFn: () => dashboardApi.getApplicantDashboard(),
   });
 };
 

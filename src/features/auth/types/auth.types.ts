@@ -1,9 +1,13 @@
 export type UserRole =
-  | "APPLICANT"
+  | "APPLICANT" | "COMPLIANCE_MANAGER" 
   | "RECRUITMENT_MANAGER"
-  | "ADMIN"
+  | "TOP_ADMIN"
   | "STAFF_MANAGER";
 
+  export interface jobType {
+    id:string,
+    name:string
+  }
 export interface AuthUser {
   id: string;
 
@@ -18,6 +22,7 @@ export interface AuthUser {
   phone?: string;
 
   avatar?: string;
+  jobType?:jobType;
 
   createdAt?: string;
 
