@@ -50,43 +50,46 @@ export default function ApplicationFooter() {
 
   const submitSection = useSubmitSection();
 
+  const onInvalid = (errors: unknown) => {
+    console.log("Invalid form:", errors);
+  };
   /**
    * ---------------------------------------------------------------------------
    * Saves the current section as a draft.
    * ---------------------------------------------------------------------------
    */
   function handleSaveDraft(values: unknown) {
-  
     const payload = activeSection.repeatable
       ? (values as Record<string, Record<string, unknown>[]>)[activeSection.id]
       : values;
 
-    saveDraft.mutate({
-      sectionId: activeSection.id,
-      values: payload as Record<string, unknown> | Record<string, unknown>[],
-    }, {
-      onSuccess: async (data) => {
-              /**
-               * TODO:
-               * Replace with notification system
-               */
-       
-              notification.success(
-                data.message
-              );
-            },
-      
-            onError: (error) => {
-              const axiosError = error as AxiosError<{
-                message: string;
-                errors?: string[];
-              }>;
-              notification.error(
-                axiosError.response?.data.message ||
-                  "Unable to create account. Please try again.",
-              );
-            },
-    });
+    saveDraft.mutate(
+      {
+        sectionId: activeSection.id,
+        values: payload as Record<string, unknown> | Record<string, unknown>[],
+      },
+      {
+        onSuccess: async (data) => {
+          /**
+           * TODO:
+           * Replace with notification system
+           */
+
+          notification.success(data.message);
+        },
+
+        onError: (error) => {
+          const axiosError = error as AxiosError<{
+            message: string;
+            errors?: string[];
+          }>;
+          notification.error(
+            axiosError.response?.data.message ||
+              "Unable to create account. Please try again.",
+          );
+        },
+      },
+    );
   }
 
   /**
@@ -95,37 +98,37 @@ export default function ApplicationFooter() {
    * ---------------------------------------------------------------------------
    */
   function handleSectionSubmit(values: unknown) {
-   
     const payload = activeSection.repeatable
       ? (values as Record<string, Record<string, unknown>[]>)[activeSection.id]
       : values;
 
-    submitSection.mutate({
-      sectionId: activeSection.id,
-      values: payload as Record<string, unknown> | Record<string, unknown>[],
-    }, {
-      onSuccess: async (data) => {
-              /**
-               * TODO:
-               * Replace with notification system
-               */
-       
-              notification.success(
-                data.message
-              );
-            },
-      
-            onError: (error) => {
-              const axiosError = error as AxiosError<{
-                message: string;
-                errors?: string[];
-              }>;
-              notification.error(
-                axiosError.response?.data.message ||
-                  "Unable to create account. Please try again.",
-              );
-            },
-    });
+    submitSection.mutate(
+      {
+        sectionId: activeSection.id,
+        values: payload as Record<string, unknown> | Record<string, unknown>[],
+      },
+      {
+        onSuccess: async (data) => {
+          /**
+           * TODO:
+           * Replace with notification system
+           */
+
+          notification.success(data.message);
+        },
+
+        onError: (error) => {
+          const axiosError = error as AxiosError<{
+            message: string;
+            errors?: string[];
+          }>;
+          notification.error(
+            axiosError.response?.data.message ||
+              "Unable to create account. Please try again.",
+          );
+        },
+      },
+    );
   }
 
   return (
@@ -160,7 +163,7 @@ export default function ApplicationFooter() {
           {canEdit && (
             <button
               type="button"
-              onClick={handleSubmit(handleSaveDraft)}
+              onClick={handleSubmit(handleSaveDraft, onInvalid)}
               disabled={saveDraft.isPending}
               className="
                 inline-flex

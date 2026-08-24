@@ -29,8 +29,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import { FormCheckbox, FormInput, FormSelect } from "@/components/forms";
-
 // import { JOB_TYPES } from "@/constants/job-types";
 
 import { ROUTES } from "@/constants/routes";
@@ -48,6 +46,9 @@ import { LoadingButton } from "@/components/ui/loading-button";
 import { useBootstrapData } from "@/hooks/useBootstrapData";
 import PageLoader from "@/components/feedback/page-loader";
 import type { AxiosError } from "axios";
+import { FormInput } from "@/components/forms/publicforms/FormInput";
+import { FormSelect } from "@/components/forms/publicforms/FormSelect";
+import { FormCheckbox } from "@/components/forms/publicforms/FormCheckbox";
 
 export default function RegisterPage() {
   const [registrationComplete, setRegistrationComplete] = useState(false);
@@ -55,9 +56,6 @@ export default function RegisterPage() {
 
   const registerMutation = useRegister();
   const { jobTypes, isLoading, isError } = useBootstrapData();
-
-
-
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -98,7 +96,7 @@ export default function RegisterPage() {
   }
 
   const onSubmit = (values: RegisterFormValues) => {
-        registerMutation.mutate(values, {
+    registerMutation.mutate(values, {
       onSuccess: async () => {
         /**
          * TODO:

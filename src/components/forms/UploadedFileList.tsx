@@ -120,7 +120,7 @@ export default function UploadedFileList({
               >
                 {type === "image" ? (
                   <img
-                    src={file.documentUrl}
+                    src={file.document_url}
                     alt=""
                     className="h-full w-full object-cover"
                   />

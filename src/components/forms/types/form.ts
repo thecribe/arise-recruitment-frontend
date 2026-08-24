@@ -10,7 +10,7 @@ export interface FormRendererConfig {
   /**
    * Current form mode.
    */
-  mode: FormMode;
+  mode?: FormMode;
 
   /**
    * Optional explicit permission override.

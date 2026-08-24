@@ -72,6 +72,7 @@ export default function UploadField({ field, prefix }: FieldComponentProps) {
            * - FormUploadedFile
            * - Array<File | FormUploadedFile>
            */
+
           const files: FormFile[] = !controller.value
             ? []
             : Array.isArray(controller.value)
@@ -140,14 +141,13 @@ export default function UploadField({ field, prefix }: FieldComponentProps) {
               <div className="space-y-4">
                 {/* Upload input */}
 
-                {!isReadOnly && (
-                  <Input
-                    id={field.id}
-                    type="file"
-                    disabled={isLocked}
-                    multiple={multiple}
-                    accept={field.file?.accept?.join(",")}
-                    className="
+                <Input
+                  id={field.id}
+                  type="file"
+                  disabled={isLocked}
+                  multiple={multiple}
+                  accept={field.file?.accept?.join(",")}
+                  className="
                       w-full
                       min-w-0
                       border-slate-300
@@ -161,9 +161,8 @@ export default function UploadField({ field, prefix }: FieldComponentProps) {
                       file:font-medium
                       file:text-blue-700
                     "
-                    onChange={handleFileChange}
-                  />
-                )}
+                  onChange={handleFileChange}
+                />
 
                 {/* File list */}
 
@@ -223,11 +222,12 @@ export default function UploadField({ field, prefix }: FieldComponentProps) {
                               {file.name}
                             </p>
 
-                            {file instanceof File && (
-                              <p className="text-xs text-slate-500">
-                                {(file.size / 1024 / 1024).toFixed(2)} MB
-                              </p>
-                            )}
+                            {file instanceof File ||
+                              (file.size && (
+                                <p className="text-xs text-slate-500">
+                                  {(file.size / 1024 / 1024).toFixed(2)} MB
+                                </p>
+                              ))}
                           </div>
 
                           {/* View */}

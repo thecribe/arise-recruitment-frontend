@@ -1,18 +1,19 @@
 /**
  * -----------------------------------------------------------------------------
- * File: FormRenderer.tsx
+ * File: ApplicationFormRenderer.tsx
  *
  * Description:
  * Renders all fields for the currently active application section.
  * -----------------------------------------------------------------------------
  */
 
+import FormRenderer from "@/components/forms/FormRenderer";
 import { useApplicationContext } from "../context/ApplicationContext";
 
-import FieldRenderer from "./FieldRenderer";
+// import FieldRenderer from "./FieldRenderer"
 import RepeatableSectionRenderer from "./RepeatableSectionRenderer";
 
-export default function FormRenderer() {
+export default function ApplicationFormRenderer() {
   const { activeSection } = useApplicationContext();
 
   if (!activeSection.fields.length) {
@@ -34,15 +35,26 @@ export default function FormRenderer() {
       </div>
     );
   }
-    if (activeSection.repeatable) {
-      return <RepeatableSectionRenderer />;
-    }
+  if (activeSection.repeatable) {
+    return <RepeatableSectionRenderer section={activeSection} />;
+  }
 
   return (
-    <div className="grid grid-cols-12 gap-6">
-      {activeSection.fields.map((field) => (
-        <FieldRenderer key={field.id} field={field} />
-      ))}
-    </div>
+    <FormRenderer
+      fields={activeSection.fields}
+      // prefix={prefix}
+      config={{
+        mode: "edit",
+        // mode: isEditing ? "edit" : "view",
+        // canEdit: isEditing,
+        readOnly: false,
+      }}
+    />
+    // <div className="grid grid-cols-12 gap-6">
+
+    //   {activeSection.fields.map((field) => (
+    //     <FieldRenderer key={field.id} field={field} />
+    //   ))}
+    // </div>
   );
 }

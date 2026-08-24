@@ -1,12 +1,13 @@
 import { Plus, Trash2 } from "lucide-react";
 import { useFieldArray } from "react-hook-form";
 
-import { useApplicationContext } from "../context/ApplicationContext";
+// import { useApplicationContext } from "../context/ApplicationContext";
 import { useApplicationForm } from "../hooks/useApplicationForm";
 
-import type { ApplicationField } from "../types";
+import type { ApplicationField, ApplicationSection } from "../types";
 
-import FieldRenderer from "./FieldRenderer";
+// import FieldRenderer from "./FieldRenderer";
+import FormRenderer from "@/components/forms/FormRenderer";
 
 function createEmptyRow(fields: ApplicationField[]) {
   const row: Record<string, unknown> = {};
@@ -32,28 +33,24 @@ function createEmptyRow(fields: ApplicationField[]) {
   return row;
 }
 
-export default function RepeatableSectionRenderer() {
-  const { activeSection } =
-    useApplicationContext();
+export default function RepeatableSectionRenderer({
+  section,
+}: {
+  section: ApplicationSection;
+}) {
+  const { control } = useApplicationForm();
 
-  const { control } =
-    useApplicationForm();
+  const { fields, append, remove } = useFieldArray({
+    control,
 
-  const { fields, append, remove } =
-    useFieldArray({
-      control,
+    // IMPORTANT:
+    // The form is structured using activeSection.id.
+    name: section.id,
+  });
 
-      // IMPORTANT:
-      // The form is structured using activeSection.id.
-      name: activeSection.id,
-    });
+  const minItems = section.minItems ?? 1;
 
-  const minItems =
-    activeSection.minItems ?? 1;
-
-  const maxItems =
-    activeSection.maxItems ??
-    Number.MAX_SAFE_INTEGER;
+  const maxItems = section.maxItems ?? Number.MAX_SAFE_INTEGER;
 
   return (
     <div className="space-y-6">
@@ -70,7 +67,7 @@ export default function RepeatableSectionRenderer() {
         >
           <div className="mb-6 flex items-center justify-between">
             <h3 className="font-medium text-slate-800">
-              {activeSection.title} #{index + 1}
+              {section.title} #{index + 1}
             </h3>
 
             {fields.length > minItems && (
@@ -90,30 +87,32 @@ export default function RepeatableSectionRenderer() {
             )}
           </div>
 
-          <div className="grid grid-cols-12 gap-6">
-            {activeSection.fields.map(
-              (field) => (
-                <FieldRenderer
-                  key={field.id}
-                  field={field}
-                  prefix={`${activeSection.id}.${index}`}
-                />
-              ),
-            )}
-          </div>
+          <FormRenderer
+            fields={section.fields}
+            prefix={`${section.id}.${index}`}
+            config={{
+              mode: "edit",
+              // mode: isEditing ? "edit" : "view",
+              // canEdit: isEditing,
+              readOnly: false,
+            }}
+          />
+          {/* <div className="grid grid-cols-12 gap-6">
+            {section.fields.map((field) => (
+              <FieldRenderer
+                key={field.id}
+                field={field}
+                prefix={`${section.id}.${index}`}
+              />
+            ))}
+          </div> */}
         </div>
       ))}
 
       {fields.length < maxItems && (
         <button
           type="button"
-          onClick={() =>
-            append(
-              createEmptyRow(
-                activeSection.fields,
-              ),
-            )
-          }
+          onClick={() => append(createEmptyRow(section.fields))}
           className="
             flex
             items-center
@@ -133,8 +132,7 @@ export default function RepeatableSectionRenderer() {
           "
         >
           <Plus size={18} />
-          Add another{" "}
-          {activeSection.title}
+          Add another {section.title}
         </button>
       )}
     </div>

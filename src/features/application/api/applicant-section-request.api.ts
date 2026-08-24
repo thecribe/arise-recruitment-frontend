@@ -16,6 +16,7 @@
  */
 
 import { instance } from "@/api/client";
+import payloadToFormData from "@/components/forms/utils/payloadToFormData";
 
 /**
  * Applicant section values returned by the backend.
@@ -60,13 +61,13 @@ export const applicationSectionApi = {
    * Replace endpoint with backend route.
    * ---------------------------------------------------------------------------
    */
-  async getApplicantSection(sectionId: string):Promise <ApplicantSectionValuesResponse> {
-  
-      const response = await instance.get(
-        `/applicant-application/sections/${sectionId}/values`, // TODO: Update endpoint
-      );
-      return response.data.data;
-  
+  async getApplicantSection(
+    sectionId: string,
+  ): Promise<ApplicantSectionValuesResponse> {
+    const response = await instance.get(
+      `/applicant-application/sections/${sectionId}/values`, // TODO: Update endpoint
+    );
+    return response.data.data;
   },
 
   /**
@@ -80,13 +81,14 @@ export const applicationSectionApi = {
   async saveDraft(payload: SaveSectionDraftRequest) {
     const { sectionId, values } = payload;
 
+    const formData = payloadToFormData(values);
+
+
     const { data } = await instance.patch(
       `/applicant-application/sections/${sectionId}/values`, // TODO: Update endpoint
-      {
-        values,
-      },
+      formData,
     );
-    
+
     return data;
   },
 

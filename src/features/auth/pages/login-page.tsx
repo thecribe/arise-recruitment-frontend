@@ -23,8 +23,6 @@ import { Button } from "@/components/ui/button";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import { FormCheckbox, FormInput, FormPassword } from "@/components/forms";
-
 import { ROUTES } from "@/constants/routes";
 
 import { loginSchema, type LoginFormValues } from "../schemas/login.schema";
@@ -34,12 +32,13 @@ import { LoadingButton } from "@/components/ui/loading-button";
 import { useLogin } from "../hooks/use-auth";
 import { notification } from "@/components/feedback/notification";
 import type { AxiosError } from "axios";
+import { FormInput } from "@/components/forms/publicforms/FormInput";
+import { FormPassword } from "@/components/forms/publicforms/FormPassword";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const loginMutation = useLogin();
 
-  
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
 
@@ -51,8 +50,6 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (values: LoginFormValues) => {
-   
-
     loginMutation.mutate(values, {
       onSuccess: (data) => {
         console.log("Login successful:", data);
@@ -60,14 +57,13 @@ export default function LoginPage() {
       },
 
       onError: (error) => {
-         const axiosError = error as AxiosError<{
-                  message: string;
-                  errors?: string[];
-                }>;
-                notification.error(
-                  axiosError.response?.data.message ||
-                    "Invalid email or password.",
-                );
+        const axiosError = error as AxiosError<{
+          message: string;
+          errors?: string[];
+        }>;
+        notification.error(
+          axiosError.response?.data.message || "Invalid email or password.",
+        );
       },
     });
     /**

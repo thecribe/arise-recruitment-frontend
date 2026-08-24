@@ -39,7 +39,9 @@ export function buildFormSchema({
       case "number":
         schema = z.coerce.number();
         break;
-
+      case "file":
+        schema = z.array(z.unknown());
+        break;
       default:
         schema = z.string();
     }

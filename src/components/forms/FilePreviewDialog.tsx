@@ -68,6 +68,7 @@ export default function FilePreviewDialog({
       <DialogContent
         className="
           max-h-[90vh]
+          min-w-2/3
           max-w-4xl
           overflow-hidden
           p-0

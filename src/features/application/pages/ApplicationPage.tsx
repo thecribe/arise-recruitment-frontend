@@ -17,7 +17,7 @@ import ProgressCard from "../components/application-shell/ProgressCard";
 import PhaseNavigation from "../components/navigation/PhaseNavigation";
 import SectionNavigation from "../components/navigation/SectionNavigation";
 import ReviewPanel from "../components/ReviewPanel";
-import FormRenderer from "../form-renderer/FormRenderer";
+import ApplicationFormRenderer from "../form-renderer/ApplicationFormRenderer";
 import ApplicationFormProvider from "../providers/ApplicationFormProvider";
 
 export default function ApplicationPage() {
@@ -47,7 +47,7 @@ export default function ApplicationPage() {
             <ReviewPanel />
 
             <ApplicationFormProvider>
-              <FormRenderer />
+              <ApplicationFormRenderer />
               <ApplicationFooter />
             </ApplicationFormProvider>
           </div>
