@@ -82,9 +82,66 @@ const getRecruitmentApplicantSection = async (
   return response.data.data;
 };
 
+/**
+ * -----------------------------------------------------------------------------
+ * Add a review comment to an application section.
+ * -----------------------------------------------------------------------------
+ */
+async function createSectionComment(
+  applicationId: string,
+  sectionId: string,
+  payload: {
+    comment: string;
+  },
+) {
+  const response = await instance.post(
+    `/recruitment/applications/${applicationId}/sections/${sectionId}/comments`,
+    payload,
+  );
+
+  return response.data;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * Update an existing review comment.
+ * -----------------------------------------------------------------------------
+ */
+async function updateSectionComment(
+  commentId: string,
+  applicationId: string,
+  sectionId: string,
+  payload: {
+    comment: string;
+  },
+) {
+  const response = await instance.patch(
+    `/recruitment/applications/${applicationId}/sections/${sectionId}/comments/${commentId}`,
+    payload,
+  );
+
+  return response.data;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * Delete an existing review comment.
+ * -----------------------------------------------------------------------------
+ */
+async function deleteSectionComment(commentId: string) {
+  const response = await instance.delete(
+    `/recruitment/section-comments/${commentId}`,
+  );
+
+  return response.data;
+}
+
 export const recruitmentApi = {
   getRecruitmentDefaultData,
   getRecruitmentApplicants,
   getRecruitmentApplicant,
   getRecruitmentApplicantSection,
+  createSectionComment,
+  updateSectionComment,
+  deleteSectionComment,
 };

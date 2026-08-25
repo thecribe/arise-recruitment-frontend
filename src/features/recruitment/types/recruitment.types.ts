@@ -368,6 +368,8 @@ export interface RecruitmentSectionComment {
   id: string;
 
   comment: string;
+  application_id: string;
+  section_id: string;
 
   createdBy: {
     id: string;
@@ -418,25 +420,6 @@ export interface RecruitmentApplicationSectionDetails {
 
 /**
  * -----------------------------------------------------------------------------
- * Recruitment Section Comment
- * -----------------------------------------------------------------------------
- */
-export interface RecruitmentSectionComment {
-  id: string;
-
-  comment: string;
-
-  createdBy: {
-    id: string;
-
-    name: string;
-  };
-
-  createdAt: string;
-}
-
-/**
- * -----------------------------------------------------------------------------
  * Repeatable Section Entry
  * -----------------------------------------------------------------------------
  */
@@ -444,4 +427,19 @@ export interface RecruitmentRepeatableSectionEntry {
   id: string;
 
   values: Record<string, unknown>;
+}
+
+export interface CreateRecruitmentSectionCommentPayload {
+  applicationId: string;
+  sectionId: string;
+  comment: string;
+}
+
+export interface UpdateRecruitmentSectionCommentPayload {
+  commentId: string;
+  comment: string;
+}
+
+export interface DeleteRecruitmentSectionCommentPayload {
+  commentId: string;
 }

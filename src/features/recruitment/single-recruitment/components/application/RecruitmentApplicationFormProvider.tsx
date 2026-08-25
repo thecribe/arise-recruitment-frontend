@@ -3,9 +3,11 @@
  * File: RecruitmentApplicationFormProvider.tsx
  *
  * Description:
+ *
  * Creates React Hook Form state for a selected Recruitment application section.
  *
  * Responsibilities:
+ *
  * - Build validation schema from section fields.
  * - Build default values.
  * - Populate the form with applicant submitted values.
@@ -25,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { RecruitmentApplicationSectionDetails } from "@/features/recruitment/types/recruitment.types";
 
 import { buildFormSchema } from "@/components/forms/utils/buildFormSchema";
+
 import { buildDefaultValues } from "@/components/forms/utils/buildDefaultValues";
 
 interface RecruitmentApplicationFormProviderProps extends PropsWithChildren {
@@ -36,36 +39,86 @@ export default function RecruitmentApplicationFormProvider({
   children,
 }: RecruitmentApplicationFormProviderProps) {
   /**
-   * Ensure fields always have a safe value.
+   * ---------------------------------------------------------------------------
+   * Normalize fields.
    *
-   * This protects against the brief loading/render state that may occur
-   * during client-side navigation.
+   * Avoid using `section.fields ?? []` directly inside dependency arrays because
+   * an empty array literal would create a new reference on every render.
+   * ---------------------------------------------------------------------------
    */
-  const fields = section.fields ?? [];
+
+  const fields = useMemo(() => section.fields ?? [], [section.fields]);
 
   /**
+   * ---------------------------------------------------------------------------
    * Build validation schema.
+   * ---------------------------------------------------------------------------
    */
+
   const schema = useMemo(
     () =>
       buildFormSchema({
-        fields: section.fields ?? [],
+        fields,
         repeatable: section.repeatable,
         sectionId: section.repeatable ? section.id : undefined,
       }),
-    [section.fields, section.repeatable, section.id],
+    [fields, section.repeatable, section.id],
   );
 
   /**
-   * Build fallback default values from the section definition.
+   * ---------------------------------------------------------------------------
+   * Build fallback default values.
+   * ---------------------------------------------------------------------------
    */
+
   const defaultValues = useMemo(() => {
     return buildDefaultValues(fields);
   }, [fields]);
 
   /**
-   * Create RHF instance.
+   * ---------------------------------------------------------------------------
+   * Build the values used to initialize/reset the form.
+   *
+   * Keeping this in one memoized value prevents the effect from rebuilding
+   * a new object unnecessarily.
+   * ---------------------------------------------------------------------------
    */
+
+  const formValues = useMemo(() => {
+    /**
+     * Repeatable section.
+     */
+
+    if (section.repeatable) {
+      const values = Array.isArray(section.values) ? section.values : [];
+
+      return {
+        [section.id]:
+          values.length > 0 ? values : (defaultValues[section.id] ?? []),
+      };
+    }
+
+    /**
+     * Non-repeatable section.
+     */
+
+    if (
+      !Array.isArray(section.values) &&
+      section.values &&
+      Object.keys(section.values).length > 0
+    ) {
+      return section.values;
+    }
+
+    return defaultValues;
+  }, [section.id, section.repeatable, section.values, defaultValues]);
+
+  /**
+   * ---------------------------------------------------------------------------
+   * Create RHF instance.
+   * ---------------------------------------------------------------------------
+   */
+
   const methods = useForm<Record<string, unknown>>({
     resolver: zodResolver(schema),
 
@@ -73,40 +126,30 @@ export default function RecruitmentApplicationFormProvider({
 
     reValidateMode: "onChange",
 
-    defaultValues,
+    defaultValues: formValues,
   });
 
   const { reset } = methods;
 
   /**
-   * Populate the form whenever the selected section changes.
+   * ---------------------------------------------------------------------------
+   * Reset only when the selected section changes.
+   *
+   * `section.id` is the important identity here.
+   *
+   * The parent already uses:
+   *
+   * key={section.id}
+   *
+   * so changing sections will remount this provider anyway. We therefore do not
+   * need to continuously reset based on object references such as
+   * `section.values` or `defaultValues`.
+   * ---------------------------------------------------------------------------
    */
+
   useEffect(() => {
-    /**
-     * Repeatable section.
-     */
-    if (section.repeatable) {
-      const values = Array.isArray(section.values) ? section.values : [];
-
-      reset({
-        [section.id]: values.length > 0 ? values : defaultValues[section.id],
-      });
-
-      return;
-    }
-
-    /**
-     * Non-repeatable section.
-     */
-    const values =
-      !Array.isArray(section.values) &&
-      section.values &&
-      Object.keys(section.values).length > 0
-        ? section.values
-        : defaultValues;
-
-    reset(values);
-  }, [section.id, section.repeatable, section.values, defaultValues, reset]);
+    reset(formValues);
+  }, [section.id, reset]);
 
   return <FormProvider {...methods}>{children}</FormProvider>;
 }

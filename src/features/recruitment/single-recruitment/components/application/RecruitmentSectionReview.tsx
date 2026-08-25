@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { CheckCircle2, Edit3, XCircle } from "lucide-react";
+import { Edit3 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import GlassCard from "@/components/ui/GlassCard";
@@ -12,19 +12,32 @@ import RecruitmentRepeatableSection from "./RecruitmentRepeatableSection";
 
 import RecruitmentSectionFields from "./RecruitmentSectionFields";
 import RecruitmentSectionEditActions from "./RecruitmentSectionEditActions";
+import RecruitmentSectionComments from "./RecruitmentSectionComments";
+import { useCreateRecruitmentSectionComment } from "@/features/recruitment/hooks/useCreateRecruitmentSectionComment";
+import { useUpdateRecruitmentSectionComment } from "@/features/recruitment/hooks/useUpdateRecruitmentSectionComment";
+import { useDeleteRecruitmentSectionComment } from "@/features/recruitment/hooks/useDeleteRecruitmentSectionComment";
+import RecruitmentSectionReviewActions from "./RecruitmentSectionReviewActions";
 
 interface RecruitmentSectionReviewProps {
   section: RecruitmentApplicationSectionDetails;
+  applicationId: string;
 }
 
 export default function RecruitmentSectionReview({
   section,
+  applicationId,
 }: RecruitmentSectionReviewProps) {
+  const createCommentMutation = useCreateRecruitmentSectionComment();
+
+  const updateCommentMutation = useUpdateRecruitmentSectionComment();
+
+  const deleteCommentMutation = useDeleteRecruitmentSectionComment();
+
   const [isEditing, setIsEditing] = useState(false);
 
-  const isApproved = section.status === "approved";
-
-  const isRejected = section.status === "rejected";
+  const canManagerEdit = ["in_progress", "submitted", "rejected"].includes(
+    section.status,
+  );
 
   /**
    * Normalize repeatable values.
@@ -61,7 +74,7 @@ export default function RecruitmentSectionReview({
             )}
           </div>
 
-          {!isApproved && !isEditing && (
+          {canManagerEdit && !isEditing && (
             <Button
               type="button"
               variant="outline"
@@ -99,111 +112,99 @@ export default function RecruitmentSectionReview({
         {/* Review comments */}
         {/* --------------------------------------------------------------- */}
 
-        {section.review?.comments.length > 0 ? (
-          <div className="space-y-3">
-            {section.review.comments.map((comment) => (
-              <div
-                key={comment.id}
-                className="
-                  rounded-xl
-                  border
-                  border-slate-200
-                  bg-slate-50/60
-                  p-4
-                "
-              >
-                <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm font-semibold text-slate-800">
-                    {comment.createdBy.name}
-                  </p>
-
-                  <p className="text-xs text-slate-400">
-                    {new Date(comment.createdAt).toLocaleString()}
-                  </p>
-                </div>
-
-                <p className="mt-2 text-sm leading-6 text-slate-600">
-                  {comment.comment}
-                </p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div
-            className="
-              rounded-xl
-              border
-              border-dashed
-              border-slate-200
-              p-5
-              text-center
-            "
-          >
-            <p className="text-sm text-slate-500">No review comments yet.</p>
-          </div>
-        )}
+        <RecruitmentSectionComments
+          comments={section.review?.comments ?? []}
+          isAdding={createCommentMutation.isPending}
+          updatingCommentId={
+            updateCommentMutation.isPending
+              ? (updateCommentMutation.variables?.commentId ?? null)
+              : null
+          }
+          deletingCommentId={
+            deleteCommentMutation.isPending
+              ? (deleteCommentMutation.variables?.commentId ?? null)
+              : null
+          }
+          onAddComment={async (comment) => {
+            await createCommentMutation.mutateAsync({
+              applicationId,
+              sectionId: section.id,
+              comment,
+            });
+          }}
+          onUpdateComment={async (commentId, comment) => {
+            await updateCommentMutation.mutateAsync({
+              commentId,
+              applicationId,
+              sectionId: section.id,
+              comment,
+            });
+          }}
+          onDeleteComment={async (commentId) => {
+            await deleteCommentMutation.mutateAsync({
+              commentId,
+            });
+          }}
+        />
 
         {/* --------------------------------------------------------------- */}
         {/* Actions */}
         {/* --------------------------------------------------------------- */}
 
-        {!isApproved && (
-          <div
-            className="
-              flex
-              flex-col
-              gap-3
-              border-t
-              border-slate-200
-              pt-5
-              sm:flex-row
-              sm:items-center
-              sm:justify-between
-            "
-          >
-            {/* Review actions */}
+        <div
+          className="
+    flex
+    flex-col
+    gap-3
+    border-t
+    border-slate-200
+    pt-5
+    sm:flex-row
+    sm:items-center
+    sm:justify-between
+  "
+        >
+          {/* --------------------------------------------------------------- */}
+          {/* Status actions */}
+          {/* --------------------------------------------------------------- */}
 
-            {!isEditing && (
-              <div className="flex flex-col gap-3 sm:flex-row">
-                {!isRejected && (
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="sm"
-                    leftIcon={<XCircle className="h-4 w-4" />}
-                  >
-                    Reject Section
-                  </Button>
-                )}
+          {!isEditing && (
+            <RecruitmentSectionReviewActions
+              sectionStatus={section.status}
+              onApprove={async () => {
+                console.log("Approve section:", section.id);
+              }}
+              onReject={async (comment) => {
+                console.log("Reject section:", {
+                  sectionId: section.id,
+                  comment,
+                });
+              }}
+              onMarkInProgress={async () => {
+                console.log("Mark section in progress:", section.id);
+              }}
+            />
+          )}
 
-                <Button
-                  type="button"
-                  size="sm"
-                  leftIcon={<CheckCircle2 className="h-4 w-4" />}
-                >
-                  Approve Section
-                </Button>
-              </div>
-            )}
+          {/* --------------------------------------------------------------- */}
+          {/* Edit actions */}
+          {/* --------------------------------------------------------------- */}
 
-            {/* Edit actions */}
+          {isEditing && (
+            <div className="sm:ml-auto">
+              <RecruitmentSectionEditActions
+                sectionId={section.id}
+                repeatable={section.repeatable}
+                onCancel={() => setIsEditing(false)}
+                onSave={(values) => {
+                  console.log("Section values to save:", values, section.id);
 
-            {isEditing && (
-              <div className="sm:ml-auto">
-                <RecruitmentSectionEditActions
-                  sectionId={section.id}
-                  repeatable={section.repeatable}
-                  onCancel={() => setIsEditing(false)}
-                  onSave={(values) => {
-                    console.log("Section values to save:", values, section.id);
-
-                    setIsEditing(false);
-                  }}
-                />
-              </div>
-            )}
-          </div>
-        )}
+                  setIsEditing(false);
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </RecruitmentApplicationFormProvider>
   );

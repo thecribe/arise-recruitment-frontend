@@ -62,7 +62,6 @@ export interface ApplicantSectionRecord {
 
 export type PhaseStatus =
   | "locked"
-  | "draft"
   | "in_progress"
   | "submitted"
   | "rejected"
@@ -70,7 +69,6 @@ export type PhaseStatus =
 
 export type SectionStatus =
   | "locked"
-  | "draft"
   | "in_progress"
   | "submitted"
   | "rejected"

@@ -9,7 +9,6 @@ export const SECTION_STATUS = {
   IN_PROGRESS: "in_progress",
   SUBMITTED: "submitted",
   APPROVED: "approved",
-  DRAFT: "draft",
   REJECTED: "rejected",
 } as const;
 

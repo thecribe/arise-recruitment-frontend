@@ -297,7 +297,10 @@ export default function RecruitmentApplication({
                     Loading section...
                   </div>
                 ) : selectedSection ? (
-                  <RecruitmentSectionReview section={selectedSection} />
+                  <RecruitmentSectionReview
+                    applicationId={applicationId}
+                    section={selectedSection}
+                  />
                 ) : (
                   <div className="p-6 text-sm text-slate-500">
                     Select a section to review.

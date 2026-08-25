@@ -19,7 +19,6 @@ import {
   Clock3,
   Loader,
   Lock,
-  Pencil,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -39,13 +38,6 @@ const sectionStatusConfig = {
     iconClass: "text-amber-600",
     borderClass: "border-amber-200",
     backgroundClass: "bg-amber-50",
-  },
-
-  [SECTION_STATUS.DRAFT]: {
-    icon: Pencil,
-    iconClass: "text-blue-600",
-    borderClass: "border-blue-200",
-    backgroundClass: "bg-blue-50",
   },
 
   [SECTION_STATUS.SUBMITTED]: {

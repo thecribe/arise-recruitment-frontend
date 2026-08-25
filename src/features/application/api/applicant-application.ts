@@ -10,15 +10,14 @@
 import { instance } from "@/api/client";
 import type { ApplicantApplication } from "../types";
 
-
 /**
  * Retrieves the current applicant's application.
  */
 
 export const applicantApi = {
   async getApplicantApplication(): Promise<ApplicantApplication> {
-    const response = await instance.get("/applicant-application")
-        return response.data.data;
+    const response = await instance.get("/applicant-application");
+    return response.data.data;
   },
 
   /**
@@ -27,5 +26,13 @@ export const applicantApi = {
   async getApplicantSection(sectionId: string) {
     const { data } = await instance.get(`/applicant/sections/${sectionId}`);
     return data;
+  },
+
+  async getSectionReviewComments(sectionId: string) {
+    const response = await instance.get(
+      `/applicant-application/sections/${sectionId}/review-comments`,
+    );
+    console.log(response.data);
+    return response.data.data;
   },
 };
