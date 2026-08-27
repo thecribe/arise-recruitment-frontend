@@ -244,9 +244,7 @@ export type RecruitmentApplicationSectionStatus =
 export type RecruitmentApplicationPhaseStatus =
   | "locked"
   | "in_progress"
-  | "submitted"
-  | "approved"
-  | "rejected";
+  | "approved";
 
 /**
  * -----------------------------------------------------------------------------

@@ -1,9 +1,3 @@
-/**
- * -----------------------------------------------------------------------------
- * Recruitment React Query keys.
- * -----------------------------------------------------------------------------
- */
-
 export const recruitmentKeys = {
   all: ["recruitment"] as const,
 
@@ -15,11 +9,9 @@ export const recruitmentKeys = {
   applicant: (applicationId: string) =>
     [...recruitmentKeys.applicants(), applicationId] as const,
 
+  applicantSections: (applicationId: string) =>
+    [...recruitmentKeys.all, "applicant-section", applicationId] as const,
+
   applicantSection: (applicationId: string, sectionId: string) =>
-    [
-      ...recruitmentKeys.all,
-      "applicant-section",
-      applicationId,
-      sectionId,
-    ] as const,
+    [...recruitmentKeys.applicantSections(applicationId), sectionId] as const,
 };

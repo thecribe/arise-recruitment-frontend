@@ -32,7 +32,6 @@ export const applicantApi = {
     const response = await instance.get(
       `/applicant-application/sections/${sectionId}/review-comments`,
     );
-    console.log(response.data);
     return response.data.data;
   },
 };

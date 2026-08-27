@@ -142,7 +142,7 @@ export default function ReviewPanel() {
   if (!current) {
     return null;
   }
-  console.log(comments);
+
   const StatusIcon = current.icon;
 
   /**

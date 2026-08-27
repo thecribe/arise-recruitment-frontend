@@ -5,6 +5,7 @@ import type {
   RecruitmentApplicantFilters,
   RecruitmentApplicationSectionDetails,
   RecruitmentDefaultData,
+  RecruitmentApplicationPhaseStatus,
 } from "../types/recruitment.types";
 
 /**
@@ -136,6 +137,49 @@ async function deleteSectionComment(commentId: string) {
   return response.data;
 }
 
+/**
+ * -----------------------------------------------------------------------------
+ * Update an application phase status.
+ * -----------------------------------------------------------------------------
+ */
+
+async function updateApplicationPhaseStatus(
+  applicationId: string,
+  phaseId: string,
+  payload: {
+    status: RecruitmentApplicationPhaseStatus;
+  },
+) {
+  const response = await instance.patch(
+    `/recruitment/applications/${applicationId}/phases/${phaseId}/status`,
+    payload,
+  );
+
+  return response.data.data;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * Update Recruitment application section status.
+ * -----------------------------------------------------------------------------
+ */
+
+async function updateApplicationSectionStatus(
+  applicationId: string,
+  sectionId: string,
+  payload: {
+    status: "in_progress" | "approved" | "rejected";
+    comment?: string;
+  },
+) {
+  const response = await instance.patch(
+    `/recruitment/applications/${applicationId}/sections/${sectionId}/status`,
+    payload,
+  );
+
+  return response.data.data;
+}
+
 export const recruitmentApi = {
   getRecruitmentDefaultData,
   getRecruitmentApplicants,
@@ -144,4 +188,6 @@ export const recruitmentApi = {
   createSectionComment,
   updateSectionComment,
   deleteSectionComment,
+  updateApplicationPhaseStatus,
+  updateApplicationSectionStatus,
 };

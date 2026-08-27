@@ -217,9 +217,8 @@ export default function ApplicationShell({ children }: PropsWithChildren) {
   const canView = !!activeSection;
 
   const canEdit =
-    activeApplicantPhase?.status === PHASE_STATUS.IN_PROGRESS ||
-    activeApplicantPhase?.status === PHASE_STATUS.REJECTED ||
-    activeApplicantPhase?.status === PHASE_STATUS.DRAFT;
+    activeApplicantSection?.status === PHASE_STATUS.IN_PROGRESS ||
+    activeApplicantSection?.status === PHASE_STATUS.REJECTED;
 
   const canSubmit = canEdit;
 

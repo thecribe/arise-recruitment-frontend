@@ -31,6 +31,7 @@ import RecruitmentSectionReview from "./RecruitmentSectionReview";
 import type { RecruitmentApplicationPhase } from "@/features/recruitment/types/recruitment.types";
 import { useRecruitmentApplicantSection } from "@/features/recruitment/hooks/use-recruitment-applicant-section";
 import RecruitmentApplicationPhaseNavigation from "./RecruitmentApplicationPhaseNavigation";
+import RecruitmentPhaseActions from "./RecruitmentPhaseActions";
 
 interface RecruitmentApplicationProps {
   /**
@@ -109,6 +110,23 @@ export default function RecruitmentApplication({
    * We do not automatically select a locked section.
    * ---------------------------------------------------------------------------
    */
+  // useEffect(() => {
+  //   if (!selectedPhase) {
+  //     // eslint-disable-next-line react-hooks/set-state-in-effect
+  //     setSelectedSectionId(null);
+  //     return;
+  //   }
+
+  //   const firstAvailableSection = selectedPhase.sections.find(
+  //     (section) => section.status !== "locked",
+  //   );
+
+  //   /**
+  //    * If no section is available, there is nothing to request.
+  //    */
+  //   setSelectedSectionId(firstAvailableSection?.id ?? null);
+  // }, [selectedPhase]);
+
   useEffect(() => {
     if (!selectedPhase) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -116,15 +134,23 @@ export default function RecruitmentApplication({
       return;
     }
 
+    const currentSectionStillExists =
+      selectedSectionId &&
+      selectedPhase.sections.some(
+        (section) =>
+          section.id === selectedSectionId && section.status !== "locked",
+      );
+
+    if (currentSectionStillExists) {
+      return;
+    }
+
     const firstAvailableSection = selectedPhase.sections.find(
       (section) => section.status !== "locked",
     );
 
-    /**
-     * If no section is available, there is nothing to request.
-     */
     setSelectedSectionId(firstAvailableSection?.id ?? null);
-  }, [selectedPhase]);
+  }, [selectedPhase, selectedSectionId]);
 
   /**
    * ---------------------------------------------------------------------------
@@ -176,99 +202,104 @@ export default function RecruitmentApplication({
       {/* ------------------------------------------------------------------- */}
 
       {selectedPhase ? (
-        <div
-          className="
+        <div className="space-y-6">
+          <RecruitmentPhaseActions
+            applicationId={applicationId}
+            phase={selectedPhase}
+          />
+          <div
+            className="
             grid
             grid-cols-1
             gap-6
             lg:grid-cols-[240px_minmax(0,1fr)]
           "
-        >
-          {/* --------------------------------------------------------------- */}
-          {/* Section navigation */}
-          {/* --------------------------------------------------------------- */}
+          >
+            {/* --------------------------------------------------------------- */}
+            {/* Section navigation */}
+            {/* --------------------------------------------------------------- */}
 
-          <GlassCard className="h-fit p-3">
-            <RecruitmentApplicationSectionNavigation
-              sections={selectedPhase.sections}
-              selectedSectionId={selectedSectionId}
-              onSectionChange={setSelectedSectionId}
-            />
-          </GlassCard>
+            <GlassCard className="h-fit p-3">
+              <RecruitmentApplicationSectionNavigation
+                sections={selectedPhase.sections}
+                selectedSectionId={selectedSectionId}
+                onSectionChange={setSelectedSectionId}
+              />
+            </GlassCard>
 
-          {/* --------------------------------------------------------------- */}
-          {/* Selected section */}
-          {/* --------------------------------------------------------------- */}
-
-          <div className="min-w-0">
-            {/* ------------------------------------------------------------- */}
-            {/* Loading */}
-            {/* ------------------------------------------------------------- */}
-
-            {isSectionLoading && (
-              <GlassCard className="p-8">
-                <div className="animate-pulse space-y-5">
-                  <div className="h-6 w-48 rounded bg-slate-200" />
-
-                  <div className="h-4 w-72 rounded bg-slate-200" />
-
-                  <div className="space-y-3 pt-4">
-                    <div className="h-12 rounded bg-slate-200" />
-                    <div className="h-12 rounded bg-slate-200" />
-                    <div className="h-12 rounded bg-slate-200" />
-                  </div>
-                </div>
-              </GlassCard>
-            )}
-
-            {/* ------------------------------------------------------------- */}
-            {/* Error */}
-            {/* ------------------------------------------------------------- */}
-
-            {isSectionError && (
-              <GlassCard className="border-red-200 p-8">
-                <div className="text-center">
-                  <p className="font-medium text-red-700">
-                    Unable to load this section.
-                  </p>
-
-                  {sectionError instanceof Error && (
-                    <p className="mt-2 text-sm text-red-500">
-                      {sectionError.message}
-                    </p>
-                  )}
-                </div>
-              </GlassCard>
-            )}
-
-            {/* ------------------------------------------------------------- */}
-            {/* No selected section */}
-            {/* ------------------------------------------------------------- */}
-
-            {!selectedSectionId && !isSectionLoading && (
-              <GlassCard className="p-8 text-center">
-                <p className="text-sm text-slate-500">
-                  Select an application section to review.
-                </p>
-              </GlassCard>
-            )}
-
-            {/* ------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------- */}
             {/* Selected section */}
-            {/* ------------------------------------------------------------- */}
+            {/* --------------------------------------------------------------- */}
 
-            {selectedSection && (
-              <div className="relative">
-                {/* --------------------------------------------------------- */}
-                {/* Background fetching indicator.
-                 *
-                 * This appears when switching between already rendered
-                 * sections while React Query fetches the new section.
-                 * --------------------------------------------------------- */}
+            <div className="min-w-0">
+              {/* ------------------------------------------------------------- */}
+              {/* Loading */}
+              {/* ------------------------------------------------------------- */}
 
-                {isSectionFetching && (
-                  <div
-                    className="
+              {isSectionLoading && (
+                <GlassCard className="p-8">
+                  <div className="animate-pulse space-y-5">
+                    <div className="h-6 w-48 rounded bg-slate-200" />
+
+                    <div className="h-4 w-72 rounded bg-slate-200" />
+
+                    <div className="space-y-3 pt-4">
+                      <div className="h-12 rounded bg-slate-200" />
+                      <div className="h-12 rounded bg-slate-200" />
+                      <div className="h-12 rounded bg-slate-200" />
+                    </div>
+                  </div>
+                </GlassCard>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* Error */}
+              {/* ------------------------------------------------------------- */}
+
+              {isSectionError && (
+                <GlassCard className="border-red-200 p-8">
+                  <div className="text-center">
+                    <p className="font-medium text-red-700">
+                      Unable to load this section.
+                    </p>
+
+                    {sectionError instanceof Error && (
+                      <p className="mt-2 text-sm text-red-500">
+                        {sectionError.message}
+                      </p>
+                    )}
+                  </div>
+                </GlassCard>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* No selected section */}
+              {/* ------------------------------------------------------------- */}
+
+              {!selectedSectionId && !isSectionLoading && (
+                <GlassCard className="p-8 text-center">
+                  <p className="text-sm text-slate-500">
+                    Select an application section to review.
+                  </p>
+                </GlassCard>
+              )}
+
+              {/* ------------------------------------------------------------- */}
+              {/* Selected section */}
+              {/* ------------------------------------------------------------- */}
+
+              {selectedSection && (
+                <div className="relative">
+                  {/* --------------------------------------------------------- */}
+                  {/* Background fetching indicator.
+                   *
+                   * This appears when switching between already rendered
+                   * sections while React Query fetches the new section.
+                   * --------------------------------------------------------- */}
+
+                  {isSectionFetching && (
+                    <div
+                      className="
                       absolute
                       right-4
                       top-4
@@ -285,29 +316,30 @@ export default function RecruitmentApplication({
                       shadow-sm
                       backdrop-blur
                     "
-                  >
-                    Loading...
-                  </div>
-                )}
+                    >
+                      Loading...
+                    </div>
+                  )}
 
-                {/* <RecruitmentSectionReview section={selectedSection} /> */}
+                  {/* <RecruitmentSectionReview section={selectedSection} /> */}
 
-                {isSectionLoading ? (
-                  <div className="p-6 text-sm text-slate-500">
-                    Loading section...
-                  </div>
-                ) : selectedSection ? (
-                  <RecruitmentSectionReview
-                    applicationId={applicationId}
-                    section={selectedSection}
-                  />
-                ) : (
-                  <div className="p-6 text-sm text-slate-500">
-                    Select a section to review.
-                  </div>
-                )}
-              </div>
-            )}
+                  {isSectionLoading ? (
+                    <div className="p-6 text-sm text-slate-500">
+                      Loading section...
+                    </div>
+                  ) : selectedSection ? (
+                    <RecruitmentSectionReview
+                      applicationId={applicationId}
+                      section={selectedSection}
+                    />
+                  ) : (
+                    <div className="p-6 text-sm text-slate-500">
+                      Select a section to review.
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       ) : (

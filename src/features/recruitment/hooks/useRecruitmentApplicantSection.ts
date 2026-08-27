@@ -3,23 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { recruitmentApi } from "../api/recruitment.api";
 import { recruitmentKeys } from "../api/recruitment.keys";
 
-// export function useRecruitmentApplicantSection(
-//   applicationId?: string,
-//   sectionId?: string | null,
-// ) {
-//   return useQuery({
-//     queryKey:
-//       applicationId && sectionId
-//         ? recruitmentKeys.applicantSection(applicationId, sectionId)
-//         : recruitmentKeys.all,
-
-//     queryFn: () =>
-//       recruitmentApi.getRecruitmentApplicantSection(applicationId!, sectionId!),
-
-//     enabled: Boolean(applicationId) && Boolean(sectionId),
-//   });
-// }
-
 export function useRecruitmentApplicantSection(
   applicationId?: string,
   sectionId?: string | null,
@@ -38,7 +21,7 @@ export function useRecruitmentApplicantSection(
     queryFn: () =>
       recruitmentApi.getRecruitmentApplicantSection(applicationId!, sectionId!),
 
-    enabled,
+    enabled: Boolean(applicationId && sectionId),
 
     /**
      * Keep previously loaded section data visible while the next section

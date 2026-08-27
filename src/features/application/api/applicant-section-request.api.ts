@@ -83,7 +83,6 @@ export const applicationSectionApi = {
 
     const formData = payloadToFormData(values);
 
-
     const { data } = await instance.patch(
       `/applicant-application/sections/${sectionId}/values`, // TODO: Update endpoint
       formData,
@@ -102,12 +101,10 @@ export const applicationSectionApi = {
    */
   async submitSection(payload: SubmitSectionRequest) {
     const { sectionId, values } = payload;
-
+    const formData = payloadToFormData(values);
     const { data } = await instance.post(
       `/applicant-application/sections/${sectionId}/submit`, // TODO: Update endpoint
-      {
-        values,
-      },
+      formData,
     );
 
     return data;

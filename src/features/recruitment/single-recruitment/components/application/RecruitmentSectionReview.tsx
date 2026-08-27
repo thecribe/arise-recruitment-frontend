@@ -17,6 +17,7 @@ import { useCreateRecruitmentSectionComment } from "@/features/recruitment/hooks
 import { useUpdateRecruitmentSectionComment } from "@/features/recruitment/hooks/useUpdateRecruitmentSectionComment";
 import { useDeleteRecruitmentSectionComment } from "@/features/recruitment/hooks/useDeleteRecruitmentSectionComment";
 import RecruitmentSectionReviewActions from "./RecruitmentSectionReviewActions";
+import { useUpdateRecruitmentApplicationSectionStatus } from "@/features/recruitment/hooks/useUpdateRecruitmentApplicationSectionStatus";
 
 interface RecruitmentSectionReviewProps {
   section: RecruitmentApplicationSectionDetails;
@@ -32,8 +33,13 @@ export default function RecruitmentSectionReview({
   const updateCommentMutation = useUpdateRecruitmentSectionComment();
 
   const deleteCommentMutation = useDeleteRecruitmentSectionComment();
+  const updateSectionStatusMutation =
+    useUpdateRecruitmentApplicationSectionStatus();
 
   const [isEditing, setIsEditing] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState<
+    "approved" | "rejected" | "in_progress" | null
+  >(null);
 
   const canManagerEdit = ["in_progress", "submitted", "rejected"].includes(
     section.status,
@@ -50,6 +56,27 @@ export default function RecruitmentSectionReview({
         }))
       : [];
 
+  const handleSectionStatusUpdate = async (
+    status: "approved" | "rejected" | "in_progress",
+    comment?: string,
+  ) => {
+    if (!applicationId || !section) {
+      return;
+    }
+
+    setUpdatingStatus(status);
+
+    try {
+      await updateSectionStatusMutation.mutateAsync({
+        applicationId,
+        sectionId: section.id,
+        status,
+        comment,
+      });
+    } finally {
+      setUpdatingStatus(null);
+    }
+  };
   return (
     <RecruitmentApplicationFormProvider key={section.id} section={section}>
       <div className="space-y-6">
@@ -171,18 +198,23 @@ export default function RecruitmentSectionReview({
           {!isEditing && (
             <RecruitmentSectionReviewActions
               sectionStatus={section.status}
-              onApprove={async () => {
-                console.log("Approve section:", section.id);
-              }}
-              onReject={async (comment) => {
-                console.log("Reject section:", {
-                  sectionId: section.id,
-                  comment,
-                });
-              }}
-              onMarkInProgress={async () => {
-                console.log("Mark section in progress:", section.id);
-              }}
+              onApprove={() => handleSectionStatusUpdate("approved")}
+              onReject={(comment) =>
+                handleSectionStatusUpdate("rejected", comment)
+              }
+              onMarkInProgress={() => handleSectionStatusUpdate("in_progress")}
+              isApproving={
+                updatingStatus === "approved" &&
+                updateSectionStatusMutation.isPending
+              }
+              isRejecting={
+                updatingStatus === "rejected" &&
+                updateSectionStatusMutation.isPending
+              }
+              isMarkingInProgress={
+                updatingStatus === "in_progress" &&
+                updateSectionStatusMutation.isPending
+              }
             />
           )}
 
