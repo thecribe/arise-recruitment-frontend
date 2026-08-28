@@ -38,11 +38,15 @@ export function useUpdateRecruitmentApplicationPhaseStatus() {
        * - section summaries inside phases come from the applicant query
        */
       await queryClient.invalidateQueries({
-        queryKey: recruitmentKeys.applicant(variables.applicationId),
+        queryKey: variables.applicationId
+          ? recruitmentKeys.applicant(variables.applicationId)
+          : recruitmentKeys.all,
       });
 
       await queryClient.refetchQueries({
-        queryKey: recruitmentKeys.applicant(variables.applicationId),
+        queryKey: variables.applicationId
+          ? recruitmentKeys.applicant(variables.applicationId)
+          : recruitmentKeys.all,
       });
 
       /**

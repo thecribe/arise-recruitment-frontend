@@ -59,8 +59,6 @@ export default function RecruitmentPage() {
     refetch,
   } = useRecruitmentApplicants(filters);
 
-  console.log(applicantsData);
-
   return (
     <div className="space-y-6">
       {/* Shared page heading */}

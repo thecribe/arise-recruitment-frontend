@@ -7,6 +7,7 @@ import type {
   RecruitmentDefaultData,
   RecruitmentApplicationPhaseStatus,
 } from "../types/recruitment.types";
+import payloadToFormData from "@/components/forms/utils/payloadToFormData";
 
 /**
  * -----------------------------------------------------------------------------
@@ -179,6 +180,19 @@ async function updateApplicationSectionStatus(
 
   return response.data.data;
 }
+async function updateApplicationData(
+  applicationId: string,
+  sectionId: string,
+  values: unknown,
+) {
+  const formData = payloadToFormData(values);
+  const response = await instance.put(
+    `/recruitment/applications/${applicationId}/sections/${sectionId}/submit`,
+    formData,
+  );
+
+  return response.data.data;
+}
 
 export const recruitmentApi = {
   getRecruitmentDefaultData,
@@ -190,4 +204,5 @@ export const recruitmentApi = {
   deleteSectionComment,
   updateApplicationPhaseStatus,
   updateApplicationSectionStatus,
+  updateApplicationData,
 };

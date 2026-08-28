@@ -110,22 +110,6 @@ export default function RecruitmentApplication({
    * We do not automatically select a locked section.
    * ---------------------------------------------------------------------------
    */
-  // useEffect(() => {
-  //   if (!selectedPhase) {
-  //     // eslint-disable-next-line react-hooks/set-state-in-effect
-  //     setSelectedSectionId(null);
-  //     return;
-  //   }
-
-  //   const firstAvailableSection = selectedPhase.sections.find(
-  //     (section) => section.status !== "locked",
-  //   );
-
-  //   /**
-  //    * If no section is available, there is nothing to request.
-  //    */
-  //   setSelectedSectionId(firstAvailableSection?.id ?? null);
-  // }, [selectedPhase]);
 
   useEffect(() => {
     if (!selectedPhase) {

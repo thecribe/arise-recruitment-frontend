@@ -119,6 +119,7 @@ export default function RecruitmentPhaseActions({
 
   const currentAction = pendingAction ? actionConfig[pendingAction] : null;
 
+  console.log(phase.status);
   return (
     <>
       <GlassCard className="p-4 sm:p-5">

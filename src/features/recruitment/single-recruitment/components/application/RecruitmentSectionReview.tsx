@@ -18,6 +18,7 @@ import { useUpdateRecruitmentSectionComment } from "@/features/recruitment/hooks
 import { useDeleteRecruitmentSectionComment } from "@/features/recruitment/hooks/useDeleteRecruitmentSectionComment";
 import RecruitmentSectionReviewActions from "./RecruitmentSectionReviewActions";
 import { useUpdateRecruitmentApplicationSectionStatus } from "@/features/recruitment/hooks/useUpdateRecruitmentApplicationSectionStatus";
+import { useUpdateApplicationData } from "@/features/recruitment/hooks/useUpdateApplicationData";
 
 interface RecruitmentSectionReviewProps {
   section: RecruitmentApplicationSectionDetails;
@@ -36,6 +37,8 @@ export default function RecruitmentSectionReview({
   const updateSectionStatusMutation =
     useUpdateRecruitmentApplicationSectionStatus();
 
+  const updateData = useUpdateApplicationData();
+
   const [isEditing, setIsEditing] = useState(false);
   const [updatingStatus, setUpdatingStatus] = useState<
     "approved" | "rejected" | "in_progress" | null
@@ -48,13 +51,13 @@ export default function RecruitmentSectionReview({
   /**
    * Normalize repeatable values.
    */
-  const entries =
-    section.repeatable && Array.isArray(section.values)
-      ? section.values.map((values, index) => ({
-          id: `${section.id}-${index}`,
-          values,
-        }))
-      : [];
+  // const entries =
+  //   section.repeatable && Array.isArray(section.values)
+  //     ? section.values.map((values, index) => ({
+  //         id: `${section.id}-${index}`,
+  //         values,
+  //       }))
+  //     : [];
 
   const handleSectionStatusUpdate = async (
     status: "approved" | "rejected" | "in_progress",
@@ -121,11 +124,12 @@ export default function RecruitmentSectionReview({
         <GlassCard className="p-4 sm:p-6">
           {section.repeatable ? (
             <RecruitmentRepeatableSection
-              sectionTitle={section.title}
-              fields={section.fields ?? []}
               sectionId={section.id}
-              entries={entries}
+              sectionTitle={section.title}
+              fields={section.fields}
               isEditing={isEditing}
+              minItems={section.minItems}
+              maxItems={section.maxItems}
             />
           ) : (
             <RecruitmentSectionFields
@@ -229,9 +233,15 @@ export default function RecruitmentSectionReview({
                 repeatable={section.repeatable}
                 onCancel={() => setIsEditing(false)}
                 onSave={(values) => {
-                  console.log("Section values to save:", values, section.id);
-
-                  setIsEditing(false);
+                  updateData.mutate(
+                    { applicationId, sectionId: section.id, values },
+                    {
+                      onSuccess: async (data) => {
+                        console.log(data);
+                        setIsEditing(false);
+                      },
+                    },
+                  );
                 }}
               />
             </div>
