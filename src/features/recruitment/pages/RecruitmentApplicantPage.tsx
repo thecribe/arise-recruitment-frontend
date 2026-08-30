@@ -26,8 +26,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button } from "@/components/ui/button";
-
 import RecruitmentApplicantHeader from "../single-recruitment/components/RecruitmentApplicantHeader";
 
 import RecruitmentApplicantTabs, {
@@ -37,6 +35,8 @@ import RecruitmentApplicantTabs, {
 import RecruitmentApplication from "../single-recruitment/components/application/RecruitmentApplication";
 
 import { useRecruitmentApplicant } from "../hooks/useRecruitmentApplicant";
+import RecruitmentApplicantMoreActions from "../single-recruitment/components/application/RecruitmentApplicantMoreActions";
+import type { RecruitmentApplicationStage } from "../types/recruitment.types";
 
 export default function RecruitmentApplicantPage() {
   const { applicantId } = useParams<{
@@ -124,13 +124,30 @@ export default function RecruitmentApplicantPage() {
     );
   }
 
-  const { applicant, jobType, status, application } = data;
+  const { applicant, jobType, application, application_status } = data;
 
   /**
    * ---------------------------------------------------------------------------
    * Applicant workspace.
    * ---------------------------------------------------------------------------
    */
+
+  const getStage = (stage: RecruitmentApplicationStage): string => {
+    switch (stage) {
+      case "APPLICATION_FORM":
+        return "Application Form";
+        break;
+      case "INTERVIEW":
+        return "Interview";
+        break;
+      case "COMPLIANCE":
+        return "Compliance";
+        break;
+      default:
+        return "Application Form";
+        break;
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -146,21 +163,23 @@ export default function RecruitmentApplicantPage() {
           phone: applicant.phone ?? undefined,
         }}
         jobType={jobType}
-        status={status}
+        status={application_status.status}
         currentStage={
           application.currentPhase
             ? {
-                id: application.currentPhase.id,
-                title: application.currentPhase.title,
+                id: application_status.stage,
+                title: getStage(application_status.stage),
               }
             : null
         }
         progress={application.progress}
         actions={
           <>
-            <Button variant="outline" size="sm">
-              More Actions
-            </Button>
+            <RecruitmentApplicantMoreActions
+              applicantId={applicant.id}
+              status={application_status.status}
+              stage={application_status.stage}
+            />
           </>
         }
       />

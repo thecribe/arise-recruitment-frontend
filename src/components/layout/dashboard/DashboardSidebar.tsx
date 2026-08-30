@@ -34,13 +34,38 @@ export function DashboardSidebar() {
         </div>
 
         <nav className="flex flex-1 flex-col gap-2">
-          {navigation.map((item) => (
-            <DashboardSidebarItem
-              key={item.href}
-              item={item}
-              collapsed={collapsed}
-            />
-          ))}
+          <div className="space-y-2">
+            <p className="uppercase text-gray-400 border-b-2 w-full py-2">
+              Application
+            </p>
+            {navigation.map((item) => {
+              return (
+                item.type === "general" && (
+                  <DashboardSidebarItem
+                    key={item.href}
+                    item={item}
+                    collapsed={collapsed}
+                  />
+                )
+              );
+            })}
+          </div>
+          <div className="space-y-5">
+            <p className="uppercase text-gray-400 border-b-2 w-full py-2">
+              Management
+            </p>
+            {navigation.map((item) => {
+              return (
+                item.type === "management" && (
+                  <DashboardSidebarItem
+                    key={item.href}
+                    item={item}
+                    collapsed={collapsed}
+                  />
+                )
+              );
+            })}
+          </div>
         </nav>
       </div>
     </aside>

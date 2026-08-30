@@ -26,6 +26,7 @@ export const navigation: NavigationItem[] = [
     title: "Dashboard",
     href: "/dashboard",
     icon: LayoutDashboard,
+    type: "general",
   },
 
   {
@@ -34,6 +35,15 @@ export const navigation: NavigationItem[] = [
     href: "/application",
     icon: FileText,
     permissions: ["APPLICATION_VIEW"],
+    type: "general",
+  },
+  {
+    id: "application-compliance",
+    title: "Compliance",
+    href: "/application-compliance",
+    icon: ShieldCheck,
+    permissions: ["APPLICATION_VIEW"],
+    type: "general",
   },
 
   {
@@ -42,6 +52,7 @@ export const navigation: NavigationItem[] = [
     href: "/recruitment",
     icon: Users,
     permissions: ["recruitment:view"],
+    type: "management",
   },
 
   {
@@ -50,12 +61,14 @@ export const navigation: NavigationItem[] = [
     href: "/compliance",
     icon: ShieldCheck,
     permissions: ["compliance:view"],
+    type: "management",
   },
 
   {
     id: "settings",
     title: "Settings",
-    href: "settings",
+    href: "/settings",
     icon: Settings,
+    type: "management",
   },
 ];

@@ -47,6 +47,10 @@ export type RecruitmentApplicantStatus =
   | "REJECTED"
   | "APPROVED";
 
+export type RecruitmentApplicationStage =
+  | "APPLICATION_FORM"
+  | "INTERVIEW"
+  | "COMPLIANCE";
 /**
  * -----------------------------------------------------------------------------
  * Recruitment Default Data
@@ -147,6 +151,11 @@ export interface RecruitmentApplicantDetail {
   } | null;
 
   application: RecruitmentApplicantApplication;
+  application_status: {
+    id: string;
+    status: RecruitmentApplicantStatus;
+    stage: RecruitmentApplicationStage;
+  };
 }
 
 /**

@@ -6,6 +6,8 @@ import type {
   RecruitmentApplicationSectionDetails,
   RecruitmentDefaultData,
   RecruitmentApplicationPhaseStatus,
+  RecruitmentApplicantStatus,
+  RecruitmentApplicationStage,
 } from "../types/recruitment.types";
 import payloadToFormData from "@/components/forms/utils/payloadToFormData";
 
@@ -194,6 +196,59 @@ async function updateApplicationData(
   return response.data.data;
 }
 
+/**
+ * -----------------------------------------------------------------------------
+ * Update applicant application status and/or stage.
+ * -----------------------------------------------------------------------------
+ */
+
+// interface UpdateRecruitmentApplicationStatusPayload {
+//   status?: RecruitmentApplicantStatus;
+//   stage?: RecruitmentApplicationStage;
+//   reason?: string;
+// }
+
+/**
+ * -----------------------------------------------------------------------------
+ * Update Recruitment applicant application status.
+ * -----------------------------------------------------------------------------
+ */
+
+const updateRecruitmentApplicationStatus = async (
+  applicationId: string,
+  payload: {
+    status: RecruitmentApplicantStatus;
+    reason?: string;
+  },
+) => {
+  const response = await instance.patch(
+    `/recruitment/applications/${applicationId}/status`,
+    payload,
+  );
+
+  return response.data.data;
+};
+
+/**
+ * -----------------------------------------------------------------------------
+ * Update Recruitment applicant application stage.
+ * -----------------------------------------------------------------------------
+ */
+
+const updateRecruitmentApplicationStage = async (
+  applicationId: string,
+  payload: {
+    stage: RecruitmentApplicationStage;
+    reason?: string;
+  },
+) => {
+  const response = await instance.patch(
+    `/recruitment/applications/${applicationId}/status`,
+    payload,
+  );
+
+  return response.data.data;
+};
 export const recruitmentApi = {
   getRecruitmentDefaultData,
   getRecruitmentApplicants,
@@ -205,4 +260,7 @@ export const recruitmentApi = {
   updateApplicationPhaseStatus,
   updateApplicationSectionStatus,
   updateApplicationData,
+
+  updateRecruitmentApplicationStatus,
+  updateRecruitmentApplicationStage,
 };

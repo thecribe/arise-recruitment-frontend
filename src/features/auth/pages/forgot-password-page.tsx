@@ -21,8 +21,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import { FormInput } from "@/components/forms";
-
 import { ROUTES } from "@/constants/routes";
 
 import AuthHeader from "../components/AuthHeader";
@@ -36,6 +34,7 @@ import { useForgotPassword } from "../hooks/use-auth";
 import { LoadingButton } from "@/components/ui/loading-button";
 import { notification } from "@/components/feedback/notification";
 import type { AxiosError } from "axios";
+import { FormInput } from "@/components/forms/publicforms/FormInput";
 
 export default function ForgotPasswordPage() {
   const [emailSent, setEmailSent] = useState(false);
@@ -49,7 +48,7 @@ export default function ForgotPasswordPage() {
   });
 
   const onSubmit = async (values: ForgotPasswordFormValues) => {
-        forgotPasswordMutation.mutate(values.email, {
+    forgotPasswordMutation.mutate(values.email, {
       /**
        * TODO:
        * - Call forgot password API
@@ -60,24 +59,23 @@ export default function ForgotPasswordPage() {
         /**
          * TODO:
          * Replace with notification system
-         */    
-          setEmailSent(true);
-          notification.success(
-            "If an account exists with this email, a password reset link has been sent."
-          );
-        
+         */
+        setEmailSent(true);
+        notification.success(
+          "If an account exists with this email, a password reset link has been sent.",
+        );
       },
 
       onError: (error) => {
         console.error(error);
         const axiosError = error as AxiosError<{
-                  message: string;
-                  errors?: string[];
-                }>;
-                notification.error(
-                  axiosError.response?.data.message ||
-                    "Unable to create account. Please try again.",
-                );
+          message: string;
+          errors?: string[];
+        }>;
+        notification.error(
+          axiosError.response?.data.message ||
+            "Unable to create account. Please try again.",
+        );
       },
     });
   };
@@ -92,18 +90,19 @@ export default function ForgotPasswordPage() {
               description="
                       If an account exists with this email, a password reset link has been sent."
             />
-          
-          <Link
-                to={ROUTES.ROOT}
-                className="
+
+            <Link
+              to={ROUTES.ROOT}
+              className="
                 ml-1
                 font-semibold
                 text-blue-600
                 hover:text-blue-700
               "
-              >
-                Continue to Home
-              </Link></div>
+            >
+              Continue to Home
+            </Link>
+          </div>
         </CardContent>
       </Card>
     );
