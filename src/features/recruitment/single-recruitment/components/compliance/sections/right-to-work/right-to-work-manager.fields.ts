@@ -20,4 +20,22 @@ export const rightToWorkManagerFields: FormField[] = [
       multiple: true,
     },
   },
+  {
+    id: "check-date",
+    name: "checkDate",
+    type: FIELD_TYPES.DATE,
+    label: "Date of Right to Work Check",
+    required: true,
+    width: FIELD_WIDTH.HALF,
+    order: 2,
+  },
+  {
+    id: "rtw-expiry-date",
+    name: "rightToWorkExpiryDate",
+    type: FIELD_TYPES.DATE,
+    label: "Right to Work Expiry Date",
+    required: true,
+    width: FIELD_WIDTH.HALF,
+    order: 3,
+  },
 ];

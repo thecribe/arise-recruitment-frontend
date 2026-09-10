@@ -16,12 +16,14 @@ export function useUpdateComplianceSectionData({
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (values: unknown) =>
-      complianceApi.updateComplianceSectionData(
+    mutationFn: (values: unknown) => {
+      console.log("Updating compliance section data with values:", values);
+      return complianceApi.updateComplianceSectionData(
         applicationId,
         sectionId,
         values,
-      ),
+      );
+    },
 
     onSuccess: () => {
       queryClient.invalidateQueries({

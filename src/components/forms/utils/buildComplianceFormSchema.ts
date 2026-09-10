@@ -33,6 +33,9 @@ import type { FieldType, FormField } from "../types/field";
 export const existingFileSchema = z.object({
   document_url: z.string().min(1),
   name: z.string().min(1),
+  id: z.string().min(1),
+  mimetype: z.string().min(1),
+  size: z.number().min(1),
 });
 
 export type ExistingFile = z.infer<typeof existingFileSchema>;

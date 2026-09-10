@@ -10,7 +10,6 @@ const getComplianceSection = async (
   const response = await instance.get(
     `/recruitment/compliance/${applicationId}/section/${sectionId}`,
   );
-  console.log(response.data.data);
   return response.data.data;
 };
 

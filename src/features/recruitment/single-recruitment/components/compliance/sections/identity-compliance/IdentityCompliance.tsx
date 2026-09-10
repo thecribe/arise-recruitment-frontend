@@ -25,7 +25,6 @@ import { identityComplianceApplicantFields } from "./identity-compliance-applica
 export default function IdentityCompliance() {
   const { sectionValues, updateSection, isUpdatingSection } =
     useComplianceSection();
-
   return (
     <ComplianceSectionReview
       title="Identity Compliance"

@@ -1,12 +1,15 @@
 function isExistingFile(value: unknown): value is {
   document_url: string;
   name: string;
+  [key: string]: unknown;
 } {
   return (
     typeof value === "object" &&
     value !== null &&
     "document_url" in value &&
-    "name" in value
+    typeof value.document_url === "string" &&
+    "name" in value &&
+    typeof value.name === "string"
   );
 }
 
@@ -55,11 +58,9 @@ function payloadToFormData(data: unknown): FormData {
     if (typeof value === "object" && value !== null) {
       const result: Record<string, unknown> = {};
 
-      Object.entries(value as Record<string, unknown>).forEach(
-        ([key, item]) => {
-          result[key] = processValue(item, path ? `${path}_${key}` : key);
-        },
-      );
+      Object.entries(value).forEach(([key, item]) => {
+        result[key] = processValue(item, path ? `${path}_${key}` : key);
+      });
 
       return result;
     }
