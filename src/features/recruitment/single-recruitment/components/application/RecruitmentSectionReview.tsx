@@ -174,6 +174,8 @@ export default function RecruitmentSectionReview({
           onDeleteComment={async (commentId) => {
             await deleteCommentMutation.mutateAsync({
               commentId,
+              applicationId,
+              sectionId: section.id,
             });
           }}
         />

@@ -37,6 +37,7 @@ import RecruitmentApplication from "../single-recruitment/components/application
 import { useRecruitmentApplicant } from "../hooks/useRecruitmentApplicant";
 import RecruitmentApplicantMoreActions from "../single-recruitment/components/application/RecruitmentApplicantMoreActions";
 import type { RecruitmentApplicationStage } from "../types/recruitment.types";
+import ComplianceRecruitmentPage from "../single-recruitment/components/compliance/ComplianceRecruitmentPage";
 
 export default function RecruitmentApplicantPage() {
   const { applicantId } = useParams<{
@@ -238,21 +239,10 @@ export default function RecruitmentApplicantPage() {
         {/* --------------------------------------------------------------- */}
 
         {activeTab === "compliance" && (
-          <div
-            className="
-              rounded-2xl
-              border
-              border-dashed
-              border-slate-200
-              bg-white/40
-              p-8
-              text-center
-              text-slate-500
-              backdrop-blur-xl
-            "
-          >
-            Compliance content
-          </div>
+          <ComplianceRecruitmentPage
+            applicantId={applicant.id}
+            applicationId={application.id}
+          />
         )}
 
         {/* --------------------------------------------------------------- */}

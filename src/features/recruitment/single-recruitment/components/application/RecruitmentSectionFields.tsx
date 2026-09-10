@@ -9,11 +9,10 @@
  */
 
 import FormRenderer from "@/components/forms/FormRenderer";
-
-import type { ApplicationField } from "@/features/application/types";
+import type { FormField } from "@/components/forms/types/field";
 
 interface RecruitmentSectionFieldsProps {
-  fields?: ApplicationField[];
+  fields?: FormField[];
 
   prefix?: string;
   isEditing: boolean;

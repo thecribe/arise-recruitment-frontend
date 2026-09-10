@@ -37,6 +37,7 @@ export const FIELD_TYPES = {
   CHECKBOX: "checkbox",
   SIGNATURE: "signature",
   UPLOAD: "file",
+  
 } as const;
 
 export type FieldType = (typeof FIELD_TYPES)[keyof typeof FIELD_TYPES];

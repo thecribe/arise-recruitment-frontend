@@ -132,9 +132,13 @@ async function updateSectionComment(
  * Delete an existing review comment.
  * -----------------------------------------------------------------------------
  */
-async function deleteSectionComment(commentId: string) {
+async function deleteSectionComment(
+  commentId: string,
+  applicationId: string,
+  sectionId: string,
+) {
   const response = await instance.delete(
-    `/recruitment/section-comments/${commentId}`,
+    `/recruitment/applications/${applicationId}/sections/${sectionId}/comments/${commentId}`,
   );
 
   return response.data;
