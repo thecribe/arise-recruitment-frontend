@@ -16,6 +16,7 @@ import ComplianceSectionReview from "../../ComplianceSectionReview";
 import { useComplianceSection } from "../../hooks/useComplianceSection";
 
 import DbsComplianceForm from "./DbsComplianceForm";
+import DbsComplianceStatus from "./DbsComplianceStatus";
 
 import { dbsApplicantFields } from "./dbs-applicant.fields";
 
@@ -49,7 +50,7 @@ export default function DbsCompliance() {
           isSaving={isUpdatingSection}
           onSave={updateSection}
         />
-
+        <DbsComplianceStatus values={managerSectionValues} />
         <DbsComplianceForm
           formId="dbs-manager"
           title="DBS Compliance Check"

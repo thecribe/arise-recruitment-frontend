@@ -6,7 +6,7 @@ const getComplianceManagerSection = async (
   sectionId: string,
 ) => {
   const response = await instance.get(
-    `/recruitment/applications/${applicationId}/compliance/manager/${sectionId}`,
+    `/recruitment/compliance/manager/${applicationId}/section/${sectionId}`,
   );
 
   return response.data.data;
@@ -20,7 +20,7 @@ const updateComplianceManagerSectionData = async (
   const formData = payloadToFormData(values);
 
   const response = await instance.put(
-    `/recruitment/applications/${applicationId}/compliance/manager/${sectionId}`,
+    `/recruitment/compliance/manager/${applicationId}/section/${sectionId}`,
     formData,
   );
 

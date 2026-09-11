@@ -18,7 +18,6 @@ const updateComplianceSectionData = async (
   sectionId: string,
   values: unknown,
 ) => {
-  console.log(values);
   const formData = payloadToFormData(values);
 
   const response = await instance.put(

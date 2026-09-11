@@ -17,7 +17,6 @@ export function useUpdateComplianceSectionData({
 
   const mutation = useMutation({
     mutationFn: (values: unknown) => {
-      console.log("Updating compliance section data with values:", values);
       return complianceApi.updateComplianceSectionData(
         applicationId,
         sectionId,

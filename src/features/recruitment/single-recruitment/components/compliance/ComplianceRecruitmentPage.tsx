@@ -57,7 +57,13 @@ export default function ComplianceRecruitmentPage({
               <ProfessionalMemberships />
             )}
           </ComplianceSectionProvider>
-          {activeSection === "references" && <ReferencesCompliance />}
+          {activeSection === "references" && (
+            <ReferencesCompliance
+              applicationId={applicationId}
+              applicantId={applicantId}
+              sectionId={activeSection}
+            />
+          )}
 
           {activeSection === "certificates" && (
             <TrainingCertificatesCompliance />

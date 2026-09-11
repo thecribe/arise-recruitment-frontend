@@ -2,6 +2,7 @@ import ComplianceSectionReview from "../../ComplianceSectionReview";
 import { useComplianceSection } from "../../hooks/useComplianceSection";
 
 import RightToWorkComplianceForm from "./RightToWorkComplianceForm";
+import RightToWorkReviewStatus from "./RightToWorkReviewStatus";
 import { rightToWorkApplicantFields } from "./right-to-work-applicant.fields";
 import { rightToWorkManagerFields } from "./right-to-work-manager.fields";
 
@@ -30,7 +31,7 @@ export default function RightToWorkCompliance() {
           isSaving={isUpdatingSection}
           onSave={updateSection}
         />
-
+        <RightToWorkReviewStatus values={managerSectionValues} />
         <RightToWorkComplianceForm
           formId="right-to-work-manager"
           title="Right to Work Compliance Check"
