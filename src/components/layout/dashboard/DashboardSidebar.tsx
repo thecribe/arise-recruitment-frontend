@@ -35,7 +35,9 @@ export function DashboardSidebar() {
 
         <nav className="flex flex-1 flex-col gap-2">
           <div className="space-y-2">
-            <p className="uppercase text-gray-400 border-b-2 w-full py-2">
+            <p
+              className={`${collapsed ? "truncate" : "normal"} uppercase text-gray-400 border-b-2 w-full py-2`}
+            >
               Application
             </p>
             {navigation.map((item) => {
@@ -51,7 +53,9 @@ export function DashboardSidebar() {
             })}
           </div>
           <div className="space-y-5">
-            <p className="uppercase text-gray-400 border-b-2 w-full py-2">
+            <p
+              className={`${collapsed ? "truncate" : "normal"} uppercase text-gray-400 border-b-2 w-full py-2`}
+            >
               Management
             </p>
             {navigation.map((item) => {

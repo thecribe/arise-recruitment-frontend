@@ -5,12 +5,13 @@ import ComplianceSidebar from "./ComplianceSidebar";
 import RightToWorkCompliance from "./sections/right-to-work/RightToWorkCompliance";
 import DbsCompliance from "./sections/dbs/DbsCompliance";
 import ProfessionalMemberships from "./sections/professional-membership/ProfessionalMemberships";
-import ReferencesCompliance from "./sections/reference/ReferencesCompliance";
 import TrainingCertificatesCompliance from "./sections/training/TrainingCertificatesCompliance";
+import IdentityCompliance from "./sections/identity-compliance/IdentityCompliance";
+import ManagerReferencesSection from "./sections/reference/ManagerReferencesSection";
 
 import type { ComplianceSectionId } from "@/features/recruitment/types/compliance.types";
+
 import ComplianceSectionProvider from "./ComplianceSectionProvider";
-import IdentityCompliance from "./sections/identity-compliance/IdentityCompliance";
 
 interface ComplianceRecruitmentPageProps {
   applicantId: string;
@@ -26,21 +27,65 @@ export default function ComplianceRecruitmentPage({
   );
 
   return (
-    <div className="space-y-6">
-      <div className="rounded-2xl border border-white/20 bg-white/10 p-6 shadow-xl backdrop-blur-xl">
-        <h2 className="text-xl font-semibold text-slate-900">Compliance</h2>
+    <div className="w-full min-w-0 space-y-6">
+      {/* -----------------------------------------------------------------------
+       * Header
+       * ----------------------------------------------------------------------- */}
+      <div
+        className="
+          w-full
+          rounded-2xl
+          border
+          border-blue-200/50
+          bg-white/40
+          p-4
+          shadow-xl
+          shadow-blue-900/5
+          backdrop-blur-xl
+          sm:p-5
+          lg:p-6
+          dark:border-blue-400/20
+          dark:bg-slate-900/30
+        "
+      >
+        <h2 className="text-lg font-semibold text-slate-900 sm:text-xl dark:text-slate-100">
+          Compliance
+        </h2>
 
-        <p className="mt-1 text-sm text-slate-600">
+        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
           Review, verify and manage applicant compliance.
         </p>
       </div>
 
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-        <ComplianceSidebar
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
+      {/* -----------------------------------------------------------------------
+       * Compliance workspace
+       * ----------------------------------------------------------------------- */}
+      <div
+        className="
+          flex
+          min-w-0
+          flex-col
+          gap-4
+          lg:flex-row
+          lg:items-start
+          lg:gap-6
+        "
+      >
+        {/* ---------------------------------------------------------------------
+         * Sidebar / Mobile Navigation
+         * --------------------------------------------------------------------- */}
+        <div className="flex min-w-0 flex-col gap-4 lg:flex-row lg:gap-6">
+          <div className="w-full min-w-0 lg:w-64 lg:shrink-0">
+            <ComplianceSidebar
+              activeSection={activeSection}
+              onSectionChange={setActiveSection}
+            />
+          </div>
+        </div>
 
+        {/* ---------------------------------------------------------------------
+         * Main Content
+         * --------------------------------------------------------------------- */}
         <main className="min-w-0 flex-1">
           <ComplianceSectionProvider
             applicationId={applicationId}
@@ -57,12 +102,9 @@ export default function ComplianceRecruitmentPage({
               <ProfessionalMemberships />
             )}
           </ComplianceSectionProvider>
+
           {activeSection === "references" && (
-            <ReferencesCompliance
-              applicationId={applicationId}
-              applicantId={applicantId}
-              sectionId={activeSection}
-            />
+            <ManagerReferencesSection applicationId={applicationId} />
           )}
 
           {activeSection === "certificates" && (

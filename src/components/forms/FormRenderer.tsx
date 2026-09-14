@@ -10,19 +10,17 @@
  * - Provide generic renderer configuration.
  * - Support nested/repeatable field prefixes.
  * - Provide existing file deletion callbacks.
+ * - Provide responsive field layout.
  *
  * Important:
  * This component does NOT create React Hook Form state.
  *
  * The consuming feature owns:
- *
  * - useForm()
  * - FormProvider
  * - validation resolver
  * - submit handling
  * - server state
- *
- * This keeps the renderer completely feature-agnostic.
  * -----------------------------------------------------------------------------
  */
 
@@ -48,7 +46,6 @@ interface FormRendererProps {
    * Optional prefix for nested/repeatable fields.
    *
    * Example:
-   *
    * employmentHistory.0
    */
   prefix?: string;
@@ -81,13 +78,12 @@ export default function FormRenderer({
    * consumed elsewhere.
    * ---------------------------------------------------------------------------
    */
-
   const orderedFields = [...fields].sort((a, b) => a.order - b.order);
 
   return (
     <FormRendererProvider config={config} onDeleteFile={onDeleteFile}>
       <div
-        className={["grid grid-cols-12 gap-5", className]
+        className={["grid grid-cols-1 gap-5 md:grid-cols-12", className]
           .filter(Boolean)
           .join(" ")}
       >

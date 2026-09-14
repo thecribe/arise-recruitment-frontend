@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 
 import { complianceSections } from "@/features/recruitment/constants/compliance-sections";
-
 import type { ComplianceSectionId } from "@/features/recruitment/types/compliance.types";
 
 interface ComplianceSidebarProps {
@@ -47,18 +46,26 @@ export default function ComplianceSidebar({
     <aside
       className="
         w-full
+        min-w-0
         shrink-0
         rounded-2xl
         border
-        border-white/60
-        bg-white/50
-        p-3
+        border-blue-200/50
+        bg-white/40
+        p-2
         shadow-sm
+        shadow-blue-900/5
         backdrop-blur-xl
+        sm:p-3
         lg:w-64
+        dark:border-blue-400/20
+        dark:bg-slate-900/30
       "
     >
-      <div className="mb-3 px-2 pt-1">
+      {/* -----------------------------------------------------------------------
+       * Section title
+       * ----------------------------------------------------------------------- */}
+      <div className="mb-2 px-2 pt-1">
         <p
           className="
             text-xs
@@ -66,38 +73,21 @@ export default function ComplianceSidebar({
             uppercase
             tracking-wider
             text-slate-400
+            dark:text-slate-500
           "
         >
           Compliance
         </p>
       </div>
 
-      {/*
-       * -----------------------------------------------------------------------
-       * Mobile:
+      {/* -----------------------------------------------------------------------
+       * Navigation
        *
-       * Horizontal navigation prevents the sidebar from consuming the entire
-       * viewport height.
-       *
-       * Desktop:
-       *
-       * Vertical navigation behaves as a traditional sidebar.
-       * -----------------------------------------------------------------------
-       */}
-
-      <div
-        className="
-          flex
-          gap-2
-          overflow-x-auto
-          pb-1
-          lg:flex-col
-          lg:overflow-visible
-        "
-      >
+       * Vertical navigation on all screen sizes.
+       * ----------------------------------------------------------------------- */}
+      <nav className="flex w-full min-w-0 flex-col gap-1">
         {complianceSections.map((section) => {
           const Icon = sectionIcons[section.id];
-
           const isActive = activeSection === section.id;
 
           return (
@@ -105,43 +95,66 @@ export default function ComplianceSidebar({
               key={section.id}
               type="button"
               onClick={() => onSectionChange(section.id)}
-              className="
-                group
-                flex
-                min-w-max
-                items-center
-                gap-3
-                rounded-xl
-                px-3
-                py-3
-                text-left
-                transition-all
-                lg:min-w-0
-                lg:w-full
-              "
+              aria-current={isActive ? "page" : undefined}
+              className={[
+                `
+                  group
+                  flex
+                  w-full
+                  min-w-0
+                  items-center
+                  gap-2.5
+                  rounded-xl
+                  px-2.5
+                  py-2.5
+                  text-left
+                  transition-all
+                  duration-200
+                `,
+                isActive
+                  ? `
+                    bg-blue-600
+                    text-white
+                    shadow-sm
+                    shadow-blue-900/10
+                  `
+                  : `
+                    text-slate-600
+                    hover:bg-blue-50/70
+                    hover:text-blue-700
+                    dark:text-slate-300
+                    dark:hover:bg-blue-500/10
+                    dark:hover:text-blue-300
+                  `,
+              ].join(" ")}
             >
               <span
                 className={[
                   `
                     flex
-                    h-9
-                    w-9
+                    h-8
+                    w-8
                     shrink-0
                     items-center
                     justify-center
-                    rounded-xl
+                    rounded-lg
                     transition-all
+                    sm:h-9
+                    sm:w-9
+                    sm:rounded-xl
                   `,
                   isActive
                     ? `
-                      bg-blue-600
+                      bg-white/15
                       text-white
-                      shadow-sm
                     `
                     : `
                       bg-blue-50/70
                       text-blue-600
                       group-hover:bg-blue-100
+                      dark:bg-blue-500/10
+                      dark:text-blue-300
+                      dark:group-hover:bg-blue-500/20
                     `,
                 ].join(" ")}
               >
@@ -151,14 +164,15 @@ export default function ComplianceSidebar({
               <span
                 className={[
                   `
-                    whitespace-nowrap
+                    min-w-0
+                    truncate
                     text-sm
                     font-medium
                     transition-colors
                   `,
                   isActive
-                    ? "text-blue-700"
-                    : "text-slate-600 group-hover:text-blue-700",
+                    ? "text-white"
+                    : "text-slate-600 group-hover:text-blue-700 dark:text-slate-300 dark:group-hover:text-blue-300",
                 ].join(" ")}
               >
                 {section.label}
@@ -166,7 +180,7 @@ export default function ComplianceSidebar({
             </button>
           );
         })}
-      </div>
+      </nav>
     </aside>
   );
 }
