@@ -11,6 +11,7 @@ import {
   RegisterPage,
   ResetPasswordPage,
   ForgotPasswordPage,
+  TrainingCertificateRequirementsPage,
 } from "./lazy";
 
 import RouteSuspense from "./suspense";
@@ -21,6 +22,7 @@ import GeneralLayout from "@/layouts/general-layout";
 import PermissionRoute from "@/permissions/permission-route";
 import { PERMISSIONS } from "@/constants/permission";
 import RecruitmentApplicantPage from "@/features/recruitment/pages/RecruitmentApplicantPage";
+import SettingsLayout from "@/features/settings/components/SettingsLayout";
 
 export const appRoutes = [
   {
@@ -46,15 +48,13 @@ export const appRoutes = [
             path: ROUTES.AUTH.REGISTER,
             element: <RegisterPage />,
           },
-         
-          
         ],
       },
 
       {
         element: <GeneralLayout />,
         children: [
-           {
+          {
             path: ROUTES.AUTH.FORGOT_PASSWORD,
             element: <ForgotPasswordPage />,
           },
@@ -62,11 +62,11 @@ export const appRoutes = [
             path: ROUTES.AUTH.VERIFY_EMAIL,
             element: <VerifyEmailPage />,
           },
-           {
+          {
             path: ROUTES.AUTH.RESET_PASSWORD,
             element: <ResetPasswordPage />,
           },
-        ]
+        ],
       },
 
       /**
@@ -99,26 +99,27 @@ export const appRoutes = [
               {
                 path: ROUTES.RECRUITMENT.ROOT,
                 element: (
-                 <PermissionRoute  permission={PERMISSIONS.RECRUITMENT_VIEW.name}> <RouteSuspense>
-                    <RecruitmentPage />
-                  </RouteSuspense></PermissionRoute>
+                  <PermissionRoute
+                    permission={PERMISSIONS.RECRUITMENT_VIEW.name}
+                  >
+                    <RouteSuspense>
+                      <RecruitmentPage />
+                    </RouteSuspense>
+                  </PermissionRoute>
                 ),
               },
-                  {
-          path: ROUTES.RECRUITMENT.APPLICANT,
-          element: (
-            <PermissionRoute
-              permission={
-                PERMISSIONS.RECRUITMENT_VIEW.name
-              }
-            >
-              <RouteSuspense>
-                
-                <RecruitmentApplicantPage />
-              </RouteSuspense>
-            </PermissionRoute>
-          ),
-        },
+              {
+                path: ROUTES.RECRUITMENT.APPLICANT,
+                element: (
+                  <PermissionRoute
+                    permission={PERMISSIONS.RECRUITMENT_VIEW.name}
+                  >
+                    <RouteSuspense>
+                      <RecruitmentApplicantPage />
+                    </RouteSuspense>
+                  </PermissionRoute>
+                ),
+              },
               {
                 path: ROUTES.COMPLIANCE.ROOT,
                 element: (
@@ -138,10 +139,30 @@ export const appRoutes = [
               {
                 path: ROUTES.SETTINGS,
                 element: (
-                  <RouteSuspense>
-                    <SettingsPage />
-                  </RouteSuspense>
+                  <PermissionRoute
+                    permission={PERMISSIONS.RECRUITMENT_VIEW.name}
+                  >
+                    <SettingsLayout />
+                  </PermissionRoute>
                 ),
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <RouteSuspense>
+                        <SettingsPage />
+                      </RouteSuspense>
+                    ),
+                  },
+                  {
+                    path: "compliance/training-certificates",
+                    element: (
+                      <RouteSuspense>
+                        <TrainingCertificateRequirementsPage />
+                      </RouteSuspense>
+                    ),
+                  },
+                ],
               },
             ],
           },

@@ -24,10 +24,7 @@ export const RecruitmentPage = lazy(
 );
 
 export const RecruitmentApplicantPage = lazy(
-  () =>
-    import(
-      "@/features/recruitment/pages/RecruitmentApplicantPage"
-    ),
+  () => import("@/features/recruitment/pages/RecruitmentApplicantPage"),
 );
 
 export const CompliancePage = lazy(
@@ -39,5 +36,9 @@ export const StaffPage = lazy(
 );
 
 export const SettingsPage = lazy(
-  () => import("@/features/settings/pages/settings-page"),
+  () => import("@/features/settings/pages/SettingsPage"),
+);
+
+export const TrainingCertificateRequirementsPage = lazy(
+  () => import("@/features/settings/pages/TrainingCertificateRequirementsPage"),
 );

@@ -67,7 +67,7 @@ export default function FilePreviewDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="
-          max-h-[90vh]
+          z-[100] max-h-[90vh]
           min-w-2/3
           max-w-4xl
           overflow-hidden

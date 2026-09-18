@@ -18,7 +18,7 @@ import { useState } from "react";
 
 import { Controller, useFormContext } from "react-hook-form";
 
-import { Eye, FileSignature, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -92,64 +92,68 @@ export default function SignatureField({ field, prefix }: FieldComponentProps) {
                 {/* Existing/new signature display */}
                 {/* ------------------------------------------------------ */}
 
-                {signature && (
+                {signature && signature.document_url && (
                   <div
                     className="
-                      flex
-                      min-w-0
-                      items-center
-                      gap-3
-                      rounded-xl
-                      border
-                      border-slate-200
-                      bg-white/70
-                      p-3
-                    "
+      flex
+      min-w-0
+      items-center
+      gap-3
+      rounded-xl
+      border
+      border-blue-200/60
+      bg-white/50
+      p-3
+      backdrop-blur-sm
+      dark:border-blue-400/20
+      dark:bg-white/5
+    "
                   >
+                    {/* Signature Preview */}
                     <div
                       className="
-                        flex
-                        size-10
-                        shrink-0
-                        items-center
-                        justify-center
-                        rounded-lg
-                        bg-blue-50
-                        text-blue-600
-                      "
+        flex
+        h-16
+        w-24
+        shrink-0
+        items-center
+        justify-center
+        overflow-hidden
+        rounded-lg
+        border
+        border-blue-100/70
+        bg-white
+        dark:border-blue-400/20
+        dark:bg-slate-800
+      "
                     >
-                      <FileSignature className="size-5" />
+                      <img
+                        src={signature.document_url}
+                        alt="Signature"
+                        className="h-full w-full object-contain p-1"
+                      />
                     </div>
 
+                    {/* Signature Information */}
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-slate-700">
+                      <p className="truncate text-sm font-medium text-slate-700 dark:text-slate-200">
                         {signature.name}
                       </p>
 
-                      <p className="text-xs text-slate-500">
+                      <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                         Signature document
                       </p>
                     </div>
 
-                    {/* Preview */}
-
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setPreviewFile(signature)}
-                    >
-                      <Eye className="size-4" />
-                    </Button>
-
                     {/* Remove */}
-
                     {!isLocked && (
                       <Button
                         type="button"
                         variant="ghost"
                         size="icon"
                         onClick={handleDelete}
+                        aria-label="Remove signature"
+                        className="shrink-0 hover:bg-red-50 dark:hover:bg-red-500/10"
                       >
                         <Trash2 className="size-4 text-red-500" />
                       </Button>
@@ -162,7 +166,7 @@ export default function SignatureField({ field, prefix }: FieldComponentProps) {
                 {/* Only show when there is no signature */}
                 {/* ------------------------------------------------------ */}
 
-                {!signature && !isLocked && (
+                {!signature?.document_url && !isLocked && (
                   <div className="w-full min-w-0 overflow-hidden rounded-2xl">
                     <SignaturePad
                       value={null}

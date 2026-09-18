@@ -125,7 +125,7 @@ const getReferenceResponse = async (
   const response = await instance.get(
     `/references/applications/${applicationId}/${referenceId}/response`,
   );
-  console.log(response.data.data);
+
   return response.data.data;
 };
 
@@ -170,7 +170,7 @@ const updateReferenceStatus = async (
   status: ManagerReference["status"],
 ): Promise<ManagerReference> => {
   const response = await instance.patch(
-    `/references/applications/${applicationId}/references/${referenceId}/status`,
+    `/references/applications/${applicationId}/${referenceId}/status`,
     {
       status,
     },

@@ -140,6 +140,22 @@ export const useUpdateManagerReference = (
       queryClient.invalidateQueries({
         queryKey: referenceKeys.list(applicationId),
       });
+      notification.success("Reference updated successfully.");
+    },
+
+    onError: (error: unknown) => {
+      const axiosError = error as {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      notification.error(
+        axiosError.response?.data?.message ||
+          "Unable to update reference. Please try again.",
+      );
     },
   });
 };
@@ -160,6 +176,22 @@ export const useSubmitReferences = (applicationId: string) => {
       queryClient.invalidateQueries({
         queryKey: referenceKeys.list(applicationId),
       });
+      notification.success("Reference submitted successfully.");
+    },
+
+    onError: (error: unknown) => {
+      const axiosError = error as {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      notification.error(
+        axiosError.response?.data?.message ||
+          "Unable to submit reference. Please try again.",
+      );
     },
   });
 };
@@ -192,6 +224,22 @@ export const useSaveManagerReferenceResponse = (
       queryClient.invalidateQueries({
         queryKey: referenceKeys.response(applicationId, referenceId),
       });
+      notification.success("Reference Response saved successfully.");
+    },
+
+    onError: (error: unknown) => {
+      const axiosError = error as {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      notification.error(
+        axiosError.response?.data?.message ||
+          "Unable to save reference response. Please try again.",
+      );
     },
   });
 };
@@ -220,6 +268,22 @@ export const useUpdateReferenceStatus = (
       queryClient.invalidateQueries({
         queryKey: referenceKeys.response(applicationId, referenceId),
       });
+      notification.success("Reference status updated successfully.");
+    },
+
+    onError: (error: unknown) => {
+      const axiosError = error as {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      notification.error(
+        axiosError.response?.data?.message ||
+          "Unable to update reference status. Please try again.",
+      );
     },
   });
 };

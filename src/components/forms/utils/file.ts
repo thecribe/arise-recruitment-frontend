@@ -9,7 +9,7 @@
 
 import type { FormUploadedFile } from "../types/file";
 
-export type FormFile = File | FormUploadedFile;
+export type FormFile = FormUploadedFile;
 
 export function isExistingFile(value: unknown): value is FormUploadedFile {
   return typeof value === "object" && value !== null && "document_url" in value;

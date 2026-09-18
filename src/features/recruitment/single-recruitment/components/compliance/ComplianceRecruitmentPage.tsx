@@ -5,13 +5,13 @@ import ComplianceSidebar from "./ComplianceSidebar";
 import RightToWorkCompliance from "./sections/right-to-work/RightToWorkCompliance";
 import DbsCompliance from "./sections/dbs/DbsCompliance";
 import ProfessionalMemberships from "./sections/professional-membership/ProfessionalMemberships";
-import TrainingCertificatesCompliance from "./sections/training/TrainingCertificatesCompliance";
 import IdentityCompliance from "./sections/identity-compliance/IdentityCompliance";
 import ManagerReferencesSection from "./sections/reference/ManagerReferencesSection";
 
 import type { ComplianceSectionId } from "@/features/recruitment/types/compliance.types";
 
 import ComplianceSectionProvider from "./ComplianceSectionProvider";
+import TrainingCertificatesSection from "./sections/training/TrainingCertificatesSection";
 
 interface ComplianceRecruitmentPageProps {
   applicantId: string;
@@ -108,7 +108,12 @@ export default function ComplianceRecruitmentPage({
           )}
 
           {activeSection === "certificates" && (
-            <TrainingCertificatesCompliance />
+            <TrainingCertificatesSection
+              applicationId={applicationId}
+              sectionId={activeSection}
+              canDelete={true}
+              canEdit={true}
+            />
           )}
         </main>
       </div>

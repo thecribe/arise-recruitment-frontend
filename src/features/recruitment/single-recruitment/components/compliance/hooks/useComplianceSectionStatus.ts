@@ -49,7 +49,7 @@ export function useComplianceSectionStatus({
           };
         };
       };
-      console.log(axiosError.response?.data?.message);
+
       notification.error(
         axiosError.response?.data?.message ||
           "Unable to update application section status. Please try again.",

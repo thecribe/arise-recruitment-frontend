@@ -178,7 +178,7 @@ export default function UploadField({ field, prefix }: FieldComponentProps) {
                           key={
                             isExistingFile(file)
                               ? file.id
-                              : `${file.name}-${file.lastModified}`
+                              : `${file?.name}-${file?.lastModified}`
                           }
                           className="
                             flex
