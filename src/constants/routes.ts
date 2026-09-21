@@ -27,7 +27,8 @@ export const ROUTES = {
 
   APPLICATION: {
     ROOT: "/application",
-    STAGE: "/application/:stage",
+
+    COMPLIANCE: "/applicant-compliance",
   },
 
   RECRUITMENT: {

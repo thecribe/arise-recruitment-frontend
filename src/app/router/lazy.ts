@@ -42,3 +42,6 @@ export const SettingsPage = lazy(
 export const TrainingCertificateRequirementsPage = lazy(
   () => import("@/features/settings/pages/TrainingCertificateRequirementsPage"),
 );
+export const ApplicantCompliancePage = lazy(
+  () => import("@/features/compliance/applicant/pages/ApplicantCompliancePage"),
+);

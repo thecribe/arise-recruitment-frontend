@@ -91,5 +91,6 @@ export const dbsApplicantFields: FormField[] = [
     required: true,
     width: FIELD_WIDTH.FULL,
     order: 5,
+    file: { multiple: true },
   },
 ];

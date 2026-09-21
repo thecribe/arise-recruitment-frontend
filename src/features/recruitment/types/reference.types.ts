@@ -112,7 +112,26 @@ export type ManagerReference = Reference;
  *
  * Applicant-facing reference representation.
  */
-export type ApplicantReference = Reference;
+export type ApplicantReference = {
+  id: string;
+
+  applicationId?: string;
+
+  companyName: string | null;
+
+  fromDate: string | null;
+  toDate: string | null;
+
+  refereeName: string | null;
+  refereeEmail: string | null;
+  refereePhone: string | null;
+  refereeRelationship: string | null;
+
+  status: ReferenceStatus;
+
+  createdAt?: string;
+  updatedAt?: string;
+};
 
 /**
  * ---------------------------------------------------------------------------

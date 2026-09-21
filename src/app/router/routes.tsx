@@ -12,6 +12,7 @@ import {
   ResetPasswordPage,
   ForgotPasswordPage,
   TrainingCertificateRequirementsPage,
+  ApplicantCompliancePage,
 } from "./lazy";
 
 import RouteSuspense from "./suspense";
@@ -93,6 +94,14 @@ export const appRoutes = [
                 element: (
                   <RouteSuspense>
                     <ApplicationPage />
+                  </RouteSuspense>
+                ),
+              },
+              {
+                path: ROUTES.APPLICATION.COMPLIANCE,
+                element: (
+                  <RouteSuspense>
+                    <ApplicantCompliancePage />
                   </RouteSuspense>
                 ),
               },

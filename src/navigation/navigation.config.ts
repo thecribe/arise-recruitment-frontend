@@ -40,7 +40,7 @@ export const navigation: NavigationItem[] = [
   {
     id: "application-compliance",
     title: "Compliance",
-    href: "/application-compliance",
+    href: "/applicant-compliance",
     icon: ShieldCheck,
     permissions: ["APPLICATION_VIEW"],
     type: "general",
