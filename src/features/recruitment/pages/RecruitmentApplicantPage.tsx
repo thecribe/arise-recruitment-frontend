@@ -38,6 +38,8 @@ import { useRecruitmentApplicant } from "../hooks/useRecruitmentApplicant";
 import RecruitmentApplicantMoreActions from "../single-recruitment/components/application/RecruitmentApplicantMoreActions";
 import type { RecruitmentApplicationStage } from "../types/recruitment.types";
 import ComplianceRecruitmentPage from "../single-recruitment/components/compliance/ComplianceRecruitmentPage";
+import InterviewWorkspace from "../single-recruitment/components/interview/components/InterviewWorkspace";
+import ApplicantDocumentsPage from "../single-recruitment/documents/pages/ApplicantDocumentsPage";
 
 export default function RecruitmentApplicantPage() {
   const { applicantId } = useParams<{
@@ -217,21 +219,7 @@ export default function RecruitmentApplicantPage() {
         {/* --------------------------------------------------------------- */}
 
         {activeTab === "interview" && (
-          <div
-            className="
-              rounded-2xl
-              border
-              border-dashed
-              border-slate-200
-              bg-white/40
-              p-8
-              text-center
-              text-slate-500
-              backdrop-blur-xl
-            "
-          >
-            Interview content
-          </div>
+          <InterviewWorkspace applicationId={application.id} />
         )}
 
         {/* --------------------------------------------------------------- */}
@@ -272,21 +260,7 @@ export default function RecruitmentApplicantPage() {
         {/* --------------------------------------------------------------- */}
 
         {activeTab === "documents" && (
-          <div
-            className="
-              rounded-2xl
-              border
-              border-dashed
-              border-slate-200
-              bg-white/40
-              p-8
-              text-center
-              text-slate-500
-              backdrop-blur-xl
-            "
-          >
-            Documents content
-          </div>
+          <ApplicantDocumentsPage applicationId={application.id} />
         )}
       </div>
     </div>

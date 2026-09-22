@@ -133,6 +133,7 @@
     display: none;
   }
 }
+
 ::selection {
   background: color-mix(in srgb, var(--primary) 30%, white);
   color: var(--foreground);
@@ -145,4 +146,96 @@
 ::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--primary) 35%, transparent);
   border-radius: 999px;
+}
+
+/* -----------------------------------------
+   Rich Text Editor
+----------------------------------------- */
+
+.rich-text-editor {
+  overflow: hidden;
+  border: 1px solid rgb(148 163 184 / 0.4);
+  border-radius: 0.75rem;
+  background: #ffffff;
+}
+
+/* Editor writing area */
+.rich-text-editor-content {
+  width: 100%;
+  min-height: 180px;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgb(226 232 240);
+  border-radius: 0 0 0.75rem 0.75rem;
+  background: #ffffff;
+  color: #000000;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+/* Ensure all editor text is black */
+.rich-text-editor-content .ProseMirror {
+  color: #000000;
+}
+
+.rich-text-editor-content p,
+.rich-text-editor-content h2,
+.rich-text-editor-content h3,
+.rich-text-editor-content li,
+.rich-text-editor-content blockquote {
+  color: #000000;
+}
+
+/* Focus state */
+.rich-text-editor-content:focus {
+  box-shadow: inset 0 0 0 1px rgb(59 130 246 / 0.5);
+}
+
+/* Placeholder */
+.rich-text-editor-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: #64748b;
+  pointer-events: none;
+}
+
+/* Content spacing */
+.rich-text-editor-content p {
+  margin-bottom: 0.75rem;
+}
+
+.rich-text-editor-content ul {
+  list-style-type: disc;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.rich-text-editor-content ol {
+  list-style-type: decimal;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+}
+
+.rich-text-editor-content h2 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.rich-text-editor-content h3 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.rich-text-editor-content blockquote {
+  margin: 1rem 0;
+  border-left: 3px solid rgb(59 130 246);
+  padding-left: 1rem;
+  color: #000000;
+}
+
+.rich-text-editor-content a {
+  color: #2563eb;
+  text-decoration: underline;
 }
