@@ -2,6 +2,8 @@ import { FileText, Menu } from "lucide-react";
 
 import type { DocumentView } from "./DocumentsSidebar";
 import ApplicationFormDocument from "./ApplicationFormDocument";
+import { InterviewScoresheetDocument } from "./InterviewScoresheetDocument";
+import UploadedDocumentsDocument from "./UploadedDocumentsDocument";
 
 interface DocumentsWorkspaceProps {
   activeView: DocumentView;
@@ -93,10 +95,7 @@ const DocumentsWorkspace = ({
         )}
 
         {activeView === "interview-scoresheet" && (
-          <EmptyDocumentState
-            title="Interview Scoresheet"
-            description="The interview scoresheet document builder will be connected here."
-          />
+          <InterviewScoresheetDocument applicationId={applicationId} />
         )}
 
         {activeView === "interview-notes" && (
@@ -114,10 +113,7 @@ const DocumentsWorkspace = ({
         )}
 
         {activeView === "uploaded-documents" && (
-          <EmptyDocumentState
-            title="Uploaded Documents"
-            description="The inline upload interface will be connected here."
-          />
+          <UploadedDocumentsDocument applicationId={applicationId} />
         )}
       </div>
     </main>
