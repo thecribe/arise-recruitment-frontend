@@ -20,25 +20,25 @@ import { useCurrentUser } from "@/features/auth/hooks/use-auth";
 export function useNavigation() {
   const { data: user } = useCurrentUser();
 
-  return useMemo(() => {
-    /**
-     * TOP_ADMIN has all system permissions.
-     *
-     * We don't need to explicitly add every permission to the
-     * user's permission array. The role itself represents
-     * unrestricted access.
-     */
-    if (user?.role === "TOP_ADMIN") {
-      return navigation;
-    }
+  return {
+    role: user?.role,
+    permission: useMemo(() => {
+      /**
+       * TOP_ADMIN has all system permissions.
+       *
+       * We don't need to explicitly add every permission to the
+       * user's permission array. The role itself represents
+       * unrestricted access.
+       */
+      if (user?.role === "TOP_ADMIN") {
+        return navigation;
+      }
 
-    /**
-     * All other users are filtered according to their
-     * assigned permissions.
-     */
-    return filterNavigation(
-      navigation,
-      user?.permissions ?? [],
-    );
-  }, [user]);
+      /**
+       * All other users are filtered according to their
+       * assigned permissions.
+       */
+      return filterNavigation(navigation, user?.permissions ?? []);
+    }, [user]),
+  };
 }

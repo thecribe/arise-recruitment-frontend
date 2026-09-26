@@ -40,7 +40,7 @@ interface RecruitmentPhaseActionsProps {
   phase: RecruitmentApplicationPhase;
 }
 
-type PhaseAction = "start" | "lock" | "approve" | "reopen" | null;
+type PhaseAction = "locked" | "approved" | "in_progress" | null;
 
 interface PhaseActionConfig {
   title: string;
@@ -59,16 +59,16 @@ export default function RecruitmentPhaseActions({
   const updatePhaseStatus = useUpdateRecruitmentApplicationPhaseStatus();
 
   const actionConfig: Record<Exclude<PhaseAction, null>, PhaseActionConfig> = {
-    start: {
-      title: "Start this phase?",
-      description:
-        "This will set the phase to in progress and make all sections in this phase available for management.",
-      confirmLabel: "Start Phase",
-      variant: "default",
-      status: "in_progress",
-    },
+    // start: {
+    //   title: "Start this phase?",
+    //   description:
+    //     "This will set the phase to in progress and make all sections in this phase available for management.",
+    //   confirmLabel: "Start Phase",
+    //   variant: "default",
+    //   status: "in_progress",
+    // },
 
-    lock: {
+    locked: {
       title: "Lock this phase?",
       description:
         "This will lock the phase and prevent further work on its sections until the phase is started again.",
@@ -77,7 +77,7 @@ export default function RecruitmentPhaseActions({
       status: "locked",
     },
 
-    approve: {
+    approved: {
       title: "Approve this phase?",
       description:
         "Approving this phase will approve all sections within it. Approved sections will no longer be editable.",
@@ -86,7 +86,7 @@ export default function RecruitmentPhaseActions({
       status: "approved",
     },
 
-    reopen: {
+    in_progress: {
       title: "Reopen this phase?",
       description:
         "This will move the phase back to in progress and allow its sections to be managed again.",
@@ -165,7 +165,7 @@ export default function RecruitmentPhaseActions({
                     <Play className="h-4 w-4" />
                   )
                 }
-                onClick={() => setPendingAction("start")}
+                onClick={() => setPendingAction("in_progress")}
               >
                 Start Phase
               </Button>
@@ -179,7 +179,7 @@ export default function RecruitmentPhaseActions({
                   size="sm"
                   disabled={updatePhaseStatus.isPending}
                   leftIcon={<Lock className="h-4 w-4" />}
-                  onClick={() => setPendingAction("lock")}
+                  onClick={() => setPendingAction("locked")}
                 >
                   Lock Phase
                 </Button>
@@ -189,7 +189,7 @@ export default function RecruitmentPhaseActions({
                   size="sm"
                   disabled={updatePhaseStatus.isPending}
                   leftIcon={<CheckCircle2 className="h-4 w-4" />}
-                  onClick={() => setPendingAction("approve")}
+                  onClick={() => setPendingAction("approved")}
                 >
                   Approve Phase
                 </Button>
@@ -203,7 +203,7 @@ export default function RecruitmentPhaseActions({
                 size="sm"
                 disabled={updatePhaseStatus.isPending}
                 leftIcon={<RotateCcw className="h-4 w-4" />}
-                onClick={() => setPendingAction("reopen")}
+                onClick={() => setPendingAction("in_progress")}
               >
                 Reopen Phase
               </Button>

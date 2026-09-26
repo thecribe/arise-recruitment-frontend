@@ -31,7 +31,10 @@ export const interviewQueryKeys = {
 // Error Helper
 // -----------------------------------------------------------------------------
 
-const getErrorMessage = (error: unknown, fallbackMessage: string): string => {
+export const getErrorMessage = (
+  error: unknown,
+  fallbackMessage: string,
+): string => {
   const axiosError = error as {
     response?: {
       data?: {

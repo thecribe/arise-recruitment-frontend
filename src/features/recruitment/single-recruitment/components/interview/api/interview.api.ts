@@ -74,7 +74,7 @@ export const getInterviewNotes = async (
   const response = await instance.get<ApiResponse<InterviewNote[]>>(
     `${INTERVIEW_BASE_URL}/${interviewId}/notes`,
   );
-  console.log(response.data);
+
   return response.data.data;
 };
 

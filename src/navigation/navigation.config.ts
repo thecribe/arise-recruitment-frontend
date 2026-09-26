@@ -68,6 +68,7 @@ export const navigation: NavigationItem[] = [
     id: "settings",
     title: "Settings",
     href: "/settings",
+    permissions: ["SETTINGS_VIEW"],
     icon: Settings,
     type: "management",
   },

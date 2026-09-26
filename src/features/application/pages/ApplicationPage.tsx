@@ -13,7 +13,7 @@
 import ApplicationFooter from "../components/application-shell/ApplicationFooter";
 import ApplicationHeader from "../components/application-shell/ApplicationHeader";
 import ApplicationShell from "../components/application-shell/ApplicationShell";
-import ProgressCard from "../components/application-shell/ProgressCard";
+// import ProgressCard from "../components/application-shell/ProgressCard";
 import PhaseNavigation from "../components/navigation/PhaseNavigation";
 import SectionNavigation from "../components/navigation/SectionNavigation";
 import ReviewPanel from "../components/ReviewPanel";
@@ -26,7 +26,7 @@ export default function ApplicationPage() {
       <div className="space-y-8">
         <ApplicationHeader />
 
-        <ProgressCard />
+        {/* <ProgressCard /> */}
 
         <PhaseNavigation />
 

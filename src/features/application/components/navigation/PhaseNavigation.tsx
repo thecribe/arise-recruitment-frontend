@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import { PHASE_STATUS, type PhaseStatus } from "../../constants/phase-status";
+
 import { useApplicationContext } from "../../context/ApplicationContext";
 
 const phaseStatusConfig: Record<
@@ -21,6 +22,7 @@ const phaseStatusConfig: Record<
     icon: Lock,
     container: "border-slate-200 bg-slate-100 text-slate-400",
   },
+
   [PHASE_STATUS.IN_PROGRESS]: {
     icon: Loader,
     container: "border-slate-200 bg-slate-100 text-slate-400",
@@ -57,37 +59,72 @@ export default function PhaseNavigation() {
    */
   const phaseRecordMap = new Map(phases.map((phase) => [phase.id, phase]));
 
+  /**
+   * Determines whether a phase can be selected.
+   */
+  const canSelectPhase = (phaseStatus?: string) => {
+    return phaseStatus !== PHASE_STATUS.LOCKED && Boolean(phaseStatus);
+  };
+
   return (
     <section
       className="
-        rounded-3xl
+        rounded-2xl
         border border-white/20
         bg-white/70
+        px-3
+        py-3
+        shadow-md
         backdrop-blur-xl
-        shadow-lg
-        p-5
-        sm:p-6
-        
+        sm:px-4
+        sm:py-3.5
       "
     >
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Application Journey</h2>
+      {/* ================================================================
+          HEADER
+      ================================================================= */}
+      <div className="mb-2.5 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <h2 className="text-sm font-semibold text-slate-900 sm:text-base">
+            Application Journey
+          </h2>
 
-        <span className="text-xs text-slate-500">{phases.length} Phases</span>
+          <span
+            className="
+              rounded-full
+              bg-blue-50
+              px-2
+              py-0.5
+              text-[10px]
+              font-medium
+              text-blue-600
+              sm:text-xs
+            "
+          >
+            {phases.length}
+          </span>
+        </div>
+
+        <span className="text-[10px] text-slate-400 sm:text-xs">
+          Scroll to view
+        </span>
       </div>
 
+      {/* ================================================================
+          PHASES
+      ================================================================= */}
       <div
         className="
           flex
-          gap-3
+          gap-2
           overflow-x-auto
           overflow-y-hidden
-          pb-5
+          pb-1
           snap-x
           snap-mandatory
           scroll-smooth
-           touch-pan-x
-          
+          touch-pan-x
+          scrollbar-thin
         "
       >
         {phases.map((phase) => {
@@ -96,67 +133,123 @@ export default function PhaseNavigation() {
           /**
            * This should never happen because availablePhases
            * are derived from applicantApplication.phases.
-           * Guard against inconsistent backend data.
            */
           if (!record) {
             return null;
           }
 
-          let config;
-
-          if (record.status) {
-            config = phaseStatusConfig[record.status as PhaseStatus];
-          } else {
-            config = phaseStatusConfig[PHASE_STATUS.LOCKED];
-          }
+          const config =
+            record.status && phaseStatusConfig[record.status as PhaseStatus]
+              ? phaseStatusConfig[record.status as PhaseStatus]
+              : phaseStatusConfig[PHASE_STATUS.LOCKED];
 
           const Icon = config.icon;
 
           const isActive = phase.id === activePhase.id;
 
-          const checkLocked = (phaseStatus?: string) => {
-            return !(phaseStatus === PHASE_STATUS.LOCKED || !phaseStatus);
-          };
+          const isSelectable = canSelectPhase(record.status);
+
           return (
             <button
               key={phase.id}
               type="button"
+              disabled={!isSelectable}
               onClick={(e) => {
                 e.preventDefault();
 
-                if (checkLocked(phase.status)) {
+                if (isSelectable) {
                   selectPhase(phase.id);
                 }
               }}
               className={`
-                w-72 min-w-55
-                sm:min-w-60
+                group
+                w-56
+                min-w-56
                 shrink-0
                 snap-start
-                rounded-2xl
+                rounded-xl
                 border
-                p-4
+                px-3
+                py-2.5
                 text-left
                 transition-all
                 duration-200
+
                 ${config.container}
+
                 ${
                   isActive
-                    ? "scale-[1.02] ring-2 ring-blue-500 shadow-md"
-                    : "hover:-translate-y-0.5"
+                    ? `
+                      ring-2
+                      ring-blue-500/70
+                      shadow-sm
+                    `
+                    : `
+                      hover:-translate-y-0.5
+                      hover:shadow-sm
+                    `
                 }
+
+                disabled:cursor-not-allowed
               `}
             >
-              <div className="flex items-center gap-3">
-                <Icon className="h-5 w-5 shrink-0" />
+              {/* Phase Title */}
+              <div className="flex items-center gap-2">
+                <div
+                  className="
+                    flex
+                    h-7
+                    w-7
+                    shrink-0
+                    items-center
+                    justify-center
+                    rounded-lg
+                    bg-white/60
+                  "
+                >
+                  <Icon
+                    className={`
+                      h-4
+                      w-4
+                      shrink-0
+                      ${
+                        record.status === PHASE_STATUS.IN_PROGRESS
+                          ? "animate-spin"
+                          : ""
+                      }
+                    `}
+                  />
+                </div>
 
-                <h3 className="truncate font-semibold">{phase.title}</h3>
+                <h3 className="truncate text-sm font-semibold">
+                  {phase.title}
+                </h3>
               </div>
 
+              {/* Description */}
               {phase.description && (
-                <p className="mt-2 line-clamp-2 text-sm opacity-80">
+                <p
+                  className="
+                    mt-1.5
+                    line-clamp-1
+                    text-[11px]
+                    leading-4
+                    opacity-75
+                  "
+                >
                   {phase.description}
                 </p>
+              )}
+
+              {/* Active Indicator */}
+              {isActive && (
+                <div className="mt-1.5 flex items-center gap-1">
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+
+                  <span className="text-[10px] font-medium text-blue-700">
+                    Current phase
+                  </span>
+                </div>
               )}
             </button>
           );

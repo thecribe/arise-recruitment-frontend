@@ -74,7 +74,7 @@ const ApplicantCompliancePage = () => {
           </div>
 
           {/* Security Indicator */}
-          <div
+          {/* <div
             className="
               flex
               items-center
@@ -95,7 +95,7 @@ const ApplicantCompliancePage = () => {
             <span className="text-base font-bold text-blue-700 sm:text-lg">
               In Progress
             </span>
-          </div>
+          </div> */}
         </div>
       </section>
 
