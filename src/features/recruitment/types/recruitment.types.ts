@@ -17,6 +17,7 @@
  * -----------------------------------------------------------------------------
  */
 
+import type { FormUploadedFile } from "@/components/forms/types/file";
 import type {
   ApplicationField,
   ApplicationPhase,
@@ -130,6 +131,7 @@ export interface RecruitmentApplicantDetail {
     address: string | null;
 
     postcode: string | null;
+    profile_img: FormUploadedFile | null;
   };
 
   jobType: JobType | null;

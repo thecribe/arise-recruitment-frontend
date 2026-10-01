@@ -28,6 +28,7 @@ import { Mail, Phone } from "lucide-react";
 import GlassCard from "@/components/ui/GlassCard";
 import StatusBadge from "@/components/ui/StatusBadge";
 import type { RecruitmentApplicantStatus } from "../../types/recruitment.types";
+import type { FormUploadedFile } from "@/components/forms/types/file";
 
 interface RecruitmentApplicantHeaderProps {
   /**
@@ -38,6 +39,7 @@ interface RecruitmentApplicantHeaderProps {
     lastName: string;
     email: string;
     phone?: string;
+    profile_img: FormUploadedFile | null;
   };
 
   /**
@@ -152,22 +154,33 @@ export default function RecruitmentApplicantHeader({
 
             <div
               className="
-                flex
-                h-14
-                w-14
-                shrink-0
-                items-center
-                justify-center
-                rounded-2xl
-                bg-blue-100
-                text-lg
-                font-bold
-                text-blue-700
-              "
+    flex
+    h-14
+    w-14
+    shrink-0
+    items-center
+    justify-center
+    overflow-hidden
+    rounded-2xl
+    bg-blue-100
+    text-lg
+    font-bold
+    text-blue-700
+  "
               aria-hidden="true"
             >
-              {applicant.firstName.charAt(0)}
-              {applicant.lastName.charAt(0)}
+              {applicant.profile_img ? (
+                <img
+                  src={applicant.profile_img.document_url}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <>
+                  {applicant.firstName.charAt(0)}
+                  {applicant.lastName.charAt(0)}
+                </>
+              )}
             </div>
 
             {/* ------------------------------------------------------------- */}

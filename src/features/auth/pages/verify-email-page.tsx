@@ -45,6 +45,7 @@ import { FormPassword } from "@/components/forms/publicforms/FormPassword";
 export default function VerifyEmailPage() {
   const [searchParams] = useSearchParams();
   const verificationToken = searchParams.get("token");
+  const mailType = searchParams.get("type");
   if (!verificationToken) {
     notification.error("Verification token is missing.");
     return;

@@ -40,6 +40,7 @@ import type { RecruitmentApplicationStage } from "../types/recruitment.types";
 import ComplianceRecruitmentPage from "../single-recruitment/components/compliance/ComplianceRecruitmentPage";
 import InterviewWorkspace from "../single-recruitment/components/interview/components/InterviewWorkspace";
 import ApplicantDocumentsPage from "../single-recruitment/documents/pages/ApplicantDocumentsPage";
+import ApplicantProfileSettings from "../single-recruitment/components/settings/ApplicantProfileSettings";
 
 export default function RecruitmentApplicantPage() {
   const { applicantId } = useParams<{
@@ -164,6 +165,7 @@ export default function RecruitmentApplicantPage() {
           lastName: applicant.lastName,
           email: applicant.email,
           phone: applicant.phone ?? undefined,
+          profile_img: applicant.profile_img,
         }}
         jobType={jobType}
         status={application_status.status}
@@ -238,21 +240,10 @@ export default function RecruitmentApplicantPage() {
         {/* --------------------------------------------------------------- */}
 
         {activeTab === "profile" && (
-          <div
-            className="
-              rounded-2xl
-              border
-              border-dashed
-              border-slate-200
-              bg-white/40
-              p-8
-              text-center
-              text-slate-500
-              backdrop-blur-xl
-            "
-          >
-            Profile &amp; Settings content
-          </div>
+          <ApplicantProfileSettings
+            applicantId={applicant.id}
+            applicationId={application.id}
+          />
         )}
 
         {/* --------------------------------------------------------------- */}
