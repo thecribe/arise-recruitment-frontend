@@ -34,13 +34,42 @@ export const dbsApplicantFields: FormField[] = [
   },
 
   {
+    id: "dbs-surname",
+    name: "surname",
+    type: FIELD_TYPES.TEXT,
+    label: "Surname (as on the Enhanced Certificate)",
+    required: true,
+    width: FIELD_WIDTH.HALF,
+    order: 2,
+    options: [
+      {
+        label: "Yes",
+        value: "yes",
+      },
+      {
+        label: "No",
+        value: "no",
+      },
+    ],
+  },
+
+  {
     id: "dbs-issue-date",
     name: "issueDate",
     type: FIELD_TYPES.DATE,
     label: "Issue Date",
     required: true,
     width: FIELD_WIDTH.HALF,
-    order: 2,
+    order: 3,
+  },
+  {
+    id: "dbs-date-of-date",
+    name: "dateOfBirth",
+    type: FIELD_TYPES.DATE,
+    label: "Date of Birth (as it appears on the DBS certificate)",
+    required: true,
+    width: FIELD_WIDTH.HALF,
+    order: 4,
   },
 
   {
@@ -50,7 +79,7 @@ export const dbsApplicantFields: FormField[] = [
     label: "Is the DBS certificate clear?",
     required: true,
     width: FIELD_WIDTH.HALF,
-    order: 3,
+    order: 5,
     options: [
       {
         label: "Yes",
@@ -70,7 +99,7 @@ export const dbsApplicantFields: FormField[] = [
     label: "Is this certificate registered with the updated service?",
     required: true,
     width: FIELD_WIDTH.FULL,
-    order: 4,
+    order: 6,
     options: [
       {
         label: "Yes",
@@ -90,7 +119,7 @@ export const dbsApplicantFields: FormField[] = [
     label: "Upload your Current DBS Disclosure",
     required: true,
     width: FIELD_WIDTH.FULL,
-    order: 5,
+    order: 7,
     file: { multiple: true },
   },
 ];

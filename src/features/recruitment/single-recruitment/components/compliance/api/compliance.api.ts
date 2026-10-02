@@ -28,7 +28,24 @@ const updateComplianceSectionData = async (
   return response.data.data;
 };
 
+const verifyDbs = async (
+  applicationId: string,
+  payload: {
+    disclosureNumber: string;
+    dateOfBirth: string;
+    surname: string;
+  },
+): Promise<unknown> => {
+  console.log(applicationId);
+  const response = await instance.post(
+    `/recruitment/compliance/${applicationId}/verify-dbs`,
+    payload,
+  );
+
+  return response.data.data;
+};
 export const complianceApi = {
   getComplianceSection,
   updateComplianceSectionData,
+  verifyDbs,
 };

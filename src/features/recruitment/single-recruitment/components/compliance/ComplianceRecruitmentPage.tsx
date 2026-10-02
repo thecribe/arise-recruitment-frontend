@@ -96,7 +96,9 @@ export default function ComplianceRecruitmentPage({
 
             {activeSection === "identity-compliance" && <IdentityCompliance />}
 
-            {activeSection === "dbs" && <DbsCompliance />}
+            {activeSection === "dbs" && (
+              <DbsCompliance applicationId={applicationId} />
+            )}
 
             {activeSection === "professional-memberships" && (
               <ProfessionalMemberships />
