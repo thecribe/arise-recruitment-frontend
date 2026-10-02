@@ -186,4 +186,13 @@ export const rightToWorkApplicantFields: FormField[] = [
     width: FIELD_WIDTH.FULL,
     order: 4,
   },
+  {
+    id: "dbs-date-of-date",
+    name: "dateOfBirth",
+    type: FIELD_TYPES.DATE,
+    label: "Date of Birth (as it appears on the right to work document)",
+    required: true,
+    width: FIELD_WIDTH.HALF,
+    order: 5,
+  },
 ];

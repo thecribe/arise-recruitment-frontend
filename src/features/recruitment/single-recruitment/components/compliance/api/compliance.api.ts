@@ -36,9 +36,23 @@ const verifyDbs = async (
     surname: string;
   },
 ): Promise<unknown> => {
-  console.log(applicationId);
   const response = await instance.post(
     `/recruitment/compliance/${applicationId}/verify-dbs`,
+    payload,
+  );
+
+  return response.data.data;
+};
+
+const verifyRightToWork = async (
+  applicationId: string,
+  payload: {
+    shareCode: string;
+    dateOfBirth: string;
+  },
+): Promise<unknown> => {
+  const response = await instance.post(
+    `/recruitment/compliance/${applicationId}/verify-right-to-work`,
     payload,
   );
 
@@ -48,4 +62,5 @@ export const complianceApi = {
   getComplianceSection,
   updateComplianceSectionData,
   verifyDbs,
+  verifyRightToWork,
 };

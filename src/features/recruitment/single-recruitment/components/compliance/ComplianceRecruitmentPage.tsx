@@ -92,7 +92,9 @@ export default function ComplianceRecruitmentPage({
             applicantId={applicantId}
             sectionId={activeSection}
           >
-            {activeSection === "right-to-work" && <RightToWorkCompliance />}
+            {activeSection === "right-to-work" && (
+              <RightToWorkCompliance applicationId={applicationId} />
+            )}
 
             {activeSection === "identity-compliance" && <IdentityCompliance />}
 
