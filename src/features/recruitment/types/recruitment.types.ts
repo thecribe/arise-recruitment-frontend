@@ -84,7 +84,7 @@ export interface RecruitmentApplicant {
     email: string;
   };
 
-  jobType: JobType | null;
+  jobType: JobType;
 
   currentStage: ApplicationPhase | null;
 

@@ -4,6 +4,7 @@ import type {
   ApplicationDefinitionSection,
   InterviewScoresheetDocument,
   ApplicantDocument,
+  ComplianceSummaryDocument,
 } from "../types/document.types";
 import payloadToFormData from "@/components/forms/utils/payloadToFormData";
 
@@ -74,6 +75,16 @@ export const deleteApplicantDocument = async (
 ): Promise<ApplicantDocument> => {
   const response = await instance.delete(
     `/documents/${applicationId}/applicant-documents/${documentId}`,
+  );
+
+  return response.data.data;
+};
+
+export const getComplianceSummaryDocument = async (
+  applicationId: string,
+): Promise<ComplianceSummaryDocument> => {
+  const response = await instance.get(
+    `/documents/${applicationId}/compliance-summary`,
   );
 
   return response.data.data;

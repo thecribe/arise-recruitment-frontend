@@ -6,6 +6,7 @@ import ApplicantComplianceTabs from "../components/ApplicantComplianceTabs";
 import ComplianceFormsTab from "../components/ComplianceFormsTab";
 import ReferencesTab from "../components/reference/ReferencesTab";
 import TrainingCertificatesTab from "../components/certiificates/TrainingCertificatesTab";
+import DeclarationsTab from "../components/declarations/DeclarationsTab";
 
 const ApplicantCompliancePage = () => {
   const [activeTab, setActiveTab] =
@@ -125,6 +126,7 @@ const ApplicantCompliancePage = () => {
         {activeTab === "training-certificates" && (
           <TrainingCertificatesTab sectionId="certificates" />
         )}
+        {activeTab === "declarations" && <DeclarationsTab />}
       </section>
     </div>
   );

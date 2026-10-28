@@ -179,7 +179,7 @@ export default function DbsCompliance({ applicationId }: DbsComplianceProps) {
           onSave={updateManagerSection}
         />
       </div>
-      onClick={}
+
       {/* Verification Response Modal */}
       {isResponseModalOpen && hasVerificationResponse && (
         <DbsVerificationResponseModal

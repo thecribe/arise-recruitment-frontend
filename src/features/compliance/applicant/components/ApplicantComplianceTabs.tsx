@@ -1,9 +1,15 @@
-import { ClipboardCheck, GraduationCap, Users } from "lucide-react";
+import {
+  ClipboardCheck,
+  FileSignature,
+  GraduationCap,
+  Users,
+} from "lucide-react";
 
 export type ComplianceTab =
   | "compliance-forms"
   | "references"
-  | "training-certificates";
+  | "training-certificates"
+  | "declarations";
 
 interface ApplicantComplianceTabsProps {
   activeTab: ComplianceTab;
@@ -33,6 +39,12 @@ const tabs: Array<{
     label: "Training Certificates",
     description: "Manage your certificates",
     icon: GraduationCap,
+  },
+  {
+    id: "declarations",
+    label: "Declarations",
+    description: "Complete your declarations",
+    icon: FileSignature,
   },
 ];
 

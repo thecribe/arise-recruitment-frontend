@@ -21,14 +21,6 @@ interface ReviewStateConfig {
   messageClassName: string;
 }
 
-const getSixMonthsAgo = (date: Date) => {
-  const result = new Date(date);
-
-  result.setMonth(result.getMonth() - 6);
-
-  return result;
-};
-
 const parseDate = (value?: string | null): Date | null => {
   if (!value) {
     return null;
@@ -53,10 +45,9 @@ const parseDate = (value?: string | null): Date | null => {
 const getReviewState = (
   values: RightToWorkManagerValues,
 ): ReviewState | null => {
-  const checkDate = parseDate(values.checkDate);
   const expiryDate = parseDate(values.rightToWorkExpiryDate);
 
-  if (!checkDate || !expiryDate) {
+  if (!expiryDate) {
     return null;
   }
 
@@ -64,6 +55,7 @@ const getReviewState = (
 
   // Ignore the current time and work with calendar dates.
   today.setHours(0, 0, 0, 0);
+  expiryDate.setHours(0, 0, 0, 0);
 
   // ---------------------------------------------------------------
   // Expired takes priority over every other state.
@@ -73,16 +65,18 @@ const getReviewState = (
   }
 
   // ---------------------------------------------------------------
-  // Due for review when the check date is 6 months old or older.
+  // Due for review when the expiry date is within the next 6 months,
+  // including exactly 6 months from today.
   // ---------------------------------------------------------------
-  const sixMonthsAgo = getSixMonthsAgo(today);
+  const sixMonthsFromToday = new Date(today);
+  sixMonthsFromToday.setMonth(sixMonthsFromToday.getMonth() + 6);
 
-  if (checkDate <= sixMonthsAgo) {
+  if (expiryDate <= sixMonthsFromToday) {
     return "due_for_review";
   }
 
   // ---------------------------------------------------------------
-  // Otherwise the right to work is currently valid.
+  // Otherwise, the expiry date is more than 6 months away.
   // ---------------------------------------------------------------
   return "valid";
 };

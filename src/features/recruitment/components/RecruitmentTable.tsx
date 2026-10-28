@@ -78,11 +78,11 @@ export default function RecruitmentTable({
    */
   const handleApplicantClick = (applicantId: string) => {
     const path = ROUTES.RECRUITMENT.APPLICANT.replace(
-    ":applicantId",
-    applicantId,
-  );
+      ":applicantId",
+      applicantId,
+    );
 
-  navigate(path);
+    navigate(path);
   };
 
   /*
@@ -114,8 +114,7 @@ export default function RecruitmentTable({
           </h3>
 
           <p className="mt-2 max-w-md text-sm text-slate-500">
-            We couldn't retrieve the recruitment applicants.
-            Please try again.
+            We couldn't retrieve the recruitment applicants. Please try again.
           </p>
 
           <Button
@@ -200,9 +199,7 @@ export default function RecruitmentTable({
                 <tr
                   key={applicant.applicationId}
                   className="group cursor-pointer transition-colors hover:bg-blue-50/40"
-                  onClick={() =>
-                    handleApplicantClick(applicant.applicantId)
-                  }
+                  onClick={() => handleApplicantClick(applicant.applicantId)}
                 >
                   {/* Applicant */}
                   <td className="px-6 py-4">
@@ -258,13 +255,9 @@ export default function RecruitmentTable({
                   {/* Stage Status */}
                   <td className="px-6 py-4">
                     {applicant.currentStage?.status ? (
-                      <StageStatus
-                        status={applicant.currentStage.status}
-                      />
+                      <StageStatus status={applicant.currentStage.status} />
                     ) : (
-                      <span className="text-sm text-slate-400">
-                        —
-                      </span>
+                      <span className="text-sm text-slate-400">—</span>
                     )}
                   </td>
 
@@ -382,14 +375,10 @@ function RecruitmentTableSkeleton() {
  * recruitment list only needs initials and doesn't require a
  * separate avatar data model.
  */
-function getApplicantInitials(
-  applicant: RecruitmentApplicant,
-): string {
-  const firstInitial =
-    applicant.applicant.firstName?.charAt(0) ?? "";
+function getApplicantInitials(applicant: RecruitmentApplicant): string {
+  const firstInitial = applicant.applicant.firstName?.charAt(0) ?? "";
 
-  const lastInitial =
-    applicant.applicant.lastName?.charAt(0) ?? "";
+  const lastInitial = applicant.applicant.lastName?.charAt(0) ?? "";
 
   return `${firstInitial}${lastInitial}`.toUpperCase();
 }

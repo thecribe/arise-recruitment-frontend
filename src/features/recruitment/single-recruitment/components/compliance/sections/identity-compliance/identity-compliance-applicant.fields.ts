@@ -35,6 +35,17 @@ export const identityComplianceApplicantFields: FormField[] = [
     width: FIELD_WIDTH.HALF,
     order: 2,
   },
+  {
+    id: "passport",
+    name: "passport",
+    type: FIELD_TYPES.UPLOAD,
+    label: "Upload Passport",
+    placeholder: "Upload your passport number",
+    required: true,
+    width: FIELD_WIDTH.HALF,
+    order: 3,
+    file: { multiple: true },
+  },
 
   {
     id: "proof-of-national-insurance-number",
@@ -43,7 +54,7 @@ export const identityComplianceApplicantFields: FormField[] = [
     label: "Upload Proof of National Insurance Number",
     required: true,
     width: FIELD_WIDTH.HALF,
-    order: 3,
+    order: 4,
     file: { multiple: true },
   },
 
@@ -54,7 +65,7 @@ export const identityComplianceApplicantFields: FormField[] = [
     label: "Passport Size Photo",
     required: true,
     width: FIELD_WIDTH.HALF,
-    order: 4,
+    order: 5,
     file: { multiple: true },
   },
 
@@ -65,7 +76,7 @@ export const identityComplianceApplicantFields: FormField[] = [
     label: "Birth Certificate",
     required: true,
     width: FIELD_WIDTH.HALF,
-    order: 5,
+    order: 6,
     file: { multiple: true },
   },
 ];

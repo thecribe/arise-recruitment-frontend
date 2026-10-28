@@ -8,7 +8,8 @@ export type RecruitmentApplicationSectionStatus =
 export type ApplicantComplianceTab =
   | "compliance-forms"
   | "references"
-  | "training-certificates";
+  | "training-certificates"
+  | "declarations";
 
 export interface ApplicantComplianceSection {
   id: string;

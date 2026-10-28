@@ -4,6 +4,8 @@ import type { DocumentView } from "./DocumentsSidebar";
 import ApplicationFormDocument from "./ApplicationFormDocument";
 import { InterviewScoresheetDocument } from "./InterviewScoresheetDocument";
 import UploadedDocumentsDocument from "./UploadedDocumentsDocument";
+import DeclarationsDocument from "./DeclarationsDocument";
+import ComplianceSummaryDocument from "./ComplianceSummaryDocument";
 
 interface DocumentsWorkspaceProps {
   activeView: DocumentView;
@@ -27,6 +29,11 @@ const viewDetails: Record<
     title: "Interview Scoresheet",
     description:
       "Generate a document containing the applicant's interview assessment.",
+  },
+  declarations: {
+    title: "Declarations",
+    description:
+      "Review and generate a PDF containing the applicant's declarations.",
   },
   "interview-notes": {
     title: "Interview Notes",
@@ -98,6 +105,9 @@ const DocumentsWorkspace = ({
           <InterviewScoresheetDocument applicationId={applicationId} />
         )}
 
+        {activeView === "declarations" && (
+          <DeclarationsDocument applicationId={applicationId} />
+        )}
         {activeView === "interview-notes" && (
           <EmptyDocumentState
             title="Interview Notes"
@@ -106,10 +116,7 @@ const DocumentsWorkspace = ({
         )}
 
         {activeView === "compliance-summary" && (
-          <EmptyDocumentState
-            title="Compliance Summary"
-            description="The compliance summary document builder will be connected here."
-          />
+          <ComplianceSummaryDocument applicationId={applicationId} />
         )}
 
         {activeView === "uploaded-documents" && (

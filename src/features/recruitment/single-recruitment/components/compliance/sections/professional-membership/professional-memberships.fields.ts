@@ -59,7 +59,7 @@ export const professionalMembershipFields: FormField[] = [
     name: "membershipCard",
     type: FIELD_TYPES.UPLOAD,
     label: "Upload your membership card",
-    required: true,
+    required: false,
     width: FIELD_WIDTH.FULL,
     order: 4,
   },

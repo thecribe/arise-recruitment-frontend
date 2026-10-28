@@ -24,6 +24,8 @@ import PermissionRoute from "@/permissions/permission-route";
 import { PERMISSIONS } from "@/constants/permission";
 import RecruitmentApplicantPage from "@/features/recruitment/pages/RecruitmentApplicantPage";
 import SettingsLayout from "@/features/settings/components/SettingsLayout";
+import GeneralSettingsPage from "@/features/settings/components/general-settings/GeneralSettingsPage";
+import JobTypesSettingsPage from "@/features/settings/pages/JobTypesSettingsPage";
 
 export const appRoutes = [
   {
@@ -160,6 +162,22 @@ export const appRoutes = [
                     element: (
                       <RouteSuspense>
                         <SettingsPage />
+                      </RouteSuspense>
+                    ),
+                  },
+                  {
+                    path: "general",
+                    element: (
+                      <RouteSuspense>
+                        <GeneralSettingsPage />
+                      </RouteSuspense>
+                    ),
+                  },
+                  {
+                    path: "job-types",
+                    element: (
+                      <RouteSuspense>
+                        <JobTypesSettingsPage />
                       </RouteSuspense>
                     ),
                   },

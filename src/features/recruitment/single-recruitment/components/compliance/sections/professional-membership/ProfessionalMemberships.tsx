@@ -37,7 +37,6 @@ export default function ProfessionalMemberships() {
         description="Professional membership details provided by the applicant."
         fields={professionalMembershipFields}
         values={sectionValues}
-        canEdit={false}
         isSaving={isUpdatingSection}
         onSave={updateSection}
       />

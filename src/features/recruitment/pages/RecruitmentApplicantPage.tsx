@@ -41,6 +41,7 @@ import ComplianceRecruitmentPage from "../single-recruitment/components/complian
 import InterviewWorkspace from "../single-recruitment/components/interview/components/InterviewWorkspace";
 import ApplicantDocumentsPage from "../single-recruitment/documents/pages/ApplicantDocumentsPage";
 import ApplicantProfileSettings from "../single-recruitment/components/settings/ApplicantProfileSettings";
+import ApplicantDeclarationsPage from "../single-recruitment/components/declarations/ApplicantDeclarationsPage";
 
 export default function RecruitmentApplicantPage() {
   const { applicantId } = useParams<{
@@ -206,7 +207,6 @@ export default function RecruitmentApplicantPage() {
         {/* --------------------------------------------------------------- */}
         {/* Application */}
         {/* --------------------------------------------------------------- */}
-
         {activeTab === "application" && (
           <RecruitmentApplication
             applicantId={applicant.id}
@@ -215,41 +215,42 @@ export default function RecruitmentApplicantPage() {
             phases={application.phases}
           />
         )}
-
         {/* --------------------------------------------------------------- */}
         {/* Interview */}
         {/* --------------------------------------------------------------- */}
-
         {activeTab === "interview" && (
           <InterviewWorkspace applicationId={application.id} />
         )}
-
         {/* --------------------------------------------------------------- */}
         {/* Compliance */}
         {/* --------------------------------------------------------------- */}
-
         {activeTab === "compliance" && (
           <ComplianceRecruitmentPage
             applicantId={applicant.id}
             applicationId={application.id}
           />
         )}
-
+        {/* --------------------------------------------------------------- */}{" "}
+        {/* Declarations */}{" "}
+        {/* --------------------------------------------------------------- */}{" "}
+        {activeTab === "declarations" && (
+          <ApplicantDeclarationsPage
+            // applicantId={applicant.id}
+            applicationId={application.id}
+          />
+        )}
         {/* --------------------------------------------------------------- */}
         {/* Profile & Settings */}
         {/* --------------------------------------------------------------- */}
-
         {activeTab === "profile" && (
           <ApplicantProfileSettings
             applicantId={applicant.id}
             applicationId={application.id}
           />
         )}
-
         {/* --------------------------------------------------------------- */}
         {/* Documents */}
         {/* --------------------------------------------------------------- */}
-
         {activeTab === "documents" && (
           <ApplicantDocumentsPage applicationId={application.id} />
         )}

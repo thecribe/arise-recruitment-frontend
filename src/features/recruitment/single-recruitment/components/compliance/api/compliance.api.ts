@@ -61,6 +61,6 @@ const verifyRightToWork = async (
 export const complianceApi = {
   getComplianceSection,
   updateComplianceSectionData,
-  verifyDbs,
+  verifyDbs,  
   verifyRightToWork,
 };

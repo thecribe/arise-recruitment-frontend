@@ -20,6 +20,7 @@ import {
   FolderOpen,
   ShieldCheck,
   UserRound,
+  FileSignature,
 } from "lucide-react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,11 +30,11 @@ export type RecruitmentApplicantTab =
   | "interview"
   | "compliance"
   | "profile"
-  | "documents";
+  | "documents"
+  | "declarations";
 
 interface RecruitmentApplicantTabsProps {
   value: RecruitmentApplicantTab;
-
   onValueChange: (value: RecruitmentApplicantTab) => void;
 }
 
@@ -62,6 +63,11 @@ const tabs = [
     icon: ShieldCheck,
   },
   {
+    value: "declarations",
+    label: "Declarations",
+    icon: FileSignature,
+  },
+  {
     value: "profile",
     label: "Profile & Settings",
     icon: UserRound,
@@ -88,8 +94,8 @@ export default function RecruitmentApplicantTabs({
        * -----------------------------------------------------------------------
        * The horizontal scroll is intentional.
        *
-       * On smaller screens the five tabs should remain usable without
-       * compressing the labels into unreadable buttons.
+       * On smaller screens the tabs should remain usable without compressing
+       * the labels into unreadable buttons.
        * -----------------------------------------------------------------------
        */}
       <div className="overflow-x-auto">
@@ -132,7 +138,6 @@ export default function RecruitmentApplicantTabs({
                 "
               >
                 <Icon className="h-4 w-4" />
-
                 <span>{tab.label}</span>
               </TabsTrigger>
             );

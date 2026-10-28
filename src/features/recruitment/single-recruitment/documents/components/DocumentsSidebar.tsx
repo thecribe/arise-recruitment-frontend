@@ -1,8 +1,9 @@
 import {
   ClipboardCheck,
+  FileSignature,
   FileText,
   Files,
-  NotebookText,
+  // NotebookText,
   ShieldCheck,
   Upload,
 } from "lucide-react";
@@ -12,7 +13,8 @@ export type DocumentView =
   | "interview-scoresheet"
   | "interview-notes"
   | "compliance-summary"
-  | "uploaded-documents";
+  | "uploaded-documents"
+  | "declarations";
 
 interface DocumentsSidebarProps {
   activeView: DocumentView;
@@ -42,11 +44,17 @@ const systemDocuments: SidebarItem[] = [
     icon: ClipboardCheck,
   },
   {
-    id: "interview-notes",
-    label: "Interview Notes",
-    description: "Recruitment notes",
-    icon: NotebookText,
+    id: "declarations",
+    label: "Declarations",
+    description: "Applicant declarations",
+    icon: FileSignature,
   },
+  // {
+  //   id: "interview-notes",
+  //   label: "Interview Notes",
+  //   description: "Recruitment notes",
+  //   icon: NotebookText,
+  // },
   {
     id: "compliance-summary",
     label: "Compliance Summary",

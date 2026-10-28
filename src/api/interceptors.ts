@@ -1,7 +1,7 @@
 import type { InternalAxiosRequestConfig } from "axios";
 
 export function attachRequestInterceptor(
-  client: typeof import("./client").apiClient,
+  client: typeof import("./client").instance,
 ) {
   client.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     /**
@@ -15,7 +15,7 @@ export function attachRequestInterceptor(
 }
 
 export function attachResponseInterceptor(
-  client: typeof import("./client").apiClient,
+  client: typeof import("./client").instance,
 ) {
   client.interceptors.response.use(
     (response) => response,
