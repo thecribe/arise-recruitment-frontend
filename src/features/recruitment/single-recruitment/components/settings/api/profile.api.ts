@@ -47,6 +47,7 @@ const updateJobType = async (
   applicantId: string,
   values: { job_type_id: string },
 ) => {
+  console.log(values);
   const response = await instance.patch(
     `/users/${applicantId}/job-type`,
     values,

@@ -1,15 +1,16 @@
 import {
-  BadgeCheck,
+  // BadgeCheck,
   Bell,
   BriefcaseBusiness,
-  FileCheck2,
-  Fingerprint,
+  // FileCheck2,
+  // Fingerprint,
   GraduationCap,
-  IdCard,
+  // IdCard,
   Settings,
   ShieldCheck,
   SlidersHorizontal,
   Users,
+  UserKey,
 } from "lucide-react";
 
 import type { SettingsNavItem } from "../types/settings.types";
@@ -67,10 +68,18 @@ export const settingsNavigation: SettingsNavItem[] = [
     ],
   },
   {
+    label: "Roles & Permission",
+    description: "Manage roles and permissions",
+    icon: UserKey,
+    disabled: false,
+    path: "/settings/roles-permissions",
+  },
+  {
     label: "Users & Access",
     description: "Manage users, roles and permissions",
     icon: Users,
-    disabled: true,
+    path: "/settings/users",
+    disabled: false,
   },
   {
     label: "Notifications",
