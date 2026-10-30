@@ -160,3 +160,35 @@ export const useUpdateUserStatus = () => {
     },
   });
 };
+
+export const useResetUserPassword = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, password }: { id: string; password: string }) =>
+      usersApi.resetPassword(id, password),
+
+    onSuccess: (_, variables) => {
+      void queryClient.invalidateQueries({
+        queryKey: userKeys.all,
+      });
+
+      void queryClient.invalidateQueries({
+        queryKey: userKeys.detail(variables.id),
+      });
+
+      notification.success(
+        "Password reset successfully. All existing sessions have been revoked.",
+      );
+    },
+
+    onError: (error) => {
+      notification.error(
+        getErrorMessage(
+          error,
+          "Unable to reset the password. Please try again.",
+        ),
+      );
+    },
+  });
+};

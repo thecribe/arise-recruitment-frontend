@@ -79,6 +79,14 @@ const updateStatus = async (
   return response.data.data;
 };
 
+const resetPassword = async (id: string, password: string): Promise<User> => {
+  const response = await instance.patch<UserApiResponse<User>>(
+    `${BASE_URL}/${id}/password`,
+    { password },
+  );
+
+  return response.data.data;
+};
 export const usersApi = {
   getAll,
   getById,
@@ -87,4 +95,5 @@ export const usersApi = {
   update,
   updateRole,
   updateStatus,
+  resetPassword,
 };

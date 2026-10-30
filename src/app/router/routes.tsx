@@ -28,6 +28,7 @@ import GeneralSettingsPage from "@/features/settings/components/general-settings
 import JobTypesSettingsPage from "@/features/settings/pages/JobTypesSettingsPage";
 import RolesPermissionsPage from "@/features/settings/pages/RolesPermissionsPage";
 import UserManagementPage from "@/features/settings/pages/UserManagementPage";
+import UserProfilePage from "@/features/settings/pages/UserProfilePage";
 
 export const appRoutes = [
   {
@@ -196,6 +197,14 @@ export const appRoutes = [
                     element: (
                       <RouteSuspense>
                         <UserManagementPage />
+                      </RouteSuspense>
+                    ),
+                  },
+                  {
+                    path: "users/:id",
+                    element: (
+                      <RouteSuspense>
+                        <UserProfilePage />
                       </RouteSuspense>
                     ),
                   },

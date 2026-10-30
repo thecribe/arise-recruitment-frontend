@@ -1,21 +1,22 @@
 import {
   ChevronLeft,
   ChevronRight,
-  Pencil,
-  ShieldCheck,
+  // Pencil,
+  // ShieldCheck,
   UserRoundCheck,
   UserRoundX,
   Users,
 } from "lucide-react";
 
 import type { User, UserPagination } from "../../types/user.types";
+import { Link } from "react-router-dom";
 
 interface UsersTableProps {
   users: User[];
   pagination?: UserPagination;
   isLoading: boolean;
-  onEdit: (user: User) => void;
-  onChangeRole: (user: User) => void;
+  // onEdit: (user: User) => void;
+  // onChangeRole: (user: User) => void;
   onChangeStatus: (user: User) => void;
   onPageChange: (page: number) => void;
 }
@@ -24,8 +25,8 @@ const UsersTable = ({
   users,
   pagination,
   isLoading,
-  onEdit,
-  onChangeRole,
+  // onEdit,
+  // onChangeRole,
   onChangeStatus,
   onPageChange,
 }: UsersTableProps) => {
@@ -117,14 +118,19 @@ const UsersTable = ({
                         </div>
                       )}
 
-                      <div className="min-w-0">
-                        <p className="truncate font-medium text-slate-800 dark:text-slate-100">
-                          {getFullName(user)}
-                        </p>
-                        <p className="truncate text-xs text-slate-500">
-                          {user.email}
-                        </p>
-                      </div>
+                      <Link
+                        to={`/settings/users/${user.id}`}
+                        className="font-medium text-slate-900 transition hover:text-blue-700 dark:text-white dark:hover:text-blue-300"
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate font-medium text-slate-800 dark:text-slate-100">
+                            {getFullName(user)}
+                          </p>
+                          <p className="truncate text-xs text-slate-500">
+                            {user.email}
+                          </p>
+                        </div>
+                      </Link>
                     </div>
                   </td>
 
@@ -161,7 +167,7 @@ const UsersTable = ({
 
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
-                      <button
+                      {/* <button
                         type="button"
                         onClick={() => onEdit(user)}
                         aria-label={`Edit ${getFullName(user)}`}
@@ -181,7 +187,7 @@ const UsersTable = ({
                       >
                         <ShieldCheck size={14} />
                         <span>Role</span>
-                      </button>
+                      </button> */}
 
                       <button
                         type="button"

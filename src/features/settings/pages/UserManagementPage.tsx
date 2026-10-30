@@ -73,10 +73,10 @@ const UserManagementPage = () => {
     setIsCreateModalOpen(true);
   };
 
-  const openEditModal = (user: User) => {
-    setIsCreateModalOpen(false);
-    setSelectedUser(user);
-  };
+  // const openEditModal = (user: User) => {
+  //   setIsCreateModalOpen(false);
+  //   setSelectedUser(user);
+  // };
 
   const closeUserModal = () => {
     setIsCreateModalOpen(false);
@@ -253,8 +253,8 @@ const UserManagementPage = () => {
             users={users}
             pagination={pagination}
             isLoading={isPending}
-            onEdit={openEditModal}
-            onChangeRole={setRoleUser}
+            // onEdit={openEditModal}
+            // onChangeRole={setRoleUser}
             onChangeStatus={setStatusUser}
             onPageChange={handlePageChange}
           />
