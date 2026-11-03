@@ -1,8 +1,7 @@
 import { MessageSquareQuote } from "lucide-react";
 
 import DashboardCard from "../../components/DashboardCard";
-
-import type { DashboardFeedback } from "../../types/dashboard";
+import type { DashboardFeedback } from "../../types/applicant-dashboard";
 
 interface Props {
   feedback?: DashboardFeedback;

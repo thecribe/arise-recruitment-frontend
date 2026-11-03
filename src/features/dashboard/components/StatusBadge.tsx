@@ -10,7 +10,8 @@ const variants = {
   [PHASE_STATUS.APPROVED]: "default",
   [PHASE_STATUS.IN_PROGRESS]: "secondary",
   [PHASE_STATUS.SUBMITTED]: "outline",
-  [PHASE_STATUS.RETURNED]: "destructive",
+  [PHASE_STATUS.DRAFT]: "outline",
+  [PHASE_STATUS.REJECTED]: "destructive",
   [PHASE_STATUS.LOCKED]: "secondary",
 } as const;
 
@@ -18,16 +19,17 @@ const labels = {
   [PHASE_STATUS.APPROVED]: "Approved",
   [PHASE_STATUS.IN_PROGRESS]: "In Progress",
   [PHASE_STATUS.SUBMITTED]: "Submitted",
-  [PHASE_STATUS.RETURNED]: "Returned",
+  [PHASE_STATUS.DRAFT]: "Draft",
+  [PHASE_STATUS.REJECTED]: "Rejected",
   [PHASE_STATUS.LOCKED]: "Locked",
 };
 
-interface BadgeVariantMap {
-  default: "default";
-  secondary: "secondary";
-  outline: "outline";
-  destructive: "destructive";
-}
+// interface BadgeVariantMap {
+//   default: "default";
+//   secondary: "secondary";
+//   outline: "outline";
+//   destructive: "destructive";
+// }
 
 const StatusBadge = ({ status }: StatusBadgeProps) => {
   return <Badge variant={variants[status]}>{labels[status]}</Badge>;

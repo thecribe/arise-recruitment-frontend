@@ -171,7 +171,7 @@ export const useSubmitApplicantTrainingCertificates = () => {
     mutationFn: (sectionId: string) =>
       trainingCertificateApi.submitTrainingCertificates(sectionId),
 
-    onSuccess: (result, sectionId) => {
+    onSuccess: (_, sectionId) => {
       notification.success("Training certificates submitted successfully.");
 
       queryClient.invalidateQueries({

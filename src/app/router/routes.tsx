@@ -13,6 +13,7 @@ import {
   ForgotPasswordPage,
   TrainingCertificateRequirementsPage,
   ApplicantCompliancePage,
+  RefereeFormPage,
 } from "./lazy";
 
 import RouteSuspense from "./suspense";
@@ -72,6 +73,7 @@ export const appRoutes = [
             path: ROUTES.AUTH.RESET_PASSWORD,
             element: <ResetPasswordPage />,
           },
+          { path: "referee-form/:referenceId", element: <RefereeFormPage /> },
         ],
       },
 

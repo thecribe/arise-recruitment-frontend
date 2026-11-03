@@ -227,8 +227,8 @@ const refuseReference = async (
  * ---------------------------------------------------------------------------
  */
 const sendReference = async (applicationId: string, referenceId: string) => {
-  const response = await instance.post(
-    `/references/applications/${applicationId}/references/${referenceId}/send`,
+  const response = await instance.get(
+    `/references/applications/${applicationId}/${referenceId}/send`,
   );
 
   return response.data.data;

@@ -10,6 +10,7 @@
  * -----------------------------------------------------------------------------
  */
 
+import { useCurrentUser } from "@/features/auth/hooks/use-auth";
 import ApplicationFooter from "../components/application-shell/ApplicationFooter";
 import ApplicationHeader from "../components/application-shell/ApplicationHeader";
 import ApplicationShell from "../components/application-shell/ApplicationShell";
@@ -19,8 +20,30 @@ import SectionNavigation from "../components/navigation/SectionNavigation";
 import ReviewPanel from "../components/ReviewPanel";
 import ApplicationFormRenderer from "../form-renderer/ApplicationFormRenderer";
 import ApplicationFormProvider from "../providers/ApplicationFormProvider";
+import PageLoader from "@/components/feedback/page-loader";
+import { adminRoles } from "@/constants/roles";
+import { Navigate, useLocation } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 export default function ApplicationPage() {
+  const { data: user, isPending } = useCurrentUser();
+  const location = useLocation();
+
+  if (isPending) {
+    return <PageLoader />;
+  }
+
+  if (user && adminRoles.includes(user.role)) {
+    return (
+      <Navigate
+        to={ROUTES.RECRUITMENT.ROOT}
+        replace
+        state={{
+          from: location,
+        }}
+      />
+    );
+  }
   return (
     <ApplicationShell>
       <div className="space-y-8">

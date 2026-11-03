@@ -42,7 +42,9 @@ export const referenceResponseApiToForm = (
     detailReference: response.detailReference ?? "",
     refererName: response.refererName ?? "",
     refererSignature: response.refererSignature ?? null,
-    signatureDate: response.signatureDate ?? "",
+    signatureDate: response.signatureDate
+      ? String(response.signatureDate).split("T")[0]
+      : "",
   };
 
   const ratings = response.ratings ?? {};

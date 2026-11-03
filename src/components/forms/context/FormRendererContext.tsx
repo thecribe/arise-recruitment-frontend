@@ -26,7 +26,7 @@ export interface FormRendererContextValue {
   /**
    * Current form mode.
    */
-  mode: FormMode;
+  mode?: FormMode;
 
   /**
    * Whether fields can be edited.

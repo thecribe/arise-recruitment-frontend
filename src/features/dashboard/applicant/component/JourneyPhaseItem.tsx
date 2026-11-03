@@ -13,8 +13,9 @@ interface JourneyPhaseItemProps {
 const icons = {
   [PHASE_STATUS.APPROVED]: CheckCircle2,
   [PHASE_STATUS.IN_PROGRESS]: Clock3,
+  [PHASE_STATUS.DRAFT]: Clock3,
   [PHASE_STATUS.SUBMITTED]: Send,
-  [PHASE_STATUS.RETURNED]: RotateCcw,
+  [PHASE_STATUS.REJECTED]: RotateCcw,
   [PHASE_STATUS.LOCKED]: Lock,
 };
 

@@ -86,7 +86,7 @@ export function useGenericForm({
    * ---------------------------------------------------------------------------
    */
 
-  const schema = useMemo(() => buildFormSchema(fields), [fields]);
+  const schema = useMemo(() => buildFormSchema({ fields }), [fields]);
 
   /**
    * ---------------------------------------------------------------------------

@@ -19,6 +19,10 @@ export const ApplicationPage = lazy(
   () => import("@/features/application/pages/ApplicationPage"),
 );
 
+export const RefereeFormPage = lazy(
+  () => import("@/features/referee-form/pages/RefereeFormPage"),
+);
+
 export const RecruitmentPage = lazy(
   () => import("@/features/recruitment/pages/RecruitmentPage"),
 );

@@ -1,4 +1,5 @@
 import PageLoader from "@/components/feedback/page-loader";
+import { adminRoles } from "@/constants/roles";
 import { ROUTES } from "@/constants/routes";
 import { useCurrentUser } from "@/features/auth/hooks/use-auth";
 
@@ -7,17 +8,26 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 export default function AuthLayout() {
   const location = useLocation();
   const { data: user, isPending } = useCurrentUser();
- 
-  
 
   if (isPending) {
     return <PageLoader />;
   }
 
-  if (user) {
+  if (user && !adminRoles.includes(user.role)) {
     return (
       <Navigate
-        to={ROUTES.DASHBOARD}
+        to={ROUTES.APPLICATION.ROOT}
+        replace
+        state={{
+          from: location,
+        }}
+      />
+    );
+  }
+  if (user && adminRoles.includes(user.role)) {
+    return (
+      <Navigate
+        to={ROUTES.RECRUITMENT.ROOT}
         replace
         state={{
           from: location,

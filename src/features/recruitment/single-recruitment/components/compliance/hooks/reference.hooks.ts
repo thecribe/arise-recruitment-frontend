@@ -306,6 +306,22 @@ export const useSendReference = (
       queryClient.invalidateQueries({
         queryKey: referenceKeys.list(applicationId),
       });
+      notification.success("Reference request mail sent successfully.");
+    },
+
+    onError: (error: unknown) => {
+      const axiosError = error as {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      notification.error(
+        axiosError.response?.data?.message ||
+          "Unable to send reference request. Please try again.",
+      );
     },
   });
 };

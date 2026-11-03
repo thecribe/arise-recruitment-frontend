@@ -175,11 +175,7 @@ export default function UploadField({ field, prefix }: FieldComponentProps) {
 
                       return (
                         <div
-                          key={
-                            isExistingFile(file)
-                              ? file.id
-                              : `${file?.name}-${file?.lastModified}`
-                          }
+                          key={isExistingFile(file) ? file.id : index}
                           className="
                             flex
                             min-w-0

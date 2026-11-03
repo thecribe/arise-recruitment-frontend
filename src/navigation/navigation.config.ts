@@ -11,7 +11,7 @@
  */
 
 import {
-  LayoutDashboard,
+  // LayoutDashboard,
   FileText,
   Users,
   ShieldCheck,
@@ -21,13 +21,13 @@ import {
 import type { NavigationItem } from "./navigation.types";
 
 export const navigation: NavigationItem[] = [
-  {
-    id: "dashboard",
-    title: "Dashboard",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    type: "general",
-  },
+  // {
+  //   id: "dashboard",
+  //   title: "Dashboard",
+  //   href: "/dashboard",
+  //   icon: LayoutDashboard,
+  //   type: "general",
+  // },
 
   {
     id: "application",

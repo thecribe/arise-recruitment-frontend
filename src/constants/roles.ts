@@ -47,11 +47,17 @@ export type Role = (typeof ROLES)[number];
 export const ROLE_CODES = {
   APPLICANT: "APPLICANT",
   RECRUITMENT_MANAGER: "RECRUITMENT_MANAGER",
-  COMPLIANCE_MANAGER:"COMPLIANCE_MANAGER",
-  STAFF_MANAGER:"STAFF_MANAGER",
+  COMPLIANCE_MANAGER: "COMPLIANCE_MANAGER",
+  STAFF_MANAGER: "STAFF_MANAGER",
   TOP_ADMIN: "TOP_ADMIN",
 } as const;
 
+export const adminRoles = [
+  "TOP_ADMIN",
+  "RECRUITMENT_MANAGER",
+  "COMPLIANCE_MANAGER",
+  "STAFF_MANAGER",
+];
 export const getRoleByCode = (code: string) =>
   ROLES.find((role) => role.code === code);
 
