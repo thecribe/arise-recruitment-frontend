@@ -238,8 +238,7 @@ export default function RecruitmentSectionReview({
                   updateData.mutate(
                     { applicationId, sectionId: section.id, values },
                     {
-                      onSuccess: async (data) => {
-                        console.log(data);
+                      onSuccess: async () => {
                         setIsEditing(false);
                       },
                     },

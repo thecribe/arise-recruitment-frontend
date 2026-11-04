@@ -69,16 +69,21 @@ export default function InterviewScoresheetForm({
 
   const { data: existingInterview, isLoading: isInterviewLoading } =
     useInterview(applicationId);
+  console.log("existingInterview", existingInterview);
 
   const createMutation = useCreateInterview();
   const updateMutation = useUpdateInterview();
 
   const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
-  const isEditing = Boolean(existingInterview);
+  const isEditing = Boolean(
+    existingInterview?.interview_date &&
+    existingInterview?.interviewer_name &&
+    existingInterview?.interviewer_signature,
+  );
 
   useEffect(() => {
-    if (!existingInterview) {
+    if (existingInterview === undefined || !existingInterview.interview_date) {
       methods.reset({
         ...defaultValues,
         interviewerName,

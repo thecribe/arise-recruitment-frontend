@@ -14,6 +14,7 @@ export const useGeneralSettings = () =>
   useQuery({
     queryKey: generalSettingsKeys.detail(),
     queryFn: generalSettingsApi.getGeneralSettings,
+    staleTime: 1000 * 60 * 30,
   });
 
 export const useUpdateGeneralSettings = () => {

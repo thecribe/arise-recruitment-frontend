@@ -40,7 +40,15 @@ export function buildFormSchema({
         schema = z.coerce.number();
         break;
       case "file":
-        schema = z.array(z.unknown());
+        schema = z.union([
+          z.array(z.unknown()),
+          z.instanceof(File),
+          z.null(),
+          z.literal(""),
+        ]);
+        break;
+      case "checkbox":
+        schema = z.array(z.string());
         break;
       default:
         schema = z.string();
