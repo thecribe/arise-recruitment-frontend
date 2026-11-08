@@ -57,8 +57,6 @@ export default function RegisterPage() {
   const registerMutation = useRegister();
   const { jobTypes, isLoading, isError } = useBootstrapData();
 
-  console.log(jobTypes);
-
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
 

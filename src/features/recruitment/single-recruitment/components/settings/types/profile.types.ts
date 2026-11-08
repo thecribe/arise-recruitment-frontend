@@ -1,3 +1,5 @@
+import type { UpdateOwnPasswordFormValues } from "../schema/profile.schema";
+
 export interface ProfileFormValues {
   first_name: string;
   last_name: string;
@@ -14,3 +16,8 @@ export interface UpdateEmailPayload {
 export interface UpdatePasswordPayload {
   password: string;
 }
+
+export type UpdateOwnPasswordPayload = Pick<
+  UpdateOwnPasswordFormValues,
+  "currentPassword" | "newPassword"
+>;

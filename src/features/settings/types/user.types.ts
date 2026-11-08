@@ -16,7 +16,8 @@ export interface User {
   role_id: string;
   role: AssignableRole;
   job_type_id: string | null;
-  profile_img: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  profile_img: any;
   is_email_verified: boolean;
   email_verified_at: string | null;
   last_login_at: string | null;

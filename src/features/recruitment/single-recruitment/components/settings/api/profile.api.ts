@@ -4,6 +4,7 @@ import payloadToFormData from "@/components/forms/utils/payloadToFormData";
 import type {
   ProfileFormValues,
   UpdateEmailPayload,
+  UpdateOwnPasswordPayload,
   UpdatePasswordPayload,
 } from "../types/profile.types";
 
@@ -47,11 +48,38 @@ const updateJobType = async (
   applicantId: string,
   values: { job_type_id: string },
 ) => {
-  console.log(values);
   const response = await instance.patch(
     `/users/${applicantId}/job-type`,
     values,
   );
+
+  return response.data.data;
+};
+
+/**
+ * Get the authenticated user's profile.
+ */
+const getOwnProfile = async () => {
+  const response = await instance.get("/single-user/profile");
+  return response.data.data;
+};
+
+/**
+ * Update the authenticated user's profile.
+ */
+const updateOwnProfile = async (values: ProfileFormValues) => {
+  const formData = payloadToFormData(values);
+
+  const response = await instance.patch("/single-user/profile", formData);
+
+  return response.data.data;
+};
+
+/**
+ * Update the authenticated user's password.
+ */
+const updateOwnPassword = async (values: UpdateOwnPasswordPayload) => {
+  const response = await instance.patch("/single-user/password", values);
 
   return response.data.data;
 };
@@ -62,4 +90,7 @@ export const profileApi = {
   updatePassword,
   getProfile,
   updateJobType,
+  getOwnProfile,
+  updateOwnProfile,
+  updateOwnPassword,
 };

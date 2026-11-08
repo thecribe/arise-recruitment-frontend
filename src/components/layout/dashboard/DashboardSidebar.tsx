@@ -2,9 +2,15 @@ import { cn } from "@/lib/utils";
 import { useSidebarStore } from "@/stores/sidebar.store";
 import { useNavigation } from "@/navigation/use-navigation";
 import { DashboardSidebarItem } from "./DashboardSidebarItem";
+import { useGeneralSettings } from "@/features/settings/hooks/useGeneralSettings";
 
 export function DashboardSidebar() {
   const { collapsed } = useSidebarStore();
+  const { data: settings, isLoading } = useGeneralSettings();
+
+  const organisationName = settings?.organisation_name || "Recruitment Portal";
+
+  const logoUrl = settings?.logo?.document_url;
 
   const navigation = useNavigation();
 
@@ -21,12 +27,22 @@ export function DashboardSidebar() {
       <div className="flex w-full flex-col p-4">
         {/* Logo */}
 
-        <div className="mb-10 flex h-16 items-center px-3">
-          {collapsed ? (
-            <span className="text-xl font-bold text-blue-400">A</span>
+        <div className="mb-10 flex h-16 items-center">
+          {isLoading ? (
+            <span className="text-xl font-bold text-blue-400 ">A</span>
+          ) : collapsed ? (
+            <span className="text-xl font-bold bg-blue-400 ">
+              <img
+                src={logoUrl}
+                alt={organisationName}
+                className="max-h-11 max-w-32 object-contain"
+              />
+            </span>
           ) : (
             <div>
-              <h1 className="text-xl font-bold text-slate-900">AIRSE</h1>
+              <h1 className="text-xl font-bold text-slate-900">
+                {organisationName}
+              </h1>
 
               <p className="text-xs text-slate-400">Recruitment Portal</p>
             </div>

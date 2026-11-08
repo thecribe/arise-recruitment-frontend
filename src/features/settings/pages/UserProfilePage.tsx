@@ -113,7 +113,7 @@ export default function UserProfilePage() {
           <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-blue-100 bg-blue-100 text-blue-700 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300">
             {user.profile_img ? (
               <img
-                src={user.profile_img}
+                src={user.profile_img.document_url}
                 alt={fullName}
                 className="h-full w-full object-cover"
               />

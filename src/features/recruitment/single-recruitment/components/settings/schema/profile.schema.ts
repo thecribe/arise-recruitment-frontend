@@ -31,3 +31,26 @@ export const updatePasswordSchema = z
   });
 
 export type UpdatePasswordFormValues = z.infer<typeof updatePasswordSchema>;
+
+/**
+ * Applicant self-service password update.
+ */
+export const updateOwnPasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Current password is required"),
+
+    newPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(128, "Password must not exceed 128 characters"),
+
+    confirmPassword: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((values) => values.newPassword === values.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
+export type UpdateOwnPasswordFormValues = z.infer<
+  typeof updateOwnPasswordSchema
+>;

@@ -22,8 +22,15 @@ import RecruitmentPagination from "../components/RecruitmentPagination";
 import { useRecruitmentApplicants } from "../hooks/useRecruitmentApplicants";
 import { useRecruitmentDefaultData } from "../hooks/useRecruitmentDefaultData";
 import { useRecruitmentFilters } from "../hooks/useRecruitmentFilters";
+import { useState } from "react";
+import AddApplicantButton from "../components/applicants/AddApplicantButton";
+import AddApplicantModal from "../components/applicants/AddApplicantModal";
+import type { AddApplicantFormValues } from "../types/add-applicant.types";
+import { useCreateApplicant } from "../hooks/useCreateApplicant";
 
 export default function RecruitmentPage() {
+  const [isAddApplicantOpen, setIsAddApplicantOpen] = useState(false);
+
   /**
    * Load the reference data required by the recruitment filters.
    *
@@ -59,6 +66,14 @@ export default function RecruitmentPage() {
     refetch,
   } = useRecruitmentApplicants(filters);
 
+  const createApplicantMutation = useCreateApplicant();
+
+  const handleCreateApplicant = async (values: AddApplicantFormValues) => {
+    await createApplicantMutation.mutateAsync(values);
+
+    setIsAddApplicantOpen(false);
+  };
+
   return (
     <div className="space-y-6">
       {/* Shared page heading */}
@@ -66,6 +81,7 @@ export default function RecruitmentPage() {
         title="Recruitment"
         description="Manage and review applicant applications."
       />
+      <AddApplicantButton onClick={() => setIsAddApplicantOpen(true)} />
 
       {/* 
         Search and filter controls.
@@ -106,6 +122,13 @@ export default function RecruitmentPage() {
       <RecruitmentPagination
         pagination={applicantsData?.pagination}
         onPageChange={(page) => updateFilter("page", page)}
+      />
+
+      <AddApplicantModal
+        open={isAddApplicantOpen}
+        onClose={() => setIsAddApplicantOpen(false)}
+        onSubmit={handleCreateApplicant}
+        isSubmitting={createApplicantMutation.isPending}
       />
     </div>
   );

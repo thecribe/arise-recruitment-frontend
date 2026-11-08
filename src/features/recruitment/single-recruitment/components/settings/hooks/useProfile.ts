@@ -8,6 +8,7 @@ import { profileKeys } from "../api/profile.keys";
 import type {
   ProfileFormValues,
   UpdateEmailPayload,
+  UpdateOwnPasswordPayload,
   UpdatePasswordPayload,
 } from "../types/profile.types";
 
@@ -119,6 +120,61 @@ export const useUpdateJobType = (applicantId: string) => {
     onError: (error: unknown) => {
       notification.error(
         getErrorMessage(error, "Unable to update job type. Please try again."),
+      );
+    },
+  });
+};
+
+/**
+ * Get authenticated user's profile.
+ */
+export const useOwnProfile = () => {
+  return useQuery({
+    queryKey: ["profile", "me"],
+    queryFn: profileApi.getOwnProfile,
+  });
+};
+
+/**
+ * Update authenticated user's profile.
+ */
+export const useUpdateOwnProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: profileApi.updateOwnProfile,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["profile", "me"],
+      });
+
+      notification.success("Profile updated successfully.");
+    },
+
+    onError: (error: unknown) => {
+      notification.error(
+        getErrorMessage(error, "Unable to update profile. Please try again."),
+      );
+    },
+  });
+};
+
+/**
+ * Update authenticated user's password.
+ */
+export const useUpdateOwnPassword = () => {
+  return useMutation({
+    mutationFn: (values: UpdateOwnPasswordPayload) =>
+      profileApi.updateOwnPassword(values),
+
+    onSuccess: () => {
+      notification.success("Password updated successfully.");
+    },
+
+    onError: (error: unknown) => {
+      notification.error(
+        getErrorMessage(error, "Unable to update password. Please try again."),
       );
     },
   });

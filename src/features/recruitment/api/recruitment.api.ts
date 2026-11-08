@@ -10,6 +10,7 @@ import type {
   RecruitmentApplicationStage,
 } from "../types/recruitment.types";
 import payloadToFormData from "@/components/forms/utils/payloadToFormData";
+import type { AddApplicantPayload } from "../types/add-applicant.types";
 
 /**
  * -----------------------------------------------------------------------------
@@ -253,6 +254,12 @@ const updateRecruitmentApplicationStage = async (
 
   return response.data.data;
 };
+
+const createApplicant = async (values: AddApplicantPayload) => {
+  const response = await instance.post("/recruitment/applicants", values);
+
+  return response.data.data;
+};
 export const recruitmentApi = {
   getRecruitmentDefaultData,
   getRecruitmentApplicants,
@@ -267,4 +274,5 @@ export const recruitmentApi = {
 
   updateRecruitmentApplicationStatus,
   updateRecruitmentApplicationStage,
+  createApplicant,
 };

@@ -5,7 +5,7 @@ import { recruitmentApi } from "../api/recruitment.api";
 
 export function useRecruitmentApplicants(filters: RecruitmentApplicantFilters) {
   return useQuery({
-    queryKey: recruitmentKeys.applicants(),
+    queryKey: recruitmentKeys.applicantList(filters),
     queryFn: () => recruitmentApi.getRecruitmentApplicants(filters),
     placeholderData: keepPreviousData,
   });
